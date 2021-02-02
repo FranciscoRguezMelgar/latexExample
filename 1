@@ -38,28 +38,8 @@
 \usepackage{fancyhdr}
  %permite referenciar la última página (para incluir páginas totales)
 \usepackage{lastpage}
-% Permite figuras y tablas que sean rodeadas por el texto.
-% Este paquete y su funcionalidad dan problemas, no lo recomiendo.
-%\usepackage{wrapfig}
 %%%%%%%%%%%%%%%%%%%% FIN SECCIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% Vamos a permitir más niveles de título, hasta 5.
-\setcounter{secnumdepth}{5}
-% Esto hace que la tabla de contenidos muestre hasta el nivel 3.
-    % Si se quiere que la tabla de contenido muestre todos los niveles, sólo
-    % ha de cambiarse el 3 por un 5
-\setcounter{tocdepth}{3}
-% Aquí estamos redefiniendo el comando paragraph, será nuestro título de nivel
-    % 4. Esta es una de las cosas que no tengo nada claro cómo funciona, 
-    % pero funciona, así que si quieres usar títulos de esta jerarquía, 
-    % déjalo así. 
-\titleformat{\paragraph}{\bfseries}{\theparagraph .}{1em}{}
-\titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
-
-% El subparagraph será el título de nivel 5
-\titleformat{\subparagraph}{\bf}{\thesubparagraph .}{1em}{}
-\titlespacing*{\subparagraph}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
-
+\setcounter{secnumdepth}{10}
 
 % Esta línea nos permite indicar un directorio donde estamos guardando
 % nuestras imágenes. Más información más adelante.
@@ -77,10 +57,7 @@
 }
 % Permite que en las ecuaciones escribas un punto y salga un punto (no lo
 % interprete como un decimal en español, es decir, una coma)
-\decimalpoint
-
-
-
+%\decimalpoint
 
 %%%%%%%%%%%%%%%%%SECCIÓN VARIABLES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Podemos definir variables para usar a lo largo del texto
@@ -113,9 +90,9 @@
 % Aquí creamos una figura para poner el logo de algo (Ahora hay un placeholder) 
 % más en cuanto a figuras más adelante.
 \begin{figure}[H]
-    % Lo centramos
-    \center
-    \includegraphics[width=.5\linewidth]{escudo}
+% Lo centramos
+\center
+\includegraphics[width=.5\linewidth]{escudo}
 \end{figure}
 \newpage
 % En esta página puedes poner agradecimientos o prefacios que no tendrán pie ni
@@ -251,7 +228,7 @@ $$
 Si en este párrafo quisiéramos poner una ecuación o números al estilo 
 matemático, lo haremos con único signo de dolar y la escribiríamos
 en la misma línea, por ejemplo, una ecuación cuadrática es: 
-$ax^2+bx+c = d : a \ne 0$.
+$a^2+b^2+c = d : a \ne 0$.
 Además, podemos poner símbolos monetarios gracias a algunos paquetes especiales
 (ver en donde se incluyen los paquetes). Esta camisa cuesta
 \EUR{10,99}. Para poner un dolar se pone una barra inclinada inversa 
@@ -263,33 +240,30 @@ Esta mañana me he ido de compras por Nueva York y he gastado 500 \$.
 Como podemos ver, una subsección se define fácilmente, con la orden
 \texttt{\textbackslash subsection}, también existe \texttt{\textbackslash
 subsubsection}. A partir de ahí, si quieres títulos de un nivel más profundo,
-hay que usar otras órdenes. Esto depende de la clase de documento escogida.
-En este caso, Article.
+hay que usar otras órdenes.
 \subsubsection{Tercer nivel en la jerarquía}
 Si quieres más información sobre ćomo hacer esto, puedes visitar
 \href{https://ctan.org/pkg/titlesec}{este enlace}.
 Pero es ciertamente algo complejo \textbf{en mi opinión}.
-\paragraph{Párrafo}
-Sin embargo; como puede ser útil, he copiado unos comandos para permitir 
-niveles mayores de título.
-Comandos sacados de \href{https://tex.stackexchange.com/questions/60209/
-how-to-add-an-extra-level-of-sections-with-headings-below-subsubsection}{aquí}.
-De la respuesta de Gonzalo Medina.
-Es una de las cosas de LaTeX que no acabo de entender, así que simplemente me
-limito a utilizar lo que otra gente ha implementado.
 
-\subparagraph{Subpárrafo}
-Este es el último nivel de jerarquía admitido. 5 niveles de jerarquía parecen
-más que suficientes para cualquier documento razonable.
+\titleformat{\paragraph}
+{\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\paragraph{Hola}
+test
+
+\subparagraph{Hola2}
+test
 
 \section{Segunda sección}
 Aquí yo tenía un párrafo sobre cuando uśabamos la clase report, pero lo cambié
 en esta versión a la clase article, así que no ha lugar. Para el tipo de
 documentos que estamos haciendo esta clase es mejor. 
 
-Los bloques verbatim son bloques donde el texto se incluye sin tomar en 
-cuenta comandos de latex, interpretándolo literalmente y en letra 
-monoespaciada.
+Los bloques verbatim son bloques donde el texto se inlcuye sin tomar en 
+cuenta comandos de latex y en letras monoespaciada.
 Se suelen usar para introducir código. Por ejemplo, este es el programa
 <<HolaMundo>> en el lenguaje C++.
 
@@ -346,26 +320,28 @@ comando anterior. Supongamos una estructura de directorios como la que sigue:
 
 Podríamos ejecutar la orden \texttt{\textbackslash graphicspath\{\{img/\}\}}
 y así sólo tendríamos que especificar el nombre de los archivos, no hace falta 
-especificar extensiones. Nótese que hay una barra inclinada después del nombre
-del directorio y que hay dos llaves, son necesarias ambas cosas. Además, esta
-orden ha de ir en el \textbf{preámbulo} del texto.
+especificar extensiones.
 
 % Así se incluye una imagen. Predeterminadamente, se incluye a su tamaño 
 % original
 \includegraphics{gatito}
-
-Con la opción scale podemos hacerla más pequeña -o más grande-. Pero las
-imágenes en \LaTeX{} no están hechas para insertarse así, sino en una
-figura, que es lo que nos permite alterar su alienamiento respecto al texto
-y demás propiedades.
+Con la opción scale podemos hacerla más pequeña -o más grande-.
+Pero así sólo estamos poniendo la imagen en el texto, esto quería bien para un
+párrafo como de revista donde estás hablando de gatitos, en este caso, y
+empiezas a decir cosas sobre ellos.\includegraphics[scale=0.2]{./img/gatito}.
+El gato es un mamífero de la familia de los felinos que ha desarrollado una
+relación de domesticación con el \textit{Homo Sapiens}.
+Lo que hay que hacer para que se inserte como una figura es utilizar
+un bloque de figura.
 
 % [H] inserta aquí, t al inicio de la página, b al final... hay muchas opciones
     % Usa "H" si quieres que la figura esté en el mismo orden que como la has
-    % escrito, es la opción más intuitiva.
+    % escrito
     % (ver sección donde incluyo los paquetes)
 % Gracias a que hemos puesto la orden \graphicspath{{./img/}} en el preámbulo
     % de nuestro documento, ahora sólo tenemos que poner el nombre de las
     % imágenes que estén ahí.
+
 %inicio de una figura.
 \begin{figure}[H]
     % Centra la imagen
@@ -402,8 +378,6 @@ Si ahora quieres referenciar una figura en un párrafo en \LaTeX{} puedes poner
 \texttt{ \textbackslash ref\{nombre de la referencia\}}.
 Por ejemplo: como podemos ver en la Figura \ref{fig:gatitoNegro}:
 \nameref{fig:gatitoNegro}. A continuación, vamos a insertar una tabla.
-
-
 % Esto no sirve para hacer la tabla en sí misma, sino para ponerle captions y
 % esas cosas. Es equivalente a \begin{figure} que no inserta una imagen, pero
 % nos prepara las cosas para que se comporte como una figura, así podemos
@@ -441,35 +415,9 @@ Creo que ya estás listo para usar \LaTeX{}.
 He incluido un fichero makefile en el directorio que debería compilar el 
 archivo presente con la orden \texttt{pdflatex} dos veces.
 
-Finalmente, incluyo un ejemplo de todas las macros de tamaños que vienen
-incluidas en LaTeX base para pdflatex. Cada modificador hace que todo lo que
-se escriba después de él se vea afectado. Por esto, debe volverse al tamaño
-normal.
-
-\tiny{Ejemplo de texto tiny}\normalsize
-
-\scriptsize{Ejemplo de texto scriptsize}\normalsize
-
-\footnotesize{Ejemplo de texto footnotesize}\normalsize
-
-\small{Ejemplo de texto small}\normalsize
-
-\normalsize{Ejemplo de texto normalsize}\normalsize
-
-\large{Ejemplo de texto large}\normalsize
-
-\Large{Ejemplo de texto Large}\normalsize
-
-\LARGE{Ejemplo de texto LARGE}\normalsize
-
-\huge{Ejemplo de texto huge}\normalsize
-
-\Huge{Ejemplo de texto Huge}\normalsize
-
-\section{Licencias y agradecimiento}
-
-Todas las páginas citadas son de sus respectivos creadores, yo sólo me limito
-a recopilar sus soluciones o información en un mismo documento. Todas las
+¡Adiós!
+\section{Licencias}
+Todas las páginas citadas son creación de sus respectivos creadores. Las
 imágenes utilizadas son de licencia libre, ver:
 \href{https://pixabay.com/service/faq/}{FAQ de Pixabay}
 
