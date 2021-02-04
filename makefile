@@ -17,6 +17,7 @@ yellow = "\033[1;33m"
 	@echo $(green)"Build complete."$(reset)
 .PHONY : all
 all : document.pdf
+.PHONY : clean
 clean:
 	@echo $(l_red)"Cleaning all aux files and pdf outputs."
 	@rm -fr ./build *.pdf
