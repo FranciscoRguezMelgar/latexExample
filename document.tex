@@ -53,9 +53,11 @@
     bottom=35mm, %margen inferior
     headheight=25mm    %margen superior
 }
-%enables utf8 support
+% Permite el uso de más caracteres, aunque algunos especiales siguen sin
+% estar disponibles.
 \usepackage[utf8]{inputenc}
 
+\usepackage{amsfonts}
 %%%%%%%%%%%%%%%%%%%% FIN SECCIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Vamos a permitir más niveles de título, hasta 5.
@@ -137,7 +139,9 @@
 % En esta página puedes poner agradecimientos o prefacios que no tendrán pie ni
 % encabezado de página y que no afectarán a la numeración, si no quieres poner
 % nada, elimina esta línea y uno de los newpages
+\begin{center}
 \textbf{[Esta página ha sido dejada en blanco a propósito por el editor]}
+\end{center}
 \newpage
 %Vamos a poner agradecimientos
 \begin{flushright}
@@ -162,7 +166,7 @@
 %decimos que se numeren las páginas en romano hasta nueva orden
     % Esto nos permite numerar las páginas de índices en números romanos
 \pagenumbering{roman} 
-%%%%%%%%%%%%%%%%%FIN
+%%%%%%%%%%%%%%%%%                 FIN                      %%%%%%%%%%%%%%%%%%%
 \tableofcontents %crea el índice el índice empieza siempre en página nueva
 
 % se pueden añadir saltos de página extra con \newpage
@@ -214,7 +218,8 @@ sin problemas. Los prerrequisitos son:
 $ sudo apt install texlive-base \
                        texlive-latex-recommended \
                        texlive-latex-extra \
-                       texlive-full \\end{verbatim} 
+                       texlive-full
+\end{verbatim} 
 En sistemas derivados de Debian. En otras distribuciones, 
 por favor, consulte la documentación específica de cómo instalar paquetes de
 \textit{software}.
@@ -239,7 +244,7 @@ escrito con estos comandos que nos permite luego convertirlos en documentos-
 que generará un documento. El
 programa que genera el documento (generalmente pdf) a partir del código LaTeX
 se llama motor o renderizador. Hay varios, con diferencias técnicas. Esta guía
-y los comandos que se listan están desarrollados para el motor 
+y los comandos que se listan están desarrollados para el motor
 \texttt{pdflatex}.
 \subsubsection{Estructura de un documento en LaTeX}
 Un documento en latex mínimo tiene estas líneas:
@@ -249,6 +254,17 @@ Un documento en latex mínimo tiene estas líneas:
     Algún texto.
 \end{document}
 \end{verbatim}
+Para empezar: las palabras que van precedidas de una barra inclinada inversa
+se llaman <<comandos>>, y son órdenes que se le dan al renderizador de \LaTeX{},
+es decir, no se imprimirán en nuestro pdf. Debido a que los comandos se incluyen
+con ese caracter especial, si quisiéramos escribir una barra inversa en el 
+documento, deberíamos usar el comando \texttt{\textbackslash textbackslash}, 
+seguido de un espacio. Si no, \LaTeX{} interpretaría que la siguiente palabra
+es un comando. Además, los comandos reciben argumentos, que van entre llaves.
+Como las llaves son otro carácter especial usado por el lenguaje, para 
+incluirlas en nuestro texto, éstas deben ir precedidas de una barra inclinada
+inversa, es decir, son otro comando: \texttt{\textbackslash \{} produciría:
+<<\{>> (sin las comillas).
 
 La clase del documento será una palabra que definirá un estilo de documento
 concreto que nos permita empezar a escribir sin tener que formatearlo todo
@@ -262,10 +278,17 @@ páginas.
 
 Todo lo que hay antes de la línea donde pone 
 \texttt{\textbackslash begin\{document\}}, sin incluirla, se denomina el 
-preámbulo del documento. Y lo que existe entre la línea
+\textbf{preámbulo del documento}. Y lo que existe entre la línea
 \texttt{\textbackslash begin\{document\}} y la línea
 \texttt{\textbackslash end\{document\}} se considera el contenido del
-documento. Además, por su herencia o similitud con otros lenguages formales,
+documento. En el preámbulo se incluyen numerosas órdenes que afectarán a cómo
+el documento se renderiza, una de las más importantes es la inclusión de
+paquetes, esto se hace mediante la orden \texttt{\textbackslash usepackage}.
+Estos paquetes permiten añadir muchas funcionalidades que son necesarias. De 
+hecho, hoy en día cualquier documento moderno incluye muchos paquetes. Si
+se observa el preámbulo de este documento, se verá que hay, de hecho, muchos.
+
+ Además, por su herencia o similitud con otros lenguages formales,
 de programación y de marcado, \LaTeX{} tiene la posibilidad de incluir 
 comentarios en el código. Esto es texto que el renderizador no lee. En \LaTeX{}
 dichos comentarios se ponen con el signo de porcentaje <<\%>>. Cualquier
@@ -286,6 +309,14 @@ Además de que no se van a renderizar los texto de los comentarios, estos
 dos párrafos son uno, porque se eliminan las líneas enteras, así que habría
 que poner una línea en blanco entre el último comentario y el segundo
 párrafo.
+
+Al ser los documentos de \texttt{.tex} documentos de texto plano, podríamos
+incluir potencialmente los caracteres que quisiérmos, pero, sin paquetes 
+adicionales (ver sección de inclusión de paquetes en el código de este
+documento) no se pueden incluir algunos símbolos. Así que hay que tener cuidado
+con los símbolos especiales que se usan, pueden renderizarse mal o no permitir
+que el pdf se genere. Si se usan los símbolos del idioma español: tildes, la eñe
+diéresis en la u y demás, no debería haber problemas. Ej.: áéíóú, ÁÉÍÓÚ, üÜ, ñÑ.
 
 \subsection{Escritura de texto en \LaTeX{}}
 Como se ha visto en la sección anterior, dentro del contenido del documento es
@@ -334,10 +365,10 @@ sería el código en \LaTeX{} que renderizaría el párrafo que se ve a continua
 % Como puedes ver, aunque hay saltos de línea, no son párrafos distintos.
 % Para que sean párrafos distintos tiene que haber una línea en blanco
 % entre ellos.
-Este es el primer párrafo de esta sección, en cualquier texto
+<<Este es el primer párrafo de esta sección, en cualquier texto
 podemos incluir texto en
 \textbf{negrita} o en \textit{cursiva}, incluso, podríamos incluir texto en 
-\textbf{\textit{negrita y cursiva}}.
+\textbf{\textit{negrita y cursiva}}.>> (sin las comillas).
 
 Si queremos escribir comandos u órdenes
 de programación, podemos ponerlo en monoespaciado: \texttt{ls -la}.
@@ -364,7 +395,7 @@ A continuación vemos cómo se hace.
     % Un item es una fila de la lista, un punto, en este caso.
     \item Sector primario
     % si quieres subniveles, creas una lista dentro de esta.
-    % Ojo, cuidado, tiene que haver un item antes, como aquí que está
+    % Ojo, cuidado, tiene que haber un item antes, como aquí que está
     % el item sector primario.
     \begin{itemize}
         \item Ganadería
@@ -387,7 +418,7 @@ Ese código generaría la siguiente lista:
     % Un item es una fila de la lista, un punto, en este caso.
     \item Sector primario
     % si quieres subniveles, creas una lista dentro de esta.
-    % Ojo, cuidado, tiene que haver un item antes, como aquí que está
+    % Ojo, cuidado, tiene que haber un item antes, como aquí que está
     % el item sector primario.
     \begin{itemize}
         \item Ganadería
@@ -412,7 +443,9 @@ G\cdot\frac{m_1\cdot m_2}{d^2}
 $$
 Para escribir esa ecuación hemos usado este código:
 \begin{verbatim}
+$$
 G\cdot\frac{m_1\cdot m_2}{d^2}
+$$
 \end{verbatim}
 Si en este párrafo quisiéramos poner una ecuación o números al estilo 
 matemático, lo haremos con único signo de dolar y la escribiríamos
@@ -432,7 +465,231 @@ $base^{exponente}$
 frac\{numerador\}\{denominador\}\$} produce: $\frac{numerador}{denominador}$
 \end{enumerate}
 
-\Huge{}POR HACER, INCLUIR MÁS COMANDOS\normalsize{}
+\paragraph{Símbolos matemáticos avanzados}
+Hay muchos símbolos y objetos matemáticos más avanzados que esos, aquí veremos
+una selección de ellos. Probablemente añada más en el futuro. El primero
+sería la matrix. Para crear una matriz se usaría:
+\begin{verbatim}
+\matrix{1&2&3 \cr 
+           4&5&6 \cr
+           7&8&9}
+\end{verbatim}
+Y el resultado sería:
+$$
+\matrix{1&2&3 \cr 
+           4&5&6 \cr
+           7&8&9}
+$$
+En latex, si queremos rodear cualquier parte de una ecuación con símbolos como
+paŕentesis, corchetes y demás, lo tenemos que hacer con las órdenes 
+\texttt{\textbackslash left} y \texttt{\textbackslash right} seguidas del
+símbolo que queramos utilizar, por ejemplo si queremos una matrix rodeada
+de paréntesis, ponemos:
+\begin{verbatim}
+$$
+\left(\matrix{1&2\cr 3&4}\right)
+$$
+\end{verbatim}
+Y generaría:
+
+$$
+\left(\matrix{1&2\cr 3&4}\right)
+$$
+Los símbolos del cálculo integral y diferencial son sencillos, la integral
+se escribe como \texttt{\textbackslash int\{\}}. Por ejemplo, el código:  
+\begin{verbatim}
+$$
+\int{x \, dx }
+$$
+\end{verbatim}
+Generaría la siguiente ecuación:
+$$
+\int{x \, dx }
+$$
+Nótese que es necesario poner \texttt{\textbackslash ,} para que se genera
+un espacio entre la x y el diferencial de x. Si queremos generar integrales
+con límites, debemos usar la notación de superíndices y subíndices justo
+después del comando \texttt{int}.
+
+\begin{verbatim}
+$$
+\int_{0}^{10}{x \, dx}
+$$
+\end{verbatim}
+Generaría esta integral:
+$$
+\int_{0}^{10}{x \, dx}
+$$
+Se podría combinar con otros comandos, por ejemplo, veamos la definición de
+la integración por partes:
+\begin{verbatim}
+$$
+\int{u \, dv} = u \cdot v - \int{v \, du}
+$$
+\end{verbatim}
+generaría:
+$$
+\int{u \, dv} = u \cdot v - \int{v \, du}
+$$
+Si se requieren más niveles de integración, se pueden concatenar:
+\begin{verbatim}
+\int{\int{\int_{0}^{10}{f(x,y,z)\,dx\,dy\,dz}}}
+\end{verbatim}
+generaría:
+$$
+\int{\int{\int_{0}^{10}{f(x,y,z)\,dx\,dy\,dz}}}
+$$
+Si se requiete la integral de superficie se puede usar la orden
+\texttt{\textbackslash oint}: $\oint{}$
+
+Las derivadas con más sencillas porque simplemente se pone el símbolo
+\texttt{'} (el apóstrofo). Por ejemplo:.
+$$
+y'' + 4y = t^2-2t+5
+$$
+\LaTeX{} tiene funciones incorporadas, como las funciones trigonométricas. El 
+siguiente código:
+\begin{verbatim}
+$$
+\sen^2{(x)} +\cos^2{(x)} = 1;\, \frac{\sen{(x)}}{\cos{(x)}} = \tan{(x)}
+$$
+\end{verbatim}
+generaría el siguiente resultado (nótese el \texttt{\textbackslash{},}
+para generar un espacio:
+$$
+\sen^2{(x)} +\cos^2{(x)} = 1;\, \frac{\sen{(x)}}{\cos{(x)}} = \tan{(x)}
+$$
+
+Hay, además, hay muchos operadores que son necesarios, algunos de ellos
+son:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{Comando} & \textbf{Presentación} & \textbf{Descripción} \\ \hline
+    \texttt{< } & $<$ &Es menor que\\ \hline
+    \texttt{>} & $>$ &Es mayor que\\ \hline
+    \texttt{=} & $=$ & Es igual a\\ \hline
+    \texttt{\textbackslash{}le} & $\leq$ &Menor o igual que\\ \hline
+    \texttt{\textbackslash{}ge} & $\geq$ &Mayor o igual que\\ \hline
+    \texttt{\textbackslash{}subset} & $\subset$ &Es subconjunto de\\ \hline
+    \texttt{\textbackslash{}supset} & $\supset$ &Es superconjunto de \\ \hline
+    \texttt{\textbackslash{}subseteq} & $\subseteq$ &Es subconjunto o igual a  \\ \hline
+    \texttt{\textbackslash{}supseteq} & $\supseteq$ &Es superconjunto o igual a \\ \hline
+    \texttt{\textbackslash{}in} & $\in$ & Está en\\ \hline
+    \texttt{\textbackslash{}prec} & $\prec$ & Precede a\\ \hline
+    \texttt{\textbackslash{}preceq} & $\preceq$ & Precede o es igual a\\ \hline
+    \texttt{\textbackslash{}succ} & $\succ$ & Antecede a\\ \hline
+    \texttt{\textbackslash{}succeq} & $\succeq$ & Antecede o es igual a\\ \hline
+    \texttt{\textbackslash{}equiv} & $\equiv$ & Equivale, coincide con\\ \hline
+    \texttt{\textbackslash{}approx} & $\approx$ & Es, aproximadamente\\ \hline
+    \texttt{\textbackslash{}cup} & $\cup$ & Unión de conjuntos\\ \hline
+    \texttt{\textbackslash{}cap} & $\cap$ & Intersección de conjuntos\\ \hline
+    \texttt{\textbackslash{}land} & $\land$ &Conjunción lógica\\ \hline
+    \texttt{\textbackslash{}lor} & $\lor$ &Disyunción lógica\\ \hline
+    \texttt{\textbackslash{}times} & $\times$ &Producto vectorial\\ \hline
+    \texttt{\textbackslash{}cdot} & $\cdot$ &Punto medio (producto)\\ \hline
+    \texttt{\textbackslash{}oplus} & $\oplus$ &Disyunción exclusiva\\ \hline
+    \texttt{\textbackslash{}pm} & $\pm$ &Más menos\\ \hline
+    \texttt{\textbackslash{}mp} & $\mp$ &Menos más\\ \hline
+    \end{tabular}
+    \label{tab:binOperators}
+    \caption{Símbolos matemáticos de relaciones binarias}
+\end{table}
+Todos los símbolos pueden ser negados (tachados con una línea ligeramente 
+oblicua) si se preceden del operador \texttt{\textbackslash not}.
+Por ejemplo \texttt{\textbackslash not\textbackslash in} producirá $\not\in{}$.
+También están disponibles las letras griegas, tanto mayúsculas como minúsculas:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+    \textbf{Letra} & \textbf{Mayúscula} & \textbf{Minúscula} & \textbf{Presentación} \\ \hline
+    alfa & \texttt{\textbackslash alpha} & \texttt{A} & $\alpha\, A$ \\ \hline
+    beta & \texttt{\textbackslash beta} & \texttt{B} & $\beta\, B$ \\ \hline
+    gama & \texttt{\textbackslash gamma} & \texttt{\textbackslash Gamma} & $\gamma\,\Gamma$ \\ \hline
+    delta & \texttt{\textbackslash delta} & \texttt{\textbackslash Delta} & $\delta\,\Delta$ \\ \hline
+    épsilon & \texttt{\textbackslash epsilon} & \texttt{E} & $\epsilon\,E$ \\ \hline
+    varépsilon & \texttt{\textbackslash varepsilon} &--& $\varepsilon$ \\ \hline
+    zeta & \texttt{\textbackslash zeta} & \texttt{\textbackslash Zeta} & $\zeta\,Z$ \\ \hline
+    eta & \texttt{\textbackslash eta} & \texttt{\textbackslash Eta} & $\eta\,H$ \\ \hline
+    teta & \texttt{\textbackslash tetha} & \texttt{\textbackslash Theta} & $\theta\,\Theta$ \\ \hline
+    varteta & \texttt{\textbackslash vartetha} &--& $\vartheta$ \\ \hline
+    iota & \texttt{\textbackslash iota} & \texttt{I} & $\iota\,I$ \\ \hline
+    kappa & \texttt{\textbackslash kappa} & \texttt{\textbackslash Kappa} & $\kappa \, K$\\ \hline
+    lambda & \texttt{\textbackslash lambda} & \texttt{\textbackslash Lambda} & $\lambda\,\Lambda$ \\ \hline
+    mu & \texttt{\textbackslash mu} & \texttt{M} & $\mu\,M$ \\ \hline
+    nu & \texttt{\textbackslash nu} & \texttt{N} & $\nu\,N$ \\ \hline
+    xi & \texttt{\textbackslash xi} & \texttt{\textbackslash Xi} & $\xi\,\Xi$ \\ \hline
+    o & \texttt{o} & \texttt{O} & $o\,O$ \\ \hline
+    pi & \texttt{\textbackslash pi} & \texttt{\textbackslash Pi} & $\pi\,\Pi$ \\ \hline
+    varpi & \texttt{\textbackslash varpi} &--& $\varpi$ \\ \hline
+    rho & \texttt{\textbackslash rho} & \texttt{P} & $\rho\,P$ \\ \hline
+    varrho & \texttt{\textbackslash varrho} &--& $\varrho$ \\ \hline
+    sigma & \texttt{\textbackslash sigma} & \texttt{\textbackslash Sigma} & $\sigma\,\Sigma$ \\ \hline
+    varsigma & \texttt{\textbackslash varsigma} &--& $\varsigma$ \\ \hline
+    tau & \texttt{\textbackslash tau} & \texttt{T} & $\tau\,T$ \\ \hline
+    upsilon & \texttt{\textbackslash upsilon} & \texttt{\textbackslash Upsilon} & $\upsilon\,\Upsilon$ \\ \hline
+    fi & \texttt{\textbackslash phi} & \texttt{\textbackslash Phi} & $\phi\,\Phi$ \\ \hline
+    varfi & \texttt{\textbackslash varphi} &--& $\varphi$ \\ \hline
+    chi & \texttt{\textbackslash chi} & \texttt{X} & $\chi\,X$ \\ \hline
+    psi & \texttt{\textbackslash psi} & \texttt{\textbackslash Psi} & $\psi\,\Psi$ \\ \hline
+    omega & \texttt{\textbackslash omega} & \texttt{\textbackslash Omega} & $\omega\,\Omega$ \\ \hline
+    \end{tabular}
+    \label{tab:greekLetters}
+    \caption{Letras griegas}
+\end{table}
+Hay, además, un surtido de símbolos tipo flecha que se basan en la siquiente
+regla: se escribe, seguida, la dirección de origen de la flecha,
+después la de llegada, y si se pone la primera letra en mayúsculas, será una
+flecha doble:
+\begin{itemize}
+\item \texttt{\textbackslash rightarrow} genera $\rightarrow$.
+\item \texttt{\textbackslash Rightarrow} genera $\Rightarrow$.
+\item \texttt{\textbackslash leftarrow} genera $\leftarrow$.
+\item \texttt{\textbackslash lefttarrow} genera $\Leftarrow$.
+\item \texttt{\textbackslash leftrightarrow} genera $\leftrightarrow$.
+\item \texttt{\textbackslash leftrightarrow} genera $\leftrightarrow$.
+\item \texttt{\textbackslash Leftrightarrow} genera $\Leftrightarrow$.
+
+...
+\end{itemize}
+Y, finalmente, existen símbolos de varios tipos útiles como: el infinito,
+verdadero y falso lógico, exite, para todo...
+\begin{table}[H]
+   \centering
+\begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{Comando}&\textbf{Presentación}&\textbf{Descripción} \\ \hline
+    \texttt{\textbackslash infty} & $\infty$ & Símbolo del infinito\\ \hline
+    \texttt{\textbackslash forall} & $\forall$ &Para todo \\ \hline
+    \texttt{\textbackslash exists} & $\exists$ & Existe\\ \hline
+    \texttt{\textbackslash top} & $\top$ &Verdadero lógico \\ \hline
+    \texttt{\textbackslash bot} & $\bot$ &Falso lógico \\ \hline
+    \texttt{\textbackslash partial} & $\partial$ &Derivada parcial \\ \hline
+    \texttt{\textbackslash mathcal\{L\}} & $\mathcal{L}$ &Tranformada de Laplace \\ \hline
+    \texttt{\textbackslash mathcal\{F\}} & $\mathcal{F}$ &Tranformada de Fourier \\ \hline
+    \texttt{\textbackslash propto} & $\propto$ &Es proporcional a \\ \hline
+    \texttt{\textbackslash dots} & $\dots$ &Puntos suspensivos \\ \hline
+    \texttt{\textbackslash ddots} & $\ddots$ &Puntos diagonal\\ \hline
+    \texttt{\textbackslash vdots} & $\vdots$ &Puntos verticales\\ \hline
+    \texttt{\textbackslash cdots} & $\cdots$ &Puntos centrales\\ \hline
+\end{tabular}
+\caption{Símbolos matemáticos varios}
+\label{tab:miscSymbols}
+\end{table}
+Además, en matemáticas se usan fuentes especiales para indicar cosas, por 
+ejemplo, una L mayúscula manuscrita es el símbolo de la transformada de Laplace.
+Hay dos comandos que crean estas fuentes:
+\begin{itemize}
+\item \texttt{\textbackslash mathcal\{ABCDEFG\}}: Genera letras escritas a mano
+(sólo vale con mayúsculas) $\mathcal{ABCDEFG}$
+\item \texttt{\textbackslash mathbb\{PNZQRC\}}: Genera letras de doble trazo,
+requiere el paquete amsfonts, incluido en el preámbulo: $\mathbb{PNZQRC}$.
+\end{itemize}
+Como es lógico, si sólo se requiere una letra, sólo ha de escribirse esa letra
+entre las llaves.
 
 Además, podemos poner símbolos monetarios gracias a algunos paquetes especiales
 (ver comentarios en donde se incluyen los paquetes). Esta camisa cuesta
@@ -722,6 +979,43 @@ De nuevo, podemos referenciar el número de la tabla con \ref{tab:gastos} y su
 títulos con \nameref{tab:gastos}. Nota del autor: a veces salen signos de
 interrogación, no te preocupes, \LaTeX{} a veces necesita dos compilaciones para 
 crear la base de datos de referencias.
+
+\subsubsection{Utilización alternativa de las figuras}
+Una de las ventajas de utilizar figuras es que el contenido de las mismas no se
+divide entre páginas, así que si quisiéramos que una lista en concreto no se
+dividiera, podríamos incluirla en un bloque de figura, esta lista, por ejemplo:
+\begin{figure}[H]
+\begin{itemize}
+   \item a
+   \item b
+   \item c
+   \item d
+   \item e
+   \item f
+   \item g
+   \item h
+   \item i
+   \item j
+   \item l
+   \item m
+   \item n
+   \item ñ
+   \item o
+   \item p
+   \item q
+   \item r
+   \item s
+   \item t
+   \item u
+   \item v
+   \item w
+   \item x
+   \item y
+   \item z
+\end{itemize}
+\end{figure}
+Esto debe usarse con cuidado, empero, pues generaría muchos espacios en blanco
+en nuestro documento.
 
 Creo que ya estás listo para usar \LaTeX{}.
 He incluido un fichero makefile en el directorio que debería compilar el 
