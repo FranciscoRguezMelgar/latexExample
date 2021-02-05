@@ -210,26 +210,80 @@ vez para ver los resultados. En los comentarios del código explico lo que se va
 haciendo y qué órdenes son necesarias para crear lo que se ve en el PDF.
 Además, incluyo un \textit{script} de compilación mínimo que debería compilar
 sin problemas. Los prerrequisitos son:
+
 \begin{itemize}
-    \item Sistema operativo GNU/Linux
-    \item Herramienta make
-    \item Tener \LaTeX{} instalado en el sistema, se puede instalar con la orden
-    \begin{verbatim}
+\item Conocimientos sobre edición básica de ficheros de texto plano
+\item Editor de \LaTeX{} en el equipo.
+\item Un renderizador de \LaTeX{} en el equipo.
+\end{itemize}
+\subsection{Instalación}
+La instalación de \LaTeX{} es sencilla tanto en sistemas operativos GNU/Linux
+como en sistemas operativos Windows.
+\subsubsection{Instalación en GNU/Linux}
+En la mayoría de instalaciones de escritorio de Linux se incluye un editor de
+texto plano, ya sea éste Nano, Emacs, o Vim. Esos editores son válidos para
+crear (o abrir) archivos \texttt{.tex}. Para instalar \LaTeX{} se puede hacer
+en la mayoría de distribuciones mediante el gestor de paquetes, por ejemplo, en
+las distribuciones derivadas de Debian (Ubuntu, Kubuntu, Xubuntu, Linux Mint...)
+se puede instalar con la siguiente orden:
+\begin{verbatim}
 $ sudo apt install texlive-base \
-                       texlive-latex-recommended \
-                       texlive-latex-extra \
-                       texlive-full
+texlive-latex-recommended \
+texlive-latex-extra \
+texlive-full
 \end{verbatim} 
-En sistemas derivados de Debian. En otras distribuciones, 
+En otras distribuciones, 
 por favor, consulte la documentación específica de cómo instalar paquetes de
 \textit{software}.
+
+Una vez instalado todo esto, en sistemas linux se puede compilar este 
+documento con el comando \texttt{make}. Para ello debe instalarle si no se
+tiene ya instalado, se instala, de nuevo, en distribuciones derivadas de Debian
+con este comando: 
+\begin{verbatim}
+$ sudo apt install make
+\end{verbatim}
+\subsubsection{Instalación en Microsoft Windows}
+En sistemas windows, la instalación de reliza como otras herramientas de
+\textit{software}, se descarga un \texttt{.exe} y se siguen las instrucciones
+del instalador. En nuestro caso, debemos instalar dos programas:
+\begin{itemize}
+    \item MikTex, el <<motor>> de \LaTeX{}, que nos permitiría compilar
+        mediante línea de comandos. Este programa se puede descargar desde 
+        \href{https://miktex.org/download}{aquí}. 
+    \item TexStudio, el editor de documentos \LaTeX{}, que nos permite compilar
+        sin tener que usar la línea de comandos de Windows. Se puede descargar
+        desde \href{https://www.texstudio.org/}{aquí}.
 \end{itemize}
+Durante el proceso de
+instalación de MikTex se nos hará decidir la ruta de instalación y si permitimos
+que el programa descargue de internet los paquetes necesarios. Yo
+recomiendo permitirle hacerlo. Para ello se deben dejar las opciones como
+se ve en la Figura \ref{fig:miktex}: \nameref{fig:miktex}.
+\begin{figure}[H]
+    \center
+    \includegraphics[width=0.75\hsize]{miktexInstall}
+    \caption{Opciones de instalación de MikTex}
+    \label{fig:miktex}
+\end{figure}
+Cuando se tengan los dos programas instalados, deberá abrirse el fichero
+\texttt{document.tex} que se encuentra en esta carpeta
+con el segundo programa (TexStudio). Una vez hecho hecho, debe pulsarse la tecla
+F5, que nos compilará el documento, generará el pdf y mostrará el resultado a la
+derecha como se puede ver en la figura \ref{fig:texstudio}:
+\nameref{fig:texstudio}
+
+\begin{figure}[H]
+    \center
+    \includegraphics[width=1.0\hsize]{TexStudio}
+    \caption{Vetana principal de TexStudio}
+    \label{fig:texstudio}
+\end{figure}
 
 Este documento está diseñado para ser una guía básica sobre Latex, pero para
 poder generarse, se usarán comandos en el mismo documento antes de explicarlos.
 Si se sabe algo sobre \LaTeX{} es recomendable leer el código primero, si no, 
-mejor leer primero el pdf compilado. Preveo añadir información sobre ćomo
-instalar LaTeX en más plataformas en el futuro.
+mejor leer primero el pdf compilado.
 
 \section{Qué es exactamente \LaTeX{}}
 Aunque en este documento no voy a hablar de las características históricas o de
@@ -251,7 +305,7 @@ Un documento en latex mínimo tiene estas líneas:
 \begin{verbatim}
 \documentclass{<clase del documento>}
 \begin{document}
-    Algún texto.
+Algún texto.
 \end{document}
 \end{verbatim}
 Para empezar: las palabras que van precedidas de una barra inclinada inversa
@@ -288,7 +342,7 @@ Estos paquetes permiten añadir muchas funcionalidades que son necesarias. De
 hecho, hoy en día cualquier documento moderno incluye muchos paquetes. Si
 se observa el preámbulo de este documento, se verá que hay, de hecho, muchos.
 
- Además, por su herencia o similitud con otros lenguages formales,
+Además, por su herencia o similitud con otros lenguages formales,
 de programación y de marcado, \LaTeX{} tiene la posibilidad de incluir 
 comentarios en el código. Esto es texto que el renderizador no lee. En \LaTeX{}
 dichos comentarios se ponen con el signo de porcentaje <<\%>>. Cualquier
@@ -339,11 +393,11 @@ Otro texto de otro párrafo.
 Además, \LaTeX{} permite utlizar varios
 comandos para manipular la presentación del texto.
 \begin{itemize}
-    \item \textbf{emph:} Pone el texto en énfasis.
-    \item \textbf{textit:} Pone el texto en itálica (o cursiva).
-    \item \textbf{textbf:} Pone el texto en negrita. 
-    \item \textbf{texttt:} Utiliza fuente monoespaciada (como la de las máquinas
-    de escribir).
+\item \textbf{emph:} Pone el texto en énfasis.
+\item \textbf{textit:} Pone el texto en itálica (o cursiva).
+\item \textbf{textbf:} Pone el texto en negrita. 
+\item \textbf{texttt:} Utiliza fuente monoespaciada (como la de las máquinas
+de escribir).
 \end{itemize}
 Estos comandos deben ponerse en nuestros archivos \texttt{.tex}
 con una barra inclinada hacia atrás delante, como todos los comandos de \LaTeX{}
@@ -392,13 +446,13 @@ A continuación vemos cómo se hace.
 %%% Ejemplo de lista
 % Este tipo de listas no son numeradas. Son listas de puntos (bullets)
 \begin{itemize}
-    % Un item es una fila de la lista, un punto, en este caso.
-    \item Sector primario
-    % si quieres subniveles, creas una lista dentro de esta.
-    % Ojo, cuidado, tiene que haber un item antes, como aquí que está
-    % el item sector primario.
-    \begin{itemize}
-        \item Ganadería
+% Un item es una fila de la lista, un punto, en este caso.
+\item Sector primario
+% si quieres subniveles, creas una lista dentro de esta.
+% Ojo, cuidado, tiene que haber un item antes, como aquí que está
+% el item sector primario.
+\begin{itemize}
+    \item Ganadería
         \begin{itemize}
             \item Porcina
             \item Bovina
@@ -684,7 +738,7 @@ ejemplo, una L mayúscula manuscrita es el símbolo de la transformada de Laplac
 Hay dos comandos que crean estas fuentes:
 \begin{itemize}
 \item \texttt{\textbackslash mathcal\{ABCDEFG\}}: Genera letras escritas a mano
-(sólo vale con mayúsculas) $\mathcal{ABCDEFG}$
+(sólo vale con mayúsculas)\\$\mathcal{ABCDEFG}$
 \item \texttt{\textbackslash mathbb\{PNZQRC\}}: Genera letras de doble trazo,
 requiere el paquete amsfonts, incluido en el preámbulo: $\mathbb{PNZQRC}$.
 \end{itemize}
