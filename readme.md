@@ -50,3 +50,16 @@ deberá tenerse instalada la utilidad `make`.
 Si utiliza otra distribución, por favor, consulte la documentacińo específica
 de la misma sobre cómo instalar paquetes de _software_ en ella.
 
+## Compilación del documento.
+En Windows, como ya se ha dicho en la sección anterior, se compila el documento
+abriéndolo con TexStudio y pulsando F5 (nótese que si se usa el documento de
+ejemplo, el resto de directorios (img y lib) deben permanecer como están o, 
+en caso de no encontrarlos, la compilación podría fallar.
+
+En Linux, simplemente se puede ejecutar `pdflatex document.tex`, en la raíz del
+repositorio. Esto, sin embargo; nos generará en esta raíz muchos archivos 
+auxiliares. Para evitar esto se ha incluido un makefile que mediante la orden
+`make` en la raíz del repositorio se encargará de compilar el documento LaTeX
+y escribir los archivos auxiliares a un directorio aparte (build), dejando
+el pdf compilado en la raíz.
+
