@@ -10,9 +10,16 @@ yellow = "\033[1;33m"
 	@if [ ! -d "build" ]; then\
 		echo $(yellow)"The build directory doesn't exist, creating it..."$(reset);\
 		mkdir build;\
+		echo $(yellow)"Directory created successfully"$(reset);\
 	fi;
 	@pdflatex -output-directory=build $< >build/compile.log
+	@echo "    Preliminar compilation ok"
+	@biber --input-directory build --output-directory build document >>build/compile.log
+	@echo "    Bibliography bulding ok"
 	@pdflatex -output-directory=build $< >build/compile.log
+	@echo "    First compilation ok"
+	@pdflatex -output-directory=build $< >build/compile.log
+	@echo "    Second compilation ok"
 	@mv build/$@ .
 	@echo $(green)"Build complete."$(reset)
 .PHONY : all

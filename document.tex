@@ -39,8 +39,10 @@
  %permite referenciar la última página (para incluir páginas totales)
 \usepackage{lastpage}
 % Paquete BibTex para referencias bibliográficas.
-\usepackage[backend=biber, style=alphabetic, sorting=ynt]{biblatex}
-
+\usepackage[backend=biber, style=apa, citestyle=apa]{biblatex}
+% Permite utilizar archivos de fuente bibliográficas
+\addbibresource{bibliography/sources.bib}
+%\bibliographystyle{ieeetr}
 % Permite figuras y tablas que sean rodeadas por el texto.
 % Este paquete y su funcionalidad dan problemas, no lo recomiendo.
 %\usepackage{wrapfig}
@@ -91,13 +93,11 @@
     linkcolor=black,
     filecolor=magenta,      
     urlcolor=blue,
+    citecolor=black
 }
 % Permite que en las ecuaciones escribas un punto y salga un punto (no lo
 % interprete como un decimal en español, es decir, una coma)
 \decimalpoint
-
-% Permite utilizar archivos de fuente bibliográficas
-\addbibresource{./bibliography/sources.bib}
 
 
 %%%%%%%%%%%%%%%%%SECCIÓN VARIABLES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -276,7 +276,7 @@ derecha como se puede ver en la figura \ref{fig:texstudio}:
 \begin{figure}[H]
     \center
     \includegraphics[width=1.0\hsize]{TexStudio}
-    \caption{Vetana principal de TexStudio}
+    \caption{Ventana principal de TexStudio}
     \label{fig:texstudio}
 \end{figure}
 
@@ -284,13 +284,13 @@ Este documento está diseñado para ser una guía básica sobre Latex, pero para
 poder generarse, se usarán comandos en el mismo documento antes de explicarlos.
 Si se sabe algo sobre \LaTeX{} es recomendable leer el código primero, si no, 
 mejor leer primero el pdf compilado.
-
+\newpage
 \section{Qué es exactamente \LaTeX{}}
 Aunque en este documento no voy a hablar de las características históricas o de
 lo que es el \textit{typesetting}. Sí voy a explicar someramente qué es LaTeX.
 LaTeX es un lenguaje que nos permite crear documentos con formato a través de
 archivos de texto plano, que no contienen en sí mismos información sobre el
-mormato, sino que utilizan secuencias especiales de caracteres para indicar 
+formato, sino que utilizan secuencias especiales de caracteres para indicar 
 cómo ha de presentarse el contenido en un documento distinto.
 \subsection{Archivos .tex}
 Un archivo .tex es donde escribimos el código -se denomina código al texto
@@ -522,7 +522,7 @@ frac\{numerador\}\{denominador\}\$} produce: $\frac{numerador}{denominador}$
 \paragraph{Símbolos matemáticos avanzados}
 Hay muchos símbolos y objetos matemáticos más avanzados que esos, aquí veremos
 una selección de ellos. Probablemente añada más en el futuro. El primero
-sería la matrix. Para crear una matriz se usaría:
+sería la matriz. Para crear una matriz se usaría:
 \begin{verbatim}
 \matrix{1&2&3 \cr 
            4&5&6 \cr
@@ -537,7 +537,7 @@ $$
 En latex, si queremos rodear cualquier parte de una ecuación con símbolos como
 paŕentesis, corchetes y demás, lo tenemos que hacer con las órdenes 
 \texttt{\textbackslash left} y \texttt{\textbackslash right} seguidas del
-símbolo que queramos utilizar, por ejemplo si queremos una matrix rodeada
+símbolo que queramos utilizar, por ejemplo si queremos una matriz rodeada
 de paréntesis, ponemos:
 \begin{verbatim}
 $$
@@ -560,7 +560,7 @@ Generaría la siguiente ecuación:
 $$
 \int{x \, dx }
 $$
-Nótese que es necesario poner \texttt{\textbackslash ,} para que se genera
+Nótese que es necesario poner \texttt{\textbackslash ,} para que se genere
 un espacio entre la x y el diferencial de x. Si queremos generar integrales
 con límites, debemos usar la notación de superíndices y subíndices justo
 después del comando \texttt{int}.
@@ -593,7 +593,7 @@ generaría:
 $$
 \int{\int{\int_{0}^{10}{f(x,y,z)\,dx\,dy\,dz}}}
 $$
-Si se requiete la integral de superficie se puede usar la orden
+Si se requiere la integral de superficie se puede usar la orden
 \texttt{\textbackslash oint}: $\oint{}$
 
 Las derivadas con más sencillas porque simplemente se pone el símbolo
@@ -704,7 +704,6 @@ flecha doble:
 \item \texttt{\textbackslash leftarrow} genera $\leftarrow$.
 \item \texttt{\textbackslash lefttarrow} genera $\Leftarrow$.
 \item \texttt{\textbackslash leftrightarrow} genera $\leftrightarrow$.
-\item \texttt{\textbackslash leftrightarrow} genera $\leftrightarrow$.
 \item \texttt{\textbackslash Leftrightarrow} genera $\Leftrightarrow$.
 
 ...
@@ -781,6 +780,7 @@ Ejemplo
 \subparagraph{Subpárrafo}
 Este es el último nivel de jerarquía admitido. 5 niveles de jerarquía parecen
 más que suficientes para cualquier documento razonable.
+\newpage
 \section{Bloques especiales; figuras y tablas}
 Hay varios tipos de bloques especiales que nos permiten insertar cosas
 más complejas en el texto que párrafos y listas. Los que vamos a tratar aquí
@@ -945,7 +945,7 @@ mismas entre páginas.
     \label{fig:gatitoNegro} %nombre interno para referenciar luego
 \end{figure}
 
-\subsubsection{Referencias cruzadas}
+\subsubsection{Referencias cruzadas} \label{subsubsec:referencias cruzadas}
 Una referencia cruzada es un punto en el texto en que hablamos de un elemento
 del mismo, por ejemplo, si quisiéramos referenciar aquí la figura titulada
 <<Un gato negro>>, podríamos ponerlo a mano en el texto: Como se puede ver
@@ -983,7 +983,7 @@ una figura que va a contener una imagen.
 \item Hace que la tabla esté centrada, aclaración: cuando la tabla es más 
 grande que el tamaño del texto se alinea a la izquierda y se desborda por la
 derecha.
-\item Empieza la tabla en sí misma, la segunda parte \texttt{\{\{|c|r|c|r|\}\}}
+\item Empieza la tabla en sí misma, la segunda parte \texttt{\{|c|r|c|r|\}}
 indica el número de celdas (que se corresponde con el número de letras) y las 
 líneas verticales (|) indican que queremos una línea entre esas dos columnas.
 \item Dibuja una línea horizontal en toda la tabla
@@ -1030,9 +1030,13 @@ dos \emph{et} (\&\&) Y que debe terminarse con \textbackslash{}\textbackslash{}.
 \end{table}
 
 De nuevo, podemos referenciar el número de la tabla con \ref{tab:gastos} y su
-títulos con \nameref{tab:gastos}. Nota del autor: a veces salen signos de
-interrogación, no te preocupes, \LaTeX{} a veces necesita dos compilaciones para 
-crear la base de datos de referencias.
+títulos con \nameref{tab:gastos}. \textbf{Nota sobre compilar 
+referencias cruzadas:}
+ a veces salen signos de
+interrogación en lugar de las referencias, no te preocupes, \LaTeX{} a 
+veces necesita dos compilaciones para crear la base de datos de referencias.
+En el makefile proporcionado ya se compila dos veces, pero si no lo utilizas,
+simplemente llama al comando dos veces seguidas.
 
 \subsubsection{Utilización alternativa de las figuras}
 Una de las ventajas de utilizar figuras es que el contenido de las mismas no se
@@ -1074,6 +1078,188 @@ en nuestro documento.
 Creo que ya estás listo para usar \LaTeX{}.
 He incluido un fichero makefile en el directorio que debería compilar el 
 archivo presente con la orden \texttt{pdflatex} dos veces.
+\subsection{Bibliografía; referencias bibliográficas}
+Además de referenciar otras partes de nuestro propio documento (ver
+\textbf{\ref{subsubsec:referencias cruzadas}}) es común necesitar una lista
+de referencias bibliográficas externas, para esto utilizaremos el paquete
+BibTex, que nos permite añadir archivos de bibliografía donde incluiremos
+todas las fuentes que necesitemos (podemos incluirlas en distintos archivos
+si queremos, e incluir varios), después, nos permitirá citar en el texto esas
+fuentes e insertar la sección de bibliografía.
+
+Para crear bibliografía, hay que crear un fichero de extensión .bib, que
+contendrá las citas bibliográficas que sean necesarias en un formato especial.
+Por ejemplo, en este repositorio hay un directorio llamado bibliography, dentro
+del cual hay un archivo llamado sources.bib. Este archivo contiene una fuente
+bibliográfica para un libro titulado \emph{El Lenguaje de programación C++}
+escrito por Bjarne Stroustrup. El contenido del archivo .bib es el siguiente:
+\begin{verbatim}
+@book{cpppl,
+author = {Stroustrup, Bjarne},
+title = {The C++ Programming Language},
+year = {2013},
+isbn = {0321563840},
+publisher = {Addison-Wesley Professional},
+edition = {4th},
+abstract = {<Resumen del libro, omitido porque es muy largo>}
+}
+\end{verbatim}
+
+Es decir, para crear un recurso bibliográfico se debe poner una arroba <<@>>,
+el tipo de recurso (libro, artículo...), se abre una llave, se pone una 
+\textbf{etiqueta}, que es el primer texto: \texttt{cpppl}. Esta es la etiqueta
+que usaremos para citar el recurso en el texto.
+
+Hay varios tipos predeterminados de documentos en el paquete biblatex que nos 
+permiten citar automáticamente, algunos de ellos son: article, book, thesis,
+masterthesis... Pero la principal ventaja del formato bibtex es que muchísimas
+plataformas de acceso online permiten copiar directamente el texto que debes
+incluir en tu archivo .bib. Más información sobre esto más adelante.
+
+Para citar el libro, utilizaremos el comando
+\texttt{\textbackslash cite\{<etiqueta de la fuente>\}}. Veamos un ejemplo, el
+código siguiente:
+\begin{verbatim}
+<<El lenguaje C++ es un superconjunto del lenguaje C>> (\cite[p.~101]{cpppl})
+\end{verbatim}
+genera este párrafo:
+
+<<El lenguaje C++ es un superconjunto del lenguaje C>> (\cite[p.~101]{cpppl})
+Nótese que los paréntesis se han de añadir aparte, y que entre el p. y el
+número de página ha de haber una tilde (\~{}), para añadir un espacio. El estilo
+de la cita viene dado por las opciones del paquete bibtex incluido en el 
+preámbulo, en este caso se ha elegido el estilo de citación APA. Algunos
+de los estilos permitidos son:
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+    \textbf{Estilo} & \textbf{Argumento} \\ \hline 
+    ACS & chem-acs\\\hline
+    AIP & phys\\\hline
+    Nature& nature\\\hline
+    Science & science\\\hline
+    IEEE & iee\\\hline
+    Chicago& chicago-authordate\\\hline
+    MLA & apa\\\hline
+    APA & apa\\\hline
+\end{tabular}
+\caption{Estilo de citación permitidos por el paquete biblatex}
+\label{tab:biblatexStyles}
+\end{table}
+Para elegir estos estilos, debe irse a la línea del preámbulo donde hayamos
+incluido el paquete biblatex (recordemos, con la orden usepackage) y modificar
+los argumentos de las opciones \texttt{style} y \texttt{citestyle}. Por 
+ejemplo, la línea actual es la siguiente:
+
+\begin{verbatim}
+\usepackage[backend=biber, style=apa, citestyle=apa]{biblatex}
+\end{verbatim}
+Si quisiéramos cambiar el estilo para ajustarse al del IEEE, se cambiaría a:
+\begin{verbatim}
+\usepackage[backend=biber, style=ieee, citestyle=ieee]{biblatex}
+\end{verbatim}
+
+Además de citar, necesitaremos imprimir nuestra bibliografía completa en
+nuestro documento, para ello, usaremos el comando \texttt{\textbackslash 
+printbibliography}. Este comando inserta un título predeterminado que, en 
+español (recordemos, paquete babel spanish) es <<Referencias>>, que, además,
+no sale en la tabla de contenido. Si queremos omitirlo, podemos añadir la opción
+\texttt{heading=none} en la orden, es decir:
+
+\begin{verbatim}
+\printbibliography[heading=none]
+\end{verbatim}
+e incluir nostros un título de la jerarquía que deseemos justo antes del 
+comando. Esto es lo que se ha hecho en este documento. 
+
+Por otro lado, algunas organizaciones exigen que las cita bibliográficas se 
+incluyan en notas al pie allí donde se citen. Por suerte \LaTeX{} permite 
+crear notas al pie de manera sencilla, simplemente se utiliza el comando
+\texttt{\textbackslash footnote\{\}}. Veamos un ejemplo.
+
+\begin{verbatim}
+Al final de esta frase va a haber una nota al pie \footnote{Esta es la nota
+al pie.}.
+\end{verbatim}
+general el siguiente párrafo y su nota el pie correspondiente:
+
+Al final de esta frase va a haber una nota al pie \footnote{Esta es la nota
+al pie.}.
+
+Si queremos que en la nota el pie aparezca la cita, simplemente incluimos dentro
+del comando \texttt{footnote} el comando \texttt{cite}. Además, tenemos la
+opción de incluir en el texto la cita completa (tal y como aparecería en la
+bibliografía, con el comando \texttt{\textbackslash fullcite}. Veamos un ejemplo
+de una nota el pie con el texto completo de la cita; este código:
+\begin{verbatim}
+La metaprogramación es una de las características más importantes del lenguaje
+C++ \footnote{\fullcite{cpppl}}.
+\end{verbatim}
+generaría:
+
+La metaprogramación es una de las características más importantes del lenguaje
+C++ \footnote{\fullcite{cpppl}}.
+
+\subsubsection{Importar referencias en formato Bibtex}
+Como se ha dicho en la sección anterior, muchos servicios permiten importar las
+citas bibliográficas directamente en el formato bibtex.
+Por ejemplo, busquemos el libro \emph{Historia de la
+decadencia y caída del Imperio romano} en Google Scholar, lo encontramos en
+este enlace: \href{https://books.google.es/books?id=uydf0KUHpeoC}{aquí}.
+
+Justo al final de esa página hay un botón que nos permite exportar la cita
+bibliográfica a varios formatos:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\hsize]{exportarBibtex}
+\caption{Ejemplo de exportar desde Google Books}
+\label{fig:exportGoogle}
+\end{figure}
+
+Si elejimos el formato bibtex, nos descargará un archivo con la referencia
+que necesitamos, esto nos permitirá copiar su contenido a nuestro archivo
+de bibliografía (en este caso, sources.bib). Aunque es recomendable guardar
+el archivo descargado aparte por si queremos utilizarlo en otros documentos
+a modo de biblioteca personal de citas, en algún lugar de nuestro sistema.
+
+Ahora lo podemos citar:
+
+<<El imperio romano cayó, en parte, por...>> (\cite{gibbon2016historia})
+
+Y se añadirá a nuestra colección de cita en la sección de bibliografía. Bibtex
+tiene la ventaja de que aunque en nuestras fuentes bibliográficas haya fuentes
+que no hemos citado, no va a incluirlas hasta que las citemos.
+
+\textbf{Nota sobre el formato}: Algunos servicios de documentación, como
+el propio Google Books, eliminan los caracteres especiales de sus citas
+exportadas (las tildes, la eñe...) y los ponen por ejemplo: 
+\texttt{\{\textbackslash\'{}i\}}
+en vez de: í. Esto provoca errores, así que simplemente debe cambiarse por
+el carácter correspondiente. Otras permiten elegir la codificación, tal
+y como está configurado este documento, debe elegirse UTF8. Y debe revisarse
+que las etiquetas no contengan estos caracteres especiales de ningún modo, lo
+ideal sería sustituirlos por sus equivalentes sin acentos, u por ü, i por í,
+etc.
+\textbf{Nota sobre la compilación}: Debido a cómo funciona el motor bibtex, 
+para que las referencias bibliográficas se creen de manera adecuada, primero
+debe compilarse con \texttt{pdflatex}, después, llamar a comando \texttt{biber}
+sobre el archivo y después compilar dos veces. En el makefile proporcionado
+esto ya se ha hecho, además, utilizando opciones de estos comandos para
+que los archivos auxiliares se creen en la carpeta build. 
+
+
+\newpage
+\section{Licencias y agradecimiento}
+Todas las páginas citadas son de sus respectivos creadores, yo sólo me limito
+a recopilar sus soluciones o información en un mismo documento. Todas las
+imágenes utilizadas son de licencia libre, ver:
+\href{https://pixabay.com/service/faq/}{FAQ de Pixabay}
+\newpage
+\section{Bibliografía}
+\printbibliography[heading=none]
+\newpage
 
 Finalmente, incluyo un ejemplo de todas las macros de tamaños que vienen
 incluidas en LaTeX base para pdflatex. Cada modificador hace que todo lo que
@@ -1099,12 +1285,5 @@ normal.
 \huge{Ejemplo de texto huge}\normalsize
 
 \Huge{Ejemplo de texto Huge}\normalsize
-
-\section{Licencias y agradecimiento}
-
-Todas las páginas citadas son de sus respectivos creadores, yo sólo me limito
-a recopilar sus soluciones o información en un mismo documento. Todas las
-imágenes utilizadas son de licencia libre, ver:
-\href{https://pixabay.com/service/faq/}{FAQ de Pixabay}
 
 \end{document}
