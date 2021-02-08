@@ -1,6 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%PREÁMBULO DEL DOCUMENTO%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% En esta sección se configura el document, pero no se incluye contenido
-% Esto es la clase del documento, que defines las instrucciones principales
+% En esta sección se configura el documento, pero no se incluye contenido
+
+% Esto es la clase del documento, que define las instrucciones principales
 % que condicionarán el documento generado. Generalmente cambiarla después de 
 % añadir contenido produce numerosos errores.
 \documentclass{article}
@@ -40,25 +41,29 @@
 \usepackage{lastpage}
 % Paquete BibTex para referencias bibliográficas.
 \usepackage[backend=biber, style=apa, citestyle=apa]{biblatex}
-% Permite utilizar archivos de fuente bibliográficas
+% Añadimos un archivo de fuentes bibliográficas.
 \addbibresource{bibliography/sources.bib}
-%\bibliographystyle{ieeetr}
 % Permite figuras y tablas que sean rodeadas por el texto.
 % Este paquete y su funcionalidad dan problemas, no lo recomiendo.
 %\usepackage{wrapfig}
 
+
+% Paquete para cambiar la configuración de página.
 \usepackage{geometry}
- \geometry{
+\geometry{
     a4paper, % tamaño del papel
     left=30mm, % márgenes laterales
 %   top=50mm 
     bottom=35mm, %margen inferior
     headheight=25mm    %margen superior
 }
+
 % Permite el uso de más caracteres, aunque algunos especiales siguen sin
 % estar disponibles.
 \usepackage[utf8]{inputenc}
 
+
+%Permite utilizar la fuente de trazo doble en ecuaciones.
 \usepackage{amsfonts}
 %%%%%%%%%%%%%%%%%%%% FIN SECCIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -86,7 +91,7 @@
 
 
 % Esto hace que los enlaces a webs (\href{url}{texto} salgan en azul.
-    % También impide que salga un repugnante rojo alrededor de cada
+    % También impide que salga un repugnante cuadrado rojo alrededor de cada
     % referencia cruzada que incluyas en el documento.
 \hypersetup{
     colorlinks=true,
@@ -95,6 +100,7 @@
     urlcolor=blue,
     citecolor=black
 }
+
 % Permite que en las ecuaciones escribas un punto y salga un punto (no lo
 % interprete como un decimal en español, es decir, una coma)
 \decimalpoint
@@ -136,6 +142,7 @@
     \includegraphics[width=.5\linewidth]{escudo}
 \end{figure}
 \newpage
+
 % En esta página puedes poner agradecimientos o prefacios que no tendrán pie ni
 % encabezado de página y que no afectarán a la numeración, si no quieres poner
 % nada, elimina esta línea y uno de los newpages
@@ -143,7 +150,8 @@
 \textbf{[Esta página ha sido dejada en blanco a propósito por el editor]}
 \end{center}
 \newpage
-%Vamos a poner agradecimientos
+%Vamos a poner agradecimientos. El bloque flushright alinea el texto a la 
+    % derecha.
 \begin{flushright}
 \textit{Esto es un placeholder, muchas gracias, placeholder.}
 \end{flushright}
@@ -180,13 +188,12 @@
 
 %tambia el nombre del índice de tablas
 \renewcommand{\listtablename}{Índice de tablas}
-
 %inserta el índice de tablas
 \listoftables
 
 % Esta orden (label) inserta etiquetas invisibles en el texto, al ponerla justo
     % antes del salto de página del último índice de la sección, me permite
-    % referenciar este punto, así es como consigo que salga "Pág. i de iiii".
+    % referenciar este punto, así es como consigo que salga "Pág. i de iii".
 \label{startSectionContent}
 
 \newpage
@@ -197,7 +204,7 @@
 \fancyhf{}
 \rhead{\autor}
 \lhead{\titulo}
-% El único cambio es que aquí referencio la última página de verdad.
+% El único cambio es que aquí referencio la última página del documento.
 \rfoot{pág. \thepage{} de \pageref{LastPage}}
 \renewcommand{\footrulewidth}{0.5pt}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%FIN SECCIÓN%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -205,29 +212,31 @@
     % documento. Introduce un título de primer nivel
 \section{Presentación}
 Este documento pretende ser un ejemplo de varias tareas que se suelen realizar
-en LaTeX. Se recomienda compilar el código y ver el pdf y el mismo código a la
+en LaTeX. Se recomienda compilar el código y ver el pdf y el código a la
 vez para ver los resultados. En los comentarios del código explico lo que se va
 haciendo y qué órdenes son necesarias para crear lo que se ve en el PDF.
 Además, incluyo un \textit{script} de compilación mínimo que debería compilar
-sin problemas. Los prerrequisitos son:
+sin problemas. Los prerrequisitos para utilizar la compilación automática son:
 
 \begin{itemize}
-\item Conocimientos sobre edición básica de ficheros de texto plano
-\item Editor de \LaTeX{} en el equipo.
-\item Un renderizador de \LaTeX{} en el equipo.
+    \item Sistema UNIX like (GNU/Linux o Mac OS).
+    \item Editor de ficheros de texto plano en el equipo (notepad, Notepad++,
+        Sublime, Vim, Nano...)
+    \item Programa pdflatex instalado en el equipo
+    \item Utilidad make instalada en el equipo.
 \end{itemize}
 \subsection{Instalación}
 La instalación de \LaTeX{} es sencilla tanto en sistemas operativos GNU/Linux
 como en sistemas operativos Windows.
 \subsubsection{Instalación en GNU/Linux}
 En la mayoría de instalaciones de escritorio de Linux se incluye un editor de
-texto plano, ya sea éste Nano, Emacs, o Vim. Esos editores son válidos para
+texto plano, ya sea éste Nano, Emacs o Vim. Esos editores son válidos para
 crear (o abrir) archivos \texttt{.tex}. Para instalar \LaTeX{} se puede hacer
 en la mayoría de distribuciones mediante el gestor de paquetes, por ejemplo, en
 las distribuciones derivadas de Debian (Ubuntu, Kubuntu, Xubuntu, Linux Mint...)
 se puede instalar con la siguiente orden:
 \begin{verbatim}
-$ sudo apt install texlive-base \
+sudo apt install texlive-base \
 texlive-latex-recommended \
 texlive-latex-extra \
 texlive-full
@@ -236,13 +245,14 @@ En otras distribuciones,
 por favor, consulte la documentación específica de cómo instalar paquetes de
 \textit{software}.
 
-Una vez instalado todo esto, en sistemas linux se puede compilar este 
+Una vez instalado todo esto, en sistemas Linux se puede compilar este 
 documento con el comando \texttt{make}. Para ello debe instalarle si no se
-tiene ya instalado, se instala, de nuevo, en distribuciones derivadas de Debian
-con este comando: 
+tiene ya instalado. Para hacerlo, de nuevo, en distribuciones derivadas de
+Debian con este comando:
 \begin{verbatim}
-$ sudo apt install make
+sudo apt install make
 \end{verbatim}
+
 \subsubsection{Instalación en Microsoft Windows}
 En sistemas windows, la instalación de reliza como otras herramientas de
 \textit{software}, se descarga un \texttt{.exe} y se siguen las instrucciones
@@ -284,22 +294,22 @@ Este documento está diseñado para ser una guía básica sobre Latex, pero para
 poder generarse, se usarán comandos en el mismo documento antes de explicarlos.
 Si se sabe algo sobre \LaTeX{} es recomendable leer el código primero, si no, 
 mejor leer primero el pdf compilado.
-\newpage
-\section{Qué es exactamente \LaTeX{}}
+
+\newpage\section{Qué es exactamente \LaTeX{}}
 Aunque en este documento no voy a hablar de las características históricas o de
-lo que es el \textit{typesetting}. Sí voy a explicar someramente qué es LaTeX.
-LaTeX es un lenguaje que nos permite crear documentos con formato a través de
-archivos de texto plano, que no contienen en sí mismos información sobre el
-formato, sino que utilizan secuencias especiales de caracteres para indicar 
-cómo ha de presentarse el contenido en un documento distinto.
+lo que es el \textit{typesetting}. Sí voy a explicar someramente qué es
+\LaTeX{}. \LaTeX{} es un lenguaje que nos permite crear documentos con formato a
+través dearchivos de texto plano, que no contienen en sí mismos información
+sobre el formato, sino que utilizan secuencias especiales de caracteres para
+indicar cómo ha de presentarse el contenido en un documento distinto.
 \subsection{Archivos .tex}
-Un archivo .tex es donde escribimos el código -se denomina código al texto
-escrito con estos comandos que nos permite luego convertirlos en documentos-
-que generará un documento. El
+Un archivo .tex es donde escribimos el código \LaTeX{}, es decir, la sucesión
+de contenido y comandos que generará un documento. El
 programa que genera el documento (generalmente pdf) a partir del código LaTeX
 se llama motor o renderizador. Hay varios, con diferencias técnicas. Esta guía
 y los comandos que se listan están desarrollados para el motor
 \texttt{pdflatex}.
+
 \subsubsection{Estructura de un documento en LaTeX}
 Un documento en latex mínimo tiene estas líneas:
 \begin{verbatim}
@@ -348,7 +358,10 @@ comentarios en el código. Esto es texto que el renderizador no lee. En \LaTeX{}
 dichos comentarios se ponen con el signo de porcentaje <<\%>>. Cualquier
 texto en un archivo \texttt{.tex} que vaya en la misma línea que un signo de
 procentaje y después de él no se renderizará. \textbf{Esto incluye el salto
-de lína del final}. Veamos un ejemplo:
+de lína del final}. De nuevo, si se quiere incluir un signo de porcentaje
+en el texto, debemos incluir antes de él una barra inclinada inversa, es decir:
+\texttt{\textbackslash{}\%} generaría el signo de porcentaje.
+Veamos un ejemplo:
 \begin{verbatim}
 \documentclass{article}
 \begin{document} % Aquí puedo escribir lo que quiera
@@ -359,7 +372,7 @@ Otro texto de otro párrafo.
 \end{document}
 \end{verbatim}
 
-Además de que no se van a renderizar los texto de los comentarios, estos
+Además de que no se van a renderizar los textos de los comentarios, estos
 dos párrafos son uno, porque se eliminan las líneas enteras, así que habría
 que poner una línea en blanco entre el último comentario y el segundo
 párrafo.
@@ -379,7 +392,7 @@ donde se puede incluir texto. Ahora bien, si has experimentado con este archivo
 que has creado con el código anterior, quizás hayas notado que los saltos de
 línea no se trasladan a párrafos distintos.
 En Latex, un párrafo es una línea de texto o varias líneas consecutivas, que se
-renderizan siempre en el mismo párrafo salvo que haya un salto de línea entre
+renderizan siempre en el mismo párrafo salvo que haya una línea en blanco entre
 ellas. Por ejemplo, vamos a poner un punto y aparte. Es decir:
 \begin{verbatim}
 \documentclass{article}
@@ -393,11 +406,11 @@ Otro texto de otro párrafo.
 Además, \LaTeX{} permite utlizar varios
 comandos para manipular la presentación del texto.
 \begin{itemize}
-\item \textbf{emph:} Pone el texto en énfasis.
-\item \textbf{textit:} Pone el texto en itálica (o cursiva).
-\item \textbf{textbf:} Pone el texto en negrita. 
-\item \textbf{texttt:} Utiliza fuente monoespaciada (como la de las máquinas
-de escribir).
+    \item \textbf{emph:} Pone el texto en énfasis.
+    \item \textbf{textit:} Pone el texto en itálica (o cursiva).
+    \item \textbf{textbf:} Pone el texto en negrita. 
+    \item \textbf{texttt:} Utiliza fuente monoespaciada (como la de las máquinas
+        de escribir).
 \end{itemize}
 Estos comandos deben ponerse en nuestros archivos \texttt{.tex}
 con una barra inclinada hacia atrás delante, como todos los comandos de \LaTeX{}
@@ -426,7 +439,8 @@ podemos incluir texto en
 
 Si queremos escribir comandos u órdenes
 de programación, podemos ponerlo en monoespaciado: \texttt{ls -la}.
-Además, el comando de énfasis (\texttt{emph}) nos maneja el énfasis automáticamente.
+Además, el comando de énfasis (\texttt{emph}) nos maneja el énfasis
+automáticamente.
 Por ejemplo, el código:
 \begin{verbatim}
 \emph{\emph{Toda} esta frase está en énfasis
@@ -448,8 +462,8 @@ A continuación vemos cómo se hace.
 \begin{itemize}
 % Un item es una fila de la lista, un punto, en este caso.
 \item Sector primario
-% si quieres subniveles, creas una lista dentro de esta.
-% Ojo, cuidado, tiene que haber un item antes, como aquí que está
+% Si quieres subniveles, creas una lista dentro de esta.
+% Tiene que haber un item antes de empezar la sublista, como aquí que está
 % el item sector primario.
 \begin{itemize}
     \item Ganadería
@@ -469,11 +483,7 @@ Ese código generaría la siguiente lista:
 %%% Ejemplo de lista
 % Este tipo de listas no son numeradas. Son listas de puntos (bullets)
 \begin{itemize}
-    % Un item es una fila de la lista, un punto, en este caso.
     \item Sector primario
-    % si quieres subniveles, creas una lista dentro de esta.
-    % Ojo, cuidado, tiene que haber un item antes, como aquí que está
-    % el item sector primario.
     \begin{itemize}
         \item Ganadería
         \begin{itemize}
@@ -502,7 +512,8 @@ G\cdot\frac{m_1\cdot m_2}{d^2}
 $$
 \end{verbatim}
 Si en este párrafo quisiéramos poner una ecuación o números al estilo 
-matemático, lo haremos con único signo de dolar y la escribiríamos
+matemático, lo haremos con único signo de dolar a cada lado
+y la escribiríamos
 en la misma línea, por ejemplo, una ecuación cuadrática es: 
 $ax^2+bx+c = d : a \ne 0$. Se ha escrito así:
 
@@ -524,9 +535,9 @@ Hay muchos símbolos y objetos matemáticos más avanzados que esos, aquí verem
 una selección de ellos. Probablemente añada más en el futuro. El primero
 sería la matriz. Para crear una matriz se usaría:
 \begin{verbatim}
-\matrix{1&2&3 \cr 
-           4&5&6 \cr
-           7&8&9}
+\matrix{1 & 2 & 3 \cr 
+        4 & 5 & 6 \cr
+        7 & 8 & 9}
 \end{verbatim}
 Y el resultado sería:
 $$
@@ -594,10 +605,13 @@ $$
 \int{\int{\int_{0}^{10}{f(x,y,z)\,dx\,dy\,dz}}}
 $$
 Si se requiere la integral de superficie se puede usar la orden
-\texttt{\textbackslash oint}: $\oint{}$
+\texttt{\textbackslash oint}:
+$$
+\oint{x\,dx}
+$$
 
 Las derivadas con más sencillas porque simplemente se pone el símbolo
-\texttt{'} (el apóstrofo). Por ejemplo:.
+\texttt{'} (el apóstrofo). Por ejemplo:
 $$
 y'' + 4y = t^2-2t+5
 $$
@@ -621,7 +635,7 @@ son:
     \begin{tabular}{|c|c|c|}
     \hline
     \textbf{Comando} & \textbf{Presentación} & \textbf{Descripción} \\ \hline
-    \texttt{< } & $<$ &Es menor que\\ \hline
+    \texttt{<} & $<$ &Es menor que\\ \hline
     \texttt{>} & $>$ &Es mayor que\\ \hline
     \texttt{=} & $=$ & Es igual a\\ \hline
     \texttt{\textbackslash{}le} & $\leq$ &Menor o igual que\\ \hline
@@ -709,7 +723,7 @@ flecha doble:
 ...
 \end{itemize}
 Y, finalmente, existen símbolos de varios tipos útiles como: el infinito,
-verdadero y falso lógico, exite, para todo...
+verdadero y falso lógico, existe, para todo...
 \begin{table}[H]
    \centering
 \begin{tabular}{|c|c|c|}
@@ -793,9 +807,10 @@ son:
 
 Los bloques verbatim son bloques donde el texto se incluye sin tomar en 
 cuenta comandos de latex, interpretándolo literalmente y en letra 
-monoespaciada. Son los bloques que he utilizado para incluir los bloques
+monoespaciada. Son los bloques que he utilizado para incluir los fragmentos
 de código \LaTeX{} que se han ido viendo en este documento.
-Se suelen usar para introducir código, en \LaTeX{} o en otros lenguajes.
+Se suelen usar para justo eso introducir código, en \LaTeX{} o en otros
+lenguajes.
 Por ejemplo, este es un programa que dice hola al usuario por su nombre
 en el lenguaje C++.
 
@@ -809,12 +824,14 @@ int main(void){
     return EXIT_SUCCESS;
 }
 \end{verbatim}
+
 Gracias a que hemos cargado el paquete babel español (ver preámbulo del código),
-podemos utilizar $<<$ y $>>$ para poner comillas latinas. Por ejemplo:
+podemos utilizar \texttt{<}\texttt{<} y \texttt{>}\texttt{>} para poner comillas latinas.
+Por ejemplo:
 
 <<El día que la mierda tenga algún valor, los pobres nacerán sin culo>> \\
 % Dos guiones son un guion largo
---Gabriel García Mázquez
+-- Gabriel García Mázquez
 
 Para crear una lista con numeración se utilizará el mismo código que 
 para una lista sin numeración, pero en vez de \texttt{itemize} pondremos
@@ -856,7 +873,11 @@ la que sigue:
 Podríamos ejecutar la orden \texttt{\textbackslash graphicspath\{\{img/\}\}}
 y así sólo tendríamos que especificar el nombre de los archivos, no hace falta 
 especificar extensiones. Nótese que hay una barra inclinada después del nombre
-del directorio y que hay dos llaves, son necesarias ambas cosas. Además, esta
+del directorio y que hay dos llaves, son necesarias ambas cosas. Esto es porque
+podríamos añadir más directorios separados por comas:
+\texttt{\textbackslash graphicspath\{\{img/\},\{images/\}\}} incluiría dos
+directorios, uno llamado <<img>> y otro llamado <<images>>.
+Además, esta
 orden ha de ir en el \textbf{preámbulo} del texto.
 
 % Así se incluye una imagen. Predeterminadamente, se incluye a su tamaño 
