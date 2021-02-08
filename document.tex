@@ -683,10 +683,6 @@ Algunos delimitadores de left y right son:
                                \Large$\left< m\atop n\right>$\normalsize \\ 
 &\\\hline
 &\\
-\texttt{<  >} &
-                               \Large$\left< m\atop n\right>$\normalsize \\ 
-&\\\hline
-&\\
 \texttt{.  .} &
                                \Large$\left. m\atop n\right.$\normalsize \\ 
 &\\\hline
@@ -812,37 +808,95 @@ También están disponibles las letras griegas, tanto mayúsculas como minúscul
     \centering
     \begin{tabular}{|c|c|c|c|}
     \hline
-    \textbf{Letra} & \textbf{Mayúscula} & \textbf{Minúscula} & \textbf{Presentación} \\ \hline
-    alfa & \texttt{\textbackslash alpha} & \texttt{A} & $\alpha\, A$ \\ \hline
-    beta & \texttt{\textbackslash beta} & \texttt{B} & $\beta\, B$ \\ \hline
-    gama & \texttt{\textbackslash gamma} & \texttt{\textbackslash Gamma} & $\gamma\,\Gamma$ \\ \hline
-    delta & \texttt{\textbackslash delta} & \texttt{\textbackslash Delta} & $\delta\,\Delta$ \\ \hline
-    épsilon & \texttt{\textbackslash epsilon} & \texttt{E} & $\epsilon\,E$ \\ \hline
-    varépsilon & \texttt{\textbackslash varepsilon} &--& $\varepsilon$ \\ \hline
-    zeta & \texttt{\textbackslash zeta} & \texttt{\textbackslash Zeta} & $\zeta\,Z$ \\ \hline
-    eta & \texttt{\textbackslash eta} & \texttt{\textbackslash Eta} & $\eta\,H$ \\ \hline
-    teta & \texttt{\textbackslash tetha} & \texttt{\textbackslash Theta} & $\theta\,\Theta$ \\ \hline
-    varteta & \texttt{\textbackslash vartetha} &--& $\vartheta$ \\ \hline
-    iota & \texttt{\textbackslash iota} & \texttt{I} & $\iota\,I$ \\ \hline
-    kappa & \texttt{\textbackslash kappa} & \texttt{\textbackslash Kappa} & $\kappa \, K$\\ \hline
-    lambda & \texttt{\textbackslash lambda} & \texttt{\textbackslash Lambda} & $\lambda\,\Lambda$ \\ \hline
+    \textbf{Letra} & \textbf{Mayúscula} &
+        \textbf{Minúscula} & \textbf{Presentación} \\ \hline
+
+    alfa & \texttt{\textbackslash alpha} &
+        \texttt{A} & $\alpha\, A$ \\ \hline
+
+    beta & \texttt{\textbackslash beta} &
+        \texttt{B} & $\beta\, B$ \\ \hline
+
+    gamma & \texttt{\textbackslash gamma} &
+        \texttt{\textbackslash Gamma} & $\gamma\,\Gamma$ \\ \hline
+
+    delta & \texttt{\textbackslash delta} &
+        \texttt{\textbackslash Delta} & $\delta\,\Delta$ \\ \hline
+
+    épsilon & \texttt{\textbackslash epsilon} &
+        \texttt{E} & $\epsilon\,E$ \\ \hline
+
+    varépsilon & \texttt{\textbackslash varepsilon} &
+        --& $\varepsilon$ \\ \hline
+
+    zeta & \texttt{\textbackslash zeta} &
+        \texttt{\textbackslash Zeta} & $\zeta\,Z$ \\ \hline
+
+    eta & \texttt{\textbackslash eta} &
+        \texttt{\textbackslash Eta} & $\eta\,H$ \\ \hline
+
+    teta & \texttt{\textbackslash tetha} &
+        \texttt{\textbackslash Theta} & $\theta\,\Theta$ \\ \hline
+
+    varteta & \texttt{\textbackslash vartetha} &
+        --& $\vartheta$ \\ \hline
+
+    iota & \texttt{\textbackslash iota} &
+        \texttt{I} & $\iota\,I$ \\ \hline
+
+    kappa & \texttt{\textbackslash kappa} &
+        \texttt{\textbackslash Kappa} & $\kappa \, K$\\ \hline
+
+    lambda & \texttt{\textbackslash lambda} &
+        \texttt{\textbackslash Lambda} & $\lambda\,\Lambda$ \\ \hline
+
     mu & \texttt{\textbackslash mu} & \texttt{M} & $\mu\,M$ \\ \hline
+
     nu & \texttt{\textbackslash nu} & \texttt{N} & $\nu\,N$ \\ \hline
-    xi & \texttt{\textbackslash xi} & \texttt{\textbackslash Xi} & $\xi\,\Xi$ \\ \hline
-    o & \texttt{o} & \texttt{O} & $o\,O$ \\ \hline
-    pi & \texttt{\textbackslash pi} & \texttt{\textbackslash Pi} & $\pi\,\Pi$ \\ \hline
-    varpi & \texttt{\textbackslash varpi} &--& $\varpi$ \\ \hline
-    rho & \texttt{\textbackslash rho} & \texttt{P} & $\rho\,P$ \\ \hline
-    varrho & \texttt{\textbackslash varrho} &--& $\varrho$ \\ \hline
-    sigma & \texttt{\textbackslash sigma} & \texttt{\textbackslash Sigma} & $\sigma\,\Sigma$ \\ \hline
+
+    xi & \texttt{\textbackslash xi} &
+        \texttt{\textbackslash Xi} & $\xi\,\Xi$ \\ \hline
+
+    o & \texttt{o} & \texttt{O} &
+        $o\,O$ \\ \hline
+
+    pi & \texttt{\textbackslash pi} &
+        \texttt{\textbackslash Pi} & $\pi\,\Pi$ \\ \hline
+
+    varpi & \texttt{\textbackslash varpi} &
+        --& $\varpi$ \\ \hline
+
+    rho & \texttt{\textbackslash rho} &
+        \texttt{P} & $\rho\,P$ \\ \hline
+
+    varrho & \texttt{\textbackslash varrho} &
+        --& $\varrho$ \\ \hline
+
+    sigma & \texttt{\textbackslash sigma} &
+        \texttt{\textbackslash Sigma} & $\sigma\,\Sigma$ \\ \hline
+
     varsigma & \texttt{\textbackslash varsigma} &--& $\varsigma$ \\ \hline
+
     tau & \texttt{\textbackslash tau} & \texttt{T} & $\tau\,T$ \\ \hline
-    upsilon & \texttt{\textbackslash upsilon} & \texttt{\textbackslash Upsilon} & $\upsilon\,\Upsilon$ \\ \hline
-    fi & \texttt{\textbackslash phi} & \texttt{\textbackslash Phi} & $\phi\,\Phi$ \\ \hline
-    varfi & \texttt{\textbackslash varphi} &--& $\varphi$ \\ \hline
-    chi & \texttt{\textbackslash chi} & \texttt{X} & $\chi\,X$ \\ \hline
-    psi & \texttt{\textbackslash psi} & \texttt{\textbackslash Psi} & $\psi\,\Psi$ \\ \hline
-    omega & \texttt{\textbackslash omega} & \texttt{\textbackslash Omega} & $\omega\,\Omega$ \\ \hline
+
+    upsilon & \texttt{\textbackslash upsilon} &
+        \texttt{\textbackslash Upsilon} & $\upsilon\,\Upsilon$ \\ \hline
+
+    fi & \texttt{\textbackslash phi} &
+        \texttt{\textbackslash Phi} & $\phi\,\Phi$ \\ \hline
+
+    varfi & \texttt{\textbackslash varphi} &
+        --& $\varphi$ \\ \hline
+
+    chi & \texttt{\textbackslash chi} &
+        \texttt{X} & $\chi\,X$ \\ \hline
+
+    psi & \texttt{\textbackslash psi} &
+        \texttt{\textbackslash Psi} & $\psi\,\Psi$ \\ \hline
+
+    omega & \texttt{\textbackslash omega} &
+        \texttt{\textbackslash Omega} & $\omega\,\Omega$ \\ \hline
+
     \end{tabular}
     \label{tab:greekLetters}
     \caption{Letras griegas}
