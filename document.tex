@@ -254,7 +254,7 @@ sudo apt install make
 \end{verbatim}
 
 \subsubsection{Instalación en Microsoft Windows}
-En sistemas windows, la instalación de reliza como otras herramientas de
+En sistemas Windows, la instalación se realiza como otras herramientas de
 \textit{software}, se descarga un \texttt{.exe} y se siguen las instrucciones
 del instalador. En nuestro caso, debemos instalar dos programas:
 \begin{itemize}
@@ -295,11 +295,11 @@ poder generarse, se usarán comandos en el mismo documento antes de explicarlos.
 Si se sabe algo sobre \LaTeX{} es recomendable leer el código primero, si no, 
 mejor leer primero el pdf compilado.
 
-\newpage\section{Qué es exactamente \LaTeX{}}
+\newpage\section{Comandos básicos de \LaTeX{}}
 Aunque en este documento no voy a hablar de las características históricas o de
 lo que es el \textit{typesetting}. Sí voy a explicar someramente qué es
 \LaTeX{}. \LaTeX{} es un lenguaje que nos permite crear documentos con formato a
-través dearchivos de texto plano, que no contienen en sí mismos información
+través de archivos de texto plano, que no contienen en sí mismos información
 sobre el formato, sino que utilizan secuencias especiales de caracteres para
 indicar cómo ha de presentarse el contenido en un documento distinto.
 \subsection{Archivos .tex}
@@ -310,7 +310,7 @@ se llama motor o renderizador. Hay varios, con diferencias técnicas. Esta guía
 y los comandos que se listan están desarrollados para el motor
 \texttt{pdflatex}.
 
-\subsubsection{Estructura de un documento en LaTeX}
+\subsubsection{Estructura de un archivo .tex}
 Un documento en latex mínimo tiene estas líneas:
 \begin{verbatim}
 \documentclass{<clase del documento>}
@@ -320,7 +320,8 @@ Algún texto.
 \end{verbatim}
 Para empezar: las palabras que van precedidas de una barra inclinada inversa
 se llaman <<comandos>>, y son órdenes que se le dan al renderizador de \LaTeX{},
-es decir, no se imprimirán en nuestro pdf. Debido a que los comandos se incluyen
+es decir, no se imprimirán en nuestro pdf (o no literalmente).
+Debido a que los comandos se incluyen
 con ese caracter especial, si quisiéramos escribir una barra inversa en el 
 documento, deberíamos usar el comando \texttt{\textbackslash textbackslash}, 
 seguido de un espacio. Si no, \LaTeX{} interpretaría que la siguiente palabra
@@ -360,7 +361,7 @@ texto en un archivo \texttt{.tex} que vaya en la misma línea que un signo de
 procentaje y después de él no se renderizará. \textbf{Esto incluye el salto
 de lína del final}. De nuevo, si se quiere incluir un signo de porcentaje
 en el texto, debemos incluir antes de él una barra inclinada inversa, es decir:
-\texttt{\textbackslash{}\%} generaría el signo de porcentaje.
+\texttt{\textbackslash{\%}} generaría el signo de porcentaje.
 Veamos un ejemplo:
 \begin{verbatim}
 \documentclass{article}
@@ -378,7 +379,7 @@ que poner una línea en blanco entre el último comentario y el segundo
 párrafo.
 
 Al ser los documentos de \texttt{.tex} documentos de texto plano, podríamos
-incluir potencialmente los caracteres que quisiérmos, pero, sin paquetes 
+incluir potencialmente los caracteres que quisiéramos, pero, sin paquetes 
 adicionales (ver sección de inclusión de paquetes en el código de este
 documento) no se pueden incluir algunos símbolos. Así que hay que tener cuidado
 con los símbolos especiales que se usan, pueden renderizarse mal o no permitir
@@ -461,7 +462,7 @@ de texto distintos, éstos son:
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{|c|c|c|}
+    \begin{tabular}{|c|r|c|}
         \hline
         \textbf{Comando} & \textbf{Tamaño (relativo al normal)}&\textbf{Ejemplo} \\\hline
         \texttt{tiny}&50 \% &\tiny{ejemplo}\normalsize \\\hline
@@ -541,21 +542,54 @@ Ese código generaría la siguiente lista:
     \item Sector Secundario
     \item Sector Servicios
 \end{itemize}
-\subsubsection{Ecuaciones en \LaTeX{}} \label{ecuaciones}
+\subsection{Jerarquización del texto}
+En el momento en que nuestro documento sea ligeramente más largo que una página
+es probable que queramos añadir títulos de sección y de subsecciones.
+Como se puede ver en el código, una sección se define fácilmente, con la
+ orden \texttt{\textbackslash{}section}, también existen \texttt{\textbackslash
+subsection} y \texttt{\textbackslash{}subsubsection}. 
+A partir de ahí, si se requieren títulos de un nivel más
+profundo, hay que usar otras órdenes. Esto depende de la clase de documento
+escogida. En este caso, article.
+\subsubsection{Cómo definir niveles más profundos de la jerarquía}
+Si quieres más información sobre ćomo hacer esto, puedes visitar
+\href{https://ctan.org/pkg/titlesec}{este enlace}.
+Pero es ciertamente algo complejo \textbf{en mi opinión}.
+Sin embargo; como puede ser útil, he copiado unos comandos en el preámbulo
+de este documento para permitir niveles mayores de título.
+Comandos sacados de \href{https://tex.stackexchange.com/questions/60209/
+how-to-add-an-extra-level-of-sections-with-headings-below-subsubsection}{aquí}.
+De la respuesta de Gonzalo Medina.
+Es una de las cosas de \LaTeX{} que no acabo de entender, así que simplemente me
+limito a utilizar lo que otra gente ha implementado.
+
+Voy a incluir a continuación dos títulos de profundidad cuatro y cinco 
+respectivamente para que se vea la sintaxis en el código. Esto se ha conseguido
+redefiniendo las órdenes \texttt{paragraph} y \texttt{subparagraph}. Por lo que
+serán éstas las que se han de utilizar. 
+\paragraph{Párrafo}
+Ejemplo
+\subparagraph{Subpárrafo}
+Este es el último nivel de jerarquía admitido. 5 niveles de jerarquía parecen
+más que suficientes para cualquier documento razonable.
+\subsection{Ecuaciones en \LaTeX{}} \label{ecuaciones}
 Uno de los puntos más fuertes de \LaTeX{} es la capacidad de incluir ecuaciones
 matemáticas de manera simple. Si queremos una ecuación matemática en bloque
-(separada del resto de los párrafos). Pondríamos lo siguiente. Veamos un
-ejemplo con la fórmula de la Ley de la Gravedad.
-% Inicio bloque de ecuación.
-$$
-G\cdot\frac{m_1\cdot m_2}{d^2}
-$$
-Para escribir esa ecuación hemos usado este código:
+(separada del resto de los párrafos) pondríamos dos signos de dolar (\$), 
+un línea nueva, la ecuación (que puede ocupar varias líneas) y otros dos signos
+ de dolar. De nuevo, al ser el signo de dolar un símbolo especial de \LaTeX{},
+si queremos incluirlo de manera literal, debe ir precedido de una barra
+inclinada inversa: \texttt{\textbackslash{\$}}. Por ejemplo:
 \begin{verbatim}
 $$
 G\cdot\frac{m_1\cdot m_2}{d^2}
 $$
 \end{verbatim}
+generaría la fórmula de la Ley de la Gravedad:
+% Inicio bloque de ecuación.
+$$
+G\cdot\frac{m_1\cdot m_2}{d^2}
+$$
 Si en este párrafo quisiéramos poner una ecuación o números al estilo 
 matemático, lo haremos con único signo de dolar a cada lado
 y la escribiríamos
@@ -570,12 +604,21 @@ Algunas de las órdenes más comunes en matemáticas son:
 \begin{enumerate}
 \item Superíndices: \texttt{\$base\^{}\{exponente\}\$} produce:
 $base^{exponente}$
-\item Subíndices: \texttt{\$base\_{}\{subíndice\}\$} produce: $base_{subindice}$
+\item Subíndices:
+\texttt{\$base\_{}\{sub\textbackslash{acute}\{\textbackslash{\{imath\}}ndice\$}
+    produce: $base_{sub\acute{\imath}ndice}$
+    \begin{enumerate}
+        \item La orden \texttt{\textbackslash{imath}} genera una i sin punto,
+        existe un análogo para la j, \texttt{\textbackslash{jmath}}.
+        \item la orden \texttt{\textbackslash{acute}} genera un acento agudo
+        en la letra, sin el comando anteriormente mencionado, saldría encima
+        del punto de la i.
+    \end{enumerate}
 \item Fracciones:  \texttt{\$\textbackslash
 frac\{numerador\}\{denominador\}\$} produce: $\frac{numerador}{denominador}$
 \end{enumerate}
 
-\paragraph{Símbolos matemáticos avanzados}
+\subsubsection{Símbolos matemáticos avanzados}
 Hay muchos símbolos y objetos matemáticos más avanzados que esos, aquí veremos
 una selección de ellos. Probablemente añada más en el futuro. El primero
 sería la matriz. Para crear una matriz se usaría:
@@ -590,7 +633,7 @@ $$
            4&5&6 \cr
            7&8&9}
 $$
-En latex, si queremos rodear cualquier parte de una ecuación con símbolos como
+En \LaTeX{}, si queremos rodear cualquier parte de una ecuación con símbolos como
 paŕentesis, corchetes y demás, lo tenemos que hacer con las órdenes 
 \texttt{\textbackslash left} y \texttt{\textbackslash right} seguidas del
 símbolo que queramos utilizar, por ejemplo si queremos una matriz rodeada
@@ -605,6 +648,57 @@ Y generaría:
 $$
 \left(\matrix{1&2\cr 3&4}\right)
 $$
+Left y right son muy versátiles, porque permiten que utilizar muchos
+delimitadores (tipos de paréntesis, por así decir) y, además, permiten que sean
+distintos a un lado de la ecuación que a otro. Todo comando left debe cerrarse
+con un comando right, pero los delimitadores especificados en ambos lados
+pueden ser distintos.
+Algunos delimitadores de left y right son:
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Delimitador}& \textbf{Ejemplo}\\\hline
+&\\
+\texttt{( )} & \Large$\left(m\atop n\right)$\normalsize \\ 
+&\\\hline
+&\\
+\texttt{[ ]} & \Large$\left[m\atop n\right]$\normalsize \\ 
+&\\\hline
+&\\
+\texttt{\textbackslash{\{} \textbackslash{\}}} &
+                                \Large$\left\{m\atop n\right\}$\normalsize \\ 
+&\\\hline
+&\\
+\texttt{\textbackslash{lceil} \textbackslash{rceil}} &
+                       \Large$\left\lceil m\atop n\right\rceil$\normalsize \\ 
+&\\\hline
+&\\
+\texttt{\textbackslash{lfloor} \textbackslash{rfloor}} &
+                       \Large$\left\lfloor m\atop n\right\rfloor$\normalsize \\ 
+&\\\hline
+
+&\\
+\texttt{<  >} &
+                               \Large$\left< m\atop n\right>$\normalsize \\ 
+&\\\hline
+&\\
+\texttt{<  >} &
+                               \Large$\left< m\atop n\right>$\normalsize \\ 
+&\\\hline
+&\\
+\texttt{.  .} &
+                               \Large$\left. m\atop n\right.$\normalsize \\ 
+&\\\hline
+\end{tabular}
+\caption{Delimitadores para los comandos left y right}
+\label{tab:delimForLeftRight}
+\end{table}
+Todos los delimitadores que se ven en la Tabla \ref{tab:delimForLeftRight}: 
+\nameref{tab:delimForLeftRight} se pueden combinar entre ellos arbitrariamente,
+pero, de nuevo, no puede haber un comando left sin su correspondiente right,
+ni viceversa, aunque los delimitadores de ambos sean diferentes.
+
 Los símbolos del cálculo integral y diferencial son sencillos, la integral
 se escribe como \texttt{\textbackslash int\{\}}. Por ejemplo, el código:  
 \begin{verbatim}
@@ -779,6 +873,7 @@ verdadero y falso lógico, existe, para todo...
     \texttt{\textbackslash exists} & $\exists$ & Existe\\ \hline
     \texttt{\textbackslash top} & $\top$ &Verdadero lógico \\ \hline
     \texttt{\textbackslash bot} & $\bot$ &Falso lógico \\ \hline
+    \texttt{\textbackslash lnot} & $\lnot$ &Negación lógica\\ \hline
     \texttt{\textbackslash partial} & $\partial$ &Derivada parcial \\ \hline
     \texttt{\textbackslash mathcal\{L\}} & $\mathcal{L}$ &Tranformada de Laplace \\ \hline
     \texttt{\textbackslash mathcal\{F\}} & $\mathcal{F}$ &Tranformada de Fourier \\ \hline
@@ -791,6 +886,84 @@ verdadero y falso lógico, existe, para todo...
 \caption{Símbolos matemáticos varios}
 \label{tab:miscSymbols}
 \end{table}
+
+Además, es común que en matemáticas se usen acentos especiales para letras u
+objetos, por ejemplo una flecha que simboliza que lo que hay debajo es un 
+vector, éstos se ponen utilizando la orden correspondiente a los mismos y 
+pasando como argumento el texto que ha de llevar el acento, por ejemplo:
+\begin{verbatim}
+$$
+\vec{v}\times\vec{w} = \left| \matrix{i & j & k \cr
+                                      v_x & v_y & v_z \cr
+                                      w_x & w_y & w_z } \right|
+$$
+\end{verbatim}
+generaría:
+$$
+\vec{v}\times\vec{w} = \left| \matrix{i & j & k \cr
+                                      v_x & v_y & v_z \cr
+                                      w_x & w_y & w_z } \right|
+$$
+Los acentos más comunes son:
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|}
+    \hline
+    \textbf{Comando}&\textbf{Ejemplo}\\\hline
+    \texttt{vec} & $\vec{v}$ \\\hline
+    \texttt{bar} & $\bar{v}$ \\\hline
+    \texttt{hat} & $\hat{v}$ \\\hline
+    \texttt{widehat} & $\widehat{\vec{v},\,\vec{w}}$ \\\hline
+    \texttt{acute} & $\acute{v}$ \\\hline
+    \texttt{grave} & $\grave{v}$ \\\hline
+    \texttt{dot} & $\dot{v}$ \\\hline
+    \texttt{tilde} & $\tilde{v}$ \\\hline
+\end{tabular}
+\caption{Acentos posibles en ecuaciones}
+\label{fig:mathAccents}
+\end{table}
+
+Nótese que el acento de barra no sirve para poner una barra encima de textos
+largos, esto debe hacerse con el comando \texttt{\textbackslash{overline}}.
+Por ejemplo:
+\begin{verbatim}
+$$
+p\land q \equiv \overline{\left(\bar{p}\lor\bar{q}\right)}
+$$
+\end{verbatim}
+genera (nótese el uso conjunto de \texttt{bar} y \texttt{overline}):
+$$
+p\land q \equiv \overline{\left(\bar{p}\lor\bar{q}\right)}
+$$
+Existe, además, el comando \texttt{underline} para subrayar en modo matemático.
+
+\subsubsection{Matrices como herramienta}
+Es evidente que el uso principal del comando \texttt{matrix} es crear matrices
+que contengan elementos algebraicos, pero en general nos permite crear rejillas
+o tablas en nuestras ecuaciones que puede resultar útiles para muchas cosas, 
+por ejemplo, el siguiente código:
+\begin{verbatim}
+$$
+|x|=\left\{ \matrix{    -x & \textrm{para} & x<0 \cr
+                         x & \textrm{para} & x \geq 0}\right.
+$$
+\end{verbatim}
+nos permitiría definir el valor absoluto como una función por partes, es decir:
+$$
+|x|=\left\{ \matrix{
+-x&\textrm{para}&x<0\cr
+x&\textrm{para}&x\geq0}\right.
+$$
+
+Hay varias cosas que comentar sobre este código:
+\begin{enumerate}
+\item El comanto \texttt{textrm} permite introducir texto (sin cursiva) en
+ecuaciones.
+\item Como se puede ver, hemos usado una matriz de dos filas y tres columnas 
+para alinear los elementos, de este modo, en todas las filas la palabra <<para>>
+está alineada con las demás.
+\end{enumerate}
+
 Además, en matemáticas se usan fuentes especiales para indicar cosas, por 
 ejemplo, una L mayúscula manuscrita es el símbolo de la transformada de Laplace.
 Hay dos comandos que crean estas fuentes:
@@ -809,36 +982,6 @@ Además, podemos poner símbolos monetarios gracias a algunos paquetes especiale
 <<\textbackslash>> y el signo de dolar. El resultado es: \$. Por ejemplo:
 Esta mañana me he ido de compras por Nueva York y he gastado 500 \$.
 
-\subsection{Jerarquización del texto}
-En el momento en que nuestro documento sea ligeramente más largo que una página
-es probable que queramos añadir títulos de sección y de subsecciones.
-Como se puede ver en el código, una sección se define fácilmente, con la
- orden \texttt{\textbackslash{}section}, también existen \texttt{\textbackslash
-subsection} y \texttt{\textbackslash{}subsubsection}. 
-A partir de ahí, si se requieren títulos de un nivel más
-profundo, hay que usar otras órdenes. Esto depende de la clase de documento
-escogida. En este caso, article.
-\subsubsection{Cómo definir niveles más profundos de la jerarquía}
-Si quieres más información sobre ćomo hacer esto, puedes visitar
-\href{https://ctan.org/pkg/titlesec}{este enlace}.
-Pero es ciertamente algo complejo \textbf{en mi opinión}.
-Sin embargo; como puede ser útil, he copiado unos comandos en el preámbulo
-de este documento para permitir niveles mayores de título.
-Comandos sacados de \href{https://tex.stackexchange.com/questions/60209/
-how-to-add-an-extra-level-of-sections-with-headings-below-subsubsection}{aquí}.
-De la respuesta de Gonzalo Medina.
-Es una de las cosas de \LaTeX{} que no acabo de entender, así que simplemente me
-limito a utilizar lo que otra gente ha implementado.
-
-Voy a incluir a continuación dos títulos de profundidad cuatro y cinco 
-respectivamente para que se vea la sintaxis en el código. Esto se ha conseguido
-redefiniendo las órdenes \texttt{paragraph} y \texttt{subparagraph}. Por lo que
-serán éstas las que se han de utilizar. 
-\paragraph{Párrafo}
-Ejemplo
-\subparagraph{Subpárrafo}
-Este es el último nivel de jerarquía admitido. 5 niveles de jerarquía parecen
-más que suficientes para cualquier documento razonable.
 \newpage
 \section{Bloques especiales; figuras y tablas}
 Hay varios tipos de bloques especiales que nos permiten insertar cosas
@@ -1147,10 +1290,6 @@ dividiera, podríamos incluirla en un bloque de figura, esta lista, por ejemplo:
 \end{figure}
 Esto debe usarse con cuidado, empero, pues generaría muchos espacios en blanco
 en nuestro documento.
-
-Creo que ya estás listo para usar \LaTeX{}.
-He incluido un fichero makefile en el directorio que debería compilar el 
-archivo presente con la orden \texttt{pdflatex} dos veces.
 \subsection{Bibliografía; referencias bibliográficas}
 Además de referenciar otras partes de nuestro propio documento (ver
 \textbf{\ref{subsubsec:referencias cruzadas}}) es común necesitar una lista
@@ -1255,7 +1394,7 @@ crear notas al pie de manera sencilla, simplemente se utiliza el comando
 Al final de esta frase va a haber una nota al pie \footnote{Esta es la nota
 al pie.}.
 \end{verbatim}
-general el siguiente párrafo y su nota el pie correspondiente:
+genera el siguiente párrafo y su nota el pie correspondiente:
 
 Al final de esta frase va a haber una nota al pie \footnote{Esta es la nota
 al pie.}.
@@ -1315,6 +1454,7 @@ y como está configurado este documento, debe elegirse UTF8. Y debe revisarse
 que las etiquetas no contengan estos caracteres especiales de ningún modo, lo
 ideal sería sustituirlos por sus equivalentes sin acentos, u por ü, i por í,
 etc.
+
 \textbf{Nota sobre la compilación}: Debido a cómo funciona el motor bibtex, 
 para que las referencias bibliográficas se creen de manera adecuada, primero
 debe compilarse con \texttt{pdflatex}, después, llamar a comando \texttt{biber}
