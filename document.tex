@@ -453,6 +453,51 @@ menos la primera y la última \emph{palabra}}.>>
 Esto es porque la orden emph, cuando se aplica a un texto enfatizado, elimina
 la letra itálica, como es la norma.
 
+Además, hay modificadores del tamaño del texto. Éstos no son absolutos, son
+dependientes del tamaño de fuente predeterminada que usemos, que, si no se
+indica nada, son 10 puntos.
+\LaTeX{} nos ofrece 10 tamaños
+de texto distintos, éstos son:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Comando} & \textbf{Tamaño (relativo al normal)}&\textbf{Ejemplo} \\\hline
+        \texttt{tiny}&50 \% &\tiny{ejemplo}\normalsize \\\hline
+        \texttt{scriptsize}&70 \% &\scriptsize{ejemplo}\normalsize \\\hline
+        \texttt{footnotesize}&80 \% &\footnotesize{ejemplo}\normalsize \\\hline
+        \texttt{small}&90 \% &\small{ejemplo}\normalsize \\\hline
+        \texttt{normalsize}&100 \% &\normalsize{ejemplo}\normalsize \\\hline
+        \texttt{large}&120 \% &\Large{ejemplo}\normalsize \\\hline
+        \texttt{Large}&140 \% &\Large{ejemplo}\normalsize \\\hline
+        \texttt{LARGE}&170 \% &\LARGE{ejemplo}\normalsize \\\hline
+        \texttt{huge}&200 \% &\huge{ejemplo}\normalsize \\\hline
+        \texttt{Huge}&250 \% &\Huge{ejemplo}\normalsize \\\hline
+    \end{tabular}
+    \caption{Comparación tamaños de letra}
+    \label{tab:comLetSize}
+\end{table}
+
+Nótese que estos comandos cambian el tamaño de \textbf{todo el texto que vaya
+tras ellos}, para hacer que el texto siguiente vuelva a ser de tamaño normal,
+debe escribirse la orden \texttt{\textbackslash normalsize} al final del texto
+cuyo tamaño queramos modificar.
+
+Y, ya que se ha dicho que se pueden elegir tamaños distintos de letra para el
+texto en general, veamos cómo. El catálogo de tamaños de letra que podemos
+escoger se basa en nuestra clase de documento (\emph{documentclass}), 
+las clases predeterminadas de \LaTeX{} como \texttt{article} sólo admiten
+10 (opción predeterminada), 11 y 12 puntos. Esto se selecciona escribiendo
+como opción el tamaño en la orden \texttt{documentclass}. Por ejemplo:
+\begin{verbatim}
+\documentclass[12 pt]{article}
+\end{verbatim}
+crearía un documento con un tamaño de letras predeterminado de 12 puntos, usando
+la clase article.
+
+
+
 Además de texto, es natural que en un 
 documento tengamos que poner listas, ya sean éstas numeradas o sin numerar.
 A continuación vemos cómo se hace.
@@ -913,15 +958,15 @@ referenciarla internamente.
     \begin{itemize}
         \item La opción (entre corchetes)
             \texttt{width=1.0\textbackslash{}hsize} hace que la imagen ocupe
-            el 100 \% del ancho de la página. Si cambias el número ($1,0$) por 
-            ejemplo a $0,5$ ocuparía el 50 \%.
+            el 100 \% del ancho de la página. Si cambias el número ($1.0$) por 
+            ejemplo a $0.5$ ocuparía el 50 \%.
         \item Como hemos usado la orden \texttt{graphicspath} en el preámbulo.
         Podemos escribir simplemente el nombre del archivo, sin extensión.
     \end{itemize}
     \item La orden \texttt{caption} pone el título visible que tendrá la figura.
     \item La orden label crea la etiqueta interna de esta figura, y permite 
     luego referenciarla. Esta orden debe ir \textbf{después} de
-        \texttt{caption}. Cada tipo de document en LaTeX tiene su prefijo, por
+        \texttt{caption}. Cada tipo de elemento en LaTeX tiene su prefijo, por
         ejemplo, las figuras deben ser \texttt{fig:XXX} y las tablas 
         \texttt{tab:XXX} donde \texttt{XXX} es un nombre arbitrario.
     \item Finalmente, esto termina la figura.
@@ -971,7 +1016,11 @@ Una referencia cruzada es un punto en el texto en que hablamos de un elemento
 del mismo, por ejemplo, si quisiéramos referenciar aquí la figura titulada
 <<Un gato negro>>, podríamos ponerlo a mano en el texto: Como se puede ver
 en la Figura 2: Un gato negro. Pero, ¿qué pasaría si cambiáramos ese título?
-¿Y si incluyéramos una imagen antes de esta y su número cambiara? Para eso
+¿Y si incluyéramos una imagen antes de esta y su número cambiara? Tendríamos
+que rastrear todas las veces que la hemos mencionado en el documento y cambiarlo
+, lo cual sería tedioso y llamaría a errores frecuentes.
+
+Para eso
 usaremos el comando \texttt{ref}. Este comando nos permite referenciar una
 figura (o cualquier objeto con una etiqueta). 
 
@@ -999,7 +1048,7 @@ Por ejemplo: como podemos ver en la Figura \ref{fig:gatitoNegro}:
 \end{verbatim}
 
 \begin{enumerate}
-\item Inicial la <<figura tabla>>, esto es equivalente a cuando incrustamos
+\item Inicia la <<figura tabla>>, esto es equivalente a cuando incrustamos
 una figura que va a contener una imagen.
 \item Hace que la tabla esté centrada, aclaración: cuando la tabla es más 
 grande que el tamaño del texto se alinea a la izquierda y se desborda por la
@@ -1007,6 +1056,8 @@ derecha.
 \item Empieza la tabla en sí misma, la segunda parte \texttt{\{|c|r|c|r|\}}
 indica el número de celdas (que se corresponde con el número de letras) y las 
 líneas verticales (|) indican que queremos una línea entre esas dos columnas.
+Las líneas verticales son opcionales, pero los especificadores de alineación
+deben aparecer en el mismo número que columnas queramos que tenga la tabla.
 \item Dibuja una línea horizontal en toda la tabla
 \item Es una fila de la tabla, el texto irá en la misma celda hasta que haya
 un \textit{et} (\&), así se pasa de columna. Cuando se haya terminado la fila,
@@ -1050,7 +1101,8 @@ dos \emph{et} (\&\&) Y que debe terminarse con \textbackslash{}\textbackslash{}.
     \label{tab:gastos}
 \end{table}
 
-De nuevo, podemos referenciar el número de la tabla con \ref{tab:gastos} y su
+De nuevo, podemos referenciar el número de la tabla con 
+\texttt{\textbackslash ref\{tab:gastos\}} y su
 títulos con \nameref{tab:gastos}. \textbf{Nota sobre compilar 
 referencias cruzadas:}
  a veces salen signos de
@@ -1162,7 +1214,7 @@ de los estilos permitidos son:
     Science & science\\\hline
     IEEE & iee\\\hline
     Chicago& chicago-authordate\\\hline
-    MLA & apa\\\hline
+    MLA & mla\\\hline
     APA & apa\\\hline
 \end{tabular}
 \caption{Estilo de citación permitidos por el paquete biblatex}
@@ -1191,10 +1243,10 @@ no sale en la tabla de contenido. Si queremos omitirlo, podemos añadir la opci�
 \begin{verbatim}
 \printbibliography[heading=none]
 \end{verbatim}
-e incluir nostros un título de la jerarquía que deseemos justo antes del 
+e incluir nosotros un título de la jerarquía que deseemos justo antes del 
 comando. Esto es lo que se ha hecho en este documento. 
 
-Por otro lado, algunas organizaciones exigen que las cita bibliográficas se 
+Por otro lado, algunas organizaciones exigen que las citas bibliográficas se 
 incluyan en notas al pie allí donde se citen. Por suerte \LaTeX{} permite 
 crear notas al pie de manera sencilla, simplemente se utiliza el comando
 \texttt{\textbackslash footnote\{\}}. Veamos un ejemplo.
@@ -1226,17 +1278,17 @@ C++ \footnote{\fullcite{cpppl}}.
 Como se ha dicho en la sección anterior, muchos servicios permiten importar las
 citas bibliográficas directamente en el formato bibtex.
 Por ejemplo, busquemos el libro \emph{Historia de la
-decadencia y caída del Imperio romano} en Google Scholar, lo encontramos en
-este enlace: \href{https://books.google.es/books?id=uydf0KUHpeoC}{aquí}.
+decadencia y caída del Imperio Romano} en Google Scholar, lo encontramos en
+este \href{https://books.google.es/books?id=uydf0KUHpeoC}{enlace}.
 
 Justo al final de esa página hay un botón que nos permite exportar la cita
 bibliográfica a varios formatos:
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=0.75\hsize]{exportarBibtex}
-\caption{Ejemplo de exportar desde Google Books}
-\label{fig:exportGoogle}
+    \centering
+    \includegraphics[width=0.75\hsize]{exportarBibtex}
+    \caption{Ejemplo de exportar desde Google Books}
+    \label{fig:exportGoogle}
 \end{figure}
 
 Si elejimos el formato bibtex, nos descargará un archivo con la referencia
@@ -1282,7 +1334,7 @@ compilar una primera vez.
 Todas las páginas citadas son de sus respectivos creadores, yo sólo me limito
 a recopilar sus soluciones o información en un mismo documento. Todas las
 imágenes utilizadas son de licencia libre, ver:
-\href{https://pixabay.com/service/faq/}{FAQ de Pixabay}
+\href{https://pixabay.com/service/faq/}{FAQ de Pixabay} o de creación propia.
 \newpage
 \section{Bibliografía}
 \printbibliography[heading=none]
