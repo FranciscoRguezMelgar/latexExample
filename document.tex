@@ -4,7 +4,7 @@
 % Esto es la clase del documento, que define las instrucciones principales
 % que condicionarán el documento generado. Generalmente cambiarla después de 
 % añadir contenido produce numerosos errores.
-\documentclass{article}
+\documentclass[]{article}
 
 
 %%%%%%%%%%%%%%%%%%%SECCIÓN INCLUSIÓN DE PAQUETES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -13,14 +13,14 @@
 % del nombre son las que se pueden usar como está aquí puesto.
 \usepackage[T1]{fontenc}
 % Comentar esta línea haría que se usara la fuente predeterminada.
-\usepackage{newcent}
+%\usepackage{newcent}
 \usepackage{titlesec}
 
 % Carga el paquete babel, las opciones son:
     % spanish: indica que usaremos configuración para escribir en español
     % es-tabla: traduce la palabra table como tabla, no como cuadro
-    % es-lcroman: permite la numeración romanda en minúscula.
-\usepackage[spanish, es-tabla, es-lcroman]{babel}
+    % es-lcroman: permite la numeración romana en minúscula.
+\usepackage[spanish,es-tabla]{babel}
 % Paquete que permite escribir el símbolo del euro, se usa de dos maneras.
     % En el documento, la orden \euro escribirá el símbolo
     % Si se escribe \EUR{<cifra>} el paquete formará un bloque con el
@@ -28,7 +28,7 @@
     % El símbolo del euro que pone es el «oficial» es decir, no se adapta
     % a la fuente que se use.
 \usepackage{eurosym} 
-% Paquete para que las imágenes tengas un tamaño relativo al del párrafo
+% Paquete para que las imágenes tengan un tamaño relativo al del párrafo
 \usepackage{graphicx}
 % nos permite insertar las figuras con el especificador H, que hace que se
     % inserte en el lugar del document donde se ha escrito su código.
@@ -43,13 +43,9 @@
 \usepackage[backend=biber, style=apa, citestyle=apa]{biblatex}
 % Añadimos un archivo de fuentes bibliográficas.
 \addbibresource{bibliography/sources.bib}
-% Permite figuras y tablas que sean rodeadas por el texto.
-% Este paquete y su funcionalidad dan problemas, no lo recomiendo.
-%\usepackage{wrapfig}
-
-
 % Paquete para cambiar la configuración de página.
 \usepackage{geometry}
+%Cambiamos los márgenes de página
 \geometry{
     a4paper, % tamaño del papel
     left=30mm, % márgenes laterales
@@ -61,7 +57,6 @@
 % Permite el uso de más caracteres, aunque algunos especiales siguen sin
 % estar disponibles.
 \usepackage[utf8]{inputenc}
-
 
 %Permite utilizar la fuente de trazo doble en ecuaciones.
 \usepackage{amsfonts}
@@ -109,7 +104,7 @@
 %%%%%%%%%%%%%%%%%SECCIÓN VARIABLES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Podemos definir variables para usar a lo largo del texto
 % Así podemos cambiarlas aquí sin tener que repetir texto.
-\def \autor{Autor Autórez Ejémplez}
+\def \autor{Francisco Rodríguez Melgar}
 \def \titulo{Ejemplo de documento en \LaTeX{}}
 \def \organizacion{Universidad de Ejemplo}
 %%%%%%%%%FIN SECCIÓN%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -159,16 +154,15 @@
 
 %%%%%%%%%%%%%%%%% CABECERA Y PIE DE PÁGINA SECCIÓN ÍNDICE%%%%%%%%%%%%%%%%%%%%%
 \pagestyle{fancy}
-% Incluye una línea horizontal en el encabezado de página.
 \fancyhf{}
-% Texto de la parte derecha del encabezado, nótese que usamos la variable
-    % que hemos definido anteriormente.
-\rhead{\autor}
-% Texto de la parte izquierda
-\lhead{\titulo}
+\fancyhead[C]{
+\Large\titulo\normalsize\\
+\rule[1mm]{0.3\hsize}{.5pt}\\
+ÍNDICES
+}
 % Incluye el texto "pág. X de Y" en el pie de pág. a la derecha.
     % estoy referenciando una etiqueta que añadí, se verá luego.
-\rfoot{pág. \thepage{} de \pageref{startSectionContent}} 
+\rfoot{pág. \textsc{\thepage{}} de \textsc{\pageref{startSectionContent}}} 
 % Incluye una línea en el pie de página.
 \renewcommand{\footrulewidth}{0.5pt}
 %decimos que se numeren las páginas en romano hasta nueva orden
@@ -181,13 +175,13 @@
 \newpage
 
 % cambia el nombre del índice de ilustraciones
-\renewcommand{\listfigurename}{Índice de ilustraciones}
+%\renewcommand{\listfigurename}{Índice de ilustraciones}
 %inserta el índice de ilustraciones
 \listoffigures 
 \newpage
 
-%tambia el nombre del índice de tablas
-\renewcommand{\listtablename}{Índice de tablas}
+%cambia el nombre del índice de tablas
+%\renewcommand{\listtablename}{Índice de tablas}
 %inserta el índice de tablas
 \listoftables
 
@@ -195,17 +189,20 @@
     % antes del salto de página del último índice de la sección, me permite
     % referenciar este punto, así es como consigo que salga "Pág. i de iii".
 \label{startSectionContent}
-
 \newpage
 % A partir de aquí numeración normal
 \pagenumbering{arabic}
 %%%%%%%%%%%%%%%%% CABECERA Y PIE DE PÁGINA SECCIÓN CUERPO%%%%%%%%%%%%%%%%%%%%%%
 \pagestyle{fancy}
 \fancyhf{}
-\rhead{\autor}
-\lhead{\titulo}
+\fancyhead[C]{
+\Large\titulo\normalsize\\
+\rule[1mm]{0.3\hsize}{.5pt}\\
+\leftmark
+}
 % El único cambio es que aquí referencio la última página del documento.
-\rfoot{pág. \thepage{} de \pageref{LastPage}}
+\fancyfoot[R]{pág. \thepage{} de \pageref{LastPage}}
+\fancyfoot[L]{\today}
 \renewcommand{\footrulewidth}{0.5pt}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%FIN SECCIÓN%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % La sección es el primer nivel de título que se permite en esta clase de 
@@ -225,12 +222,15 @@ sin problemas. Los prerrequisitos para utilizar la compilación automática son:
     \item Programa pdflatex instalado en el equipo
     \item Utilidad make instalada en el equipo.
 \end{itemize}
+
+En caso de tener un sistema operativo Windows, deben seguirse las instrucciones
+de instalación que se detallan en la siguiente sección.
 \subsection{Instalación}
 La instalación de \LaTeX{} es sencilla tanto en sistemas operativos GNU/Linux
 como en sistemas operativos Windows.
-\subsubsection{Instalación en GNU/Linux}
+\subsubsection{Instalación en GNU/Linux}\label{instGNULinux}
 En la mayoría de instalaciones de escritorio de Linux se incluye un editor de
-texto plano, ya sea éste Nano, Emacs o Vim. Esos editores son válidos para
+texto plano, ya sea éste Nano, Emacs, Vim u otros. Esos editores son válidos para
 crear (o abrir) archivos \texttt{.tex}. Para instalar \LaTeX{} se puede hacer
 en la mayoría de distribuciones mediante el gestor de paquetes, por ejemplo, en
 las distribuciones derivadas de Debian (Ubuntu, Kubuntu, Xubuntu, Linux Mint...)
@@ -245,6 +245,10 @@ En otras distribuciones,
 por favor, consulte la documentación específica de cómo instalar paquetes de
 \textit{software}.
 
+Una vez instalados estos paquetes, se puede compilar con el comando
+\texttt{pdflatex}, este comando debería ejecutarse sobre un archivo .tex.
+(ver \textbf{\ref{ArchivosTex}}).
+
 Una vez instalado todo esto, en sistemas Linux se puede compilar este 
 documento con el comando \texttt{make}. Para ello debe instalarle si no se
 tiene ya instalado. Para hacerlo, de nuevo, en distribuciones derivadas de
@@ -253,18 +257,37 @@ Debian con este comando:
 sudo apt install make
 \end{verbatim}
 
+Si quieres preparar un entorno para compilar archivos (en Linux) que hayas
+escrito tú, simplemente crea un directorio en sitio sencillo (por ejemplo tu
+carpeta personal) y, dentro del mismo, un archivo .tex. Por ejemplo, con estos
+comandos de terminal se puede hacer:
+\begin{verbatim}
+mkdir ~/holaMundoLatex
+touch ~/holaMundoLatex/holaMundo.tex
+cd ~/holaMundoLatex
+\end{verbatim}
+
+Con estos comandos habrás creado un directorio en tu carpeta personal llamado
+\texttt{holaMundoLatex}, un documento .tex dentro llamado \texttt{holaMundo.tex}
+y te habrás situado en él para trabajar. En las páginas siguientes podrás ver
+cómo crear el primer documento. Recuerda que el fichero de este tutorial dispone
+de compilación con \texttt{make}, los que tú crees no.
+
 \subsubsection{Instalación en Microsoft Windows}
 En sistemas Windows, la instalación se realiza como otras herramientas de
 \textit{software}, se descarga un \texttt{.exe} y se siguen las instrucciones
 del instalador. En nuestro caso, debemos instalar dos programas:
 \begin{itemize}
-    \item MikTex, el <<motor>> de \LaTeX{}, que nos permitiría compilar
-        mediante línea de comandos. Este programa se puede descargar desde 
-        \href{https://miktex.org/download}{aquí}. 
+    \item MikTex, el <<motor>> de \LaTeX{}, que nos permitiría compilar,
+         pero sin ofrecernos asistencia a la edición.
+        Este programa se puede descargar desde
+         \href{https://miktex.org/download}{aquí}. 
     \item TexStudio, el editor de documentos \LaTeX{}, que nos permite compilar
-        sin tener que usar la línea de comandos de Windows. Se puede descargar
-        desde \href{https://www.texstudio.org/}{aquí}.
+        sin tener que usar la línea de comandos de Windows. Y nos ofrece
+        asistencia a la edición y funcionalidades como corrector ortográfico.
+        Se puede descargar desde \href{https://www.texstudio.org/}{aquí}.
 \end{itemize}
+
 Durante el proceso de
 instalación de MikTex se nos hará decidir la ruta de instalación y si permitimos
 que el programa descargue de internet los paquetes necesarios. Yo
@@ -276,12 +299,15 @@ se ve en la Figura \ref{fig:miktex}: \nameref{fig:miktex}.
     \caption{Opciones de instalación de MikTex}
     \label{fig:miktex}
 \end{figure}
+
 Cuando se tengan los dos programas instalados, deberá abrirse el fichero
 \texttt{document.tex} que se encuentra en esta carpeta
 con el segundo programa (TexStudio). Una vez hecho hecho, debe pulsarse la tecla
 F5, que nos compilará el documento, generará el pdf y mostrará el resultado a la
 derecha como se puede ver en la figura \ref{fig:texstudio}:
-\nameref{fig:texstudio}
+\nameref{fig:texstudio}. Como este ejemplo incluye referencias bibliográficas,
+no se van a crear bien, porque hacen falta pasos adicionales para eso, pero
+se generará el PDF, y en secciones posteriores se explica lo que hay que hacer.
 
 \begin{figure}[H]
     \center
@@ -302,7 +328,7 @@ lo que es el \textit{typesetting}. Sí voy a explicar someramente qué es
 través de archivos de texto plano, que no contienen en sí mismos información
 sobre el formato, sino que utilizan secuencias especiales de caracteres para
 indicar cómo ha de presentarse el contenido en un documento distinto.
-\subsection{Archivos .tex}
+\subsection{Archivos .tex} \label{ArchivosTex}
 Un archivo .tex es donde escribimos el código \LaTeX{}, es decir, la sucesión
 de contenido y comandos que generará un documento. El
 programa que genera el documento (generalmente pdf) a partir del código LaTeX
@@ -318,6 +344,7 @@ Un documento en latex mínimo tiene estas líneas:
 Algún texto.
 \end{document}
 \end{verbatim}
+
 Para empezar: las palabras que van precedidas de una barra inclinada inversa
 se llaman <<comandos>>, y son órdenes que se le dan al renderizador de \LaTeX{},
 es decir, no se imprimirán en nuestro pdf (o no literalmente).
@@ -352,6 +379,19 @@ paquetes, esto se hace mediante la orden \texttt{\textbackslash usepackage}.
 Estos paquetes permiten añadir muchas funcionalidades que son necesarias. De 
 hecho, hoy en día cualquier documento moderno incluye muchos paquetes. Si
 se observa el preámbulo de este documento, se verá que hay, de hecho, muchos.
+
+\textbf{Nota sobre paquetes:} para realizar muchas de las tareas que se explican
+aquí se han incluido paquetes, para saber qué paquete es necesario para cada
+cosa, acuda a los comentarios del código.
+
+Ahora que ya hemos visto el contenido mínimo de un archivo .tex, puedes abrir
+aquél que creaste en el punto \ref{instGNULinux} y copiar los ejemplos
+que estamos viendo en él, para compilarlo en Linux y crear un pdf, puedes
+ejecutar (recuerda situarte en el directorio donde creaste el archivo):
+\begin{verbatim}
+pdflatex holaMundo.tex
+\end{verbatim}
+En Windows, puedes abrir el archivo .tex con TexStudio y compilarlo con F5.
 
 Además, por su herencia o similitud con otros lenguages formales,
 de programación y de marcado, \LaTeX{} tiene la posibilidad de incluir 
@@ -412,11 +452,12 @@ comandos para manipular la presentación del texto.
     \item \textbf{textbf:} Pone el texto en negrita. 
     \item \textbf{texttt:} Utiliza fuente monoespaciada (como la de las máquinas
         de escribir).
+    \item \textbf{textsc:} Pone el texto en versalitas (letras del mismo tamaño
+    que las minúsculas, pero que se escriben como mayúsculas).
 \end{itemize}
 Estos comandos deben ponerse en nuestros archivos \texttt{.tex}
-con una barra inclinada hacia atrás delante, como todos los comandos de \LaTeX{}
-.
-Y seguidos de dos llaves,
+con una barra inclinada hacia atrás delante, como todos los comandos de 
+\LaTeX{} y seguidos de dos llaves,
 dentro de las cuales incluiremos el texto que queramos modificar. Por ejemplo:
 \begin{verbatim}
 Este es el primer párrafo de esta sección,
@@ -425,7 +466,8 @@ en cualquier texto podemos incluir texto en
 podríamos incluir texto en 
 \textbf{\textit{negrita y cursiva}}. 
 \end{verbatim}
-sería el código en \LaTeX{} que renderizaría el párrafo que se ve a continuación:
+sería el código en \LaTeX{} que renderizaría el párrafo que se ve a
+continuación:
 
 
 % párrafo con texto en distintos formatos, textit es itálita, textbf es 
@@ -439,7 +481,8 @@ podemos incluir texto en
 \textbf{\textit{negrita y cursiva}}.>> (sin las comillas).
 
 Si queremos escribir comandos u órdenes
-de programación, podemos ponerlo en monoespaciado: \texttt{ls -la}.
+de programación, podemos ponerlo en monoespaciado con
+\texttt{\textbackslash{texttt}}, por ejemplo: \texttt{ls -la}.
 Además, el comando de énfasis (\texttt{emph}) nos maneja el énfasis
 automáticamente.
 Por ejemplo, el código:
@@ -967,7 +1010,8 @@ Los acentos más comunes son:
     \texttt{vec} & $\vec{v}$ \\\hline
     \texttt{bar} & $\bar{v}$ \\\hline
     \texttt{hat} & $\hat{v}$ \\\hline
-    \texttt{widehat} & $\widehat{\vec{v},\,\vec{w}}$ \\\hline
+    \texttt{widehat} & $\widehat{v,\,w}
+                                 \vphantom{\matrix{ \cr \cr \cr}}$ \\\hline
     \texttt{acute} & $\acute{v}$ \\\hline
     \texttt{grave} & $\grave{v}$ \\\hline
     \texttt{dot} & $\dot{v}$ \\\hline
@@ -1522,7 +1566,153 @@ las fuentes bibliográficas, se debe acudir al menú:
 para que se genere la bibliografía, y se debe hacer \textbf{después} de 
 compilar una primera vez.
 
+\newpage\section{Decoración e indización}
+De momento no se han visto órdenes para crear índices, tablas de contenido,
+pies de página y encabezados ni portadas como las que tiene este documento.
+En esta sección veremos cómo se ha formateado este documento,
+pero lo recomendable es que se quiere copiar alguna característica, simplemente
+se incluya el código en tus propios documentos.
+\subsection{La portada}
+La clase article se creó para artículos científicos, así que no está preparada
+para crear portadas tal y como las crean otros editores de texto como 
+Word. Lo cual no es un gran inconveniente. Para crear la portada de este
+documento se han seguido estos pasos:
+\begin{enumerate}
+    \item En el preámbulo del documento
+    \begin{enumerate}
+        \item Se ha usado el comando \texttt{\textbackslash{title}}
+        para indicar qué título ha de salir en la portada.
+        \item Se ha usado el comando \texttt{\textbackslash{author}}
+         para decir qué autor.
+    \end{enumerate}
+    \item En el contenido del documento
+    \begin{enumerate}
+        \item Se ha usado el comando \texttt{\textbackslash{maketile}}
+        para crear la portada propiamente dicha.
+    \end{enumerate}
+\end{enumerate}
 
+En términos mínimos, en el documento .tex habrá ahora lo siguiente:
+\begin{verbatim}
+\documentclass{article}
+\title{Título}
+\author{Autor de Ejemplo}
+\begin{document}
+\maketitle
+Primer texto del documento.
+\end{document}
+\end{verbatim}
+
+Esto generará un documento con un título, el nombre del autor y la fecha,
+pero el primer texto del documento saldrá en la misma página, y esa página
+estará numerada, como 1. Además, la fecha estará en inglés. No es lo ideal.
+Las siguientes tareas que llevaremos a cabo son:
+\begin{enumerate}
+\item Que la portada no se numere.
+\item Que la portada esté en su propia página.
+\item Modificar la fecha para que salga en español.
+\end{enumerate}
+
+Para conseguir la primera tarea, usaremos el comando 
+\texttt{\textbackslash{pagenumbering\{gobble\}}}, que hace que las páginas
+no se numeren. Este efecto dura hasta que se use otra orden que sobreescriba
+este comportamiento.
+Para la segunda, vamos a utilizar
+el comando \texttt{newpage}, que hace que el siguiente texto salga en la página
+siguiente. Ahora, para que las siguiente páginas sí se numeren, usaremos la
+orden \texttt{\textbackslash{pagenumbering\{arabic\}}},
+así se numerarán con números arábigos.
+Finalmente, para la tercera, vamos a utilizar el paquete babel, este
+paquete <<traduce>> los textos automáticos (títulos, fechas...) a español,
+y da mejor soporte a símbolos del español. En el preámbulo del documento
+pondremos simplemente: \texttt{\textbackslash{usepackage\{babel\}}}.
+El contenido del documento debería ser, por tanto:
+\begin{figure}[H]
+\begin{verbatim}
+\documentclass{article}
+
+\title{Título}
+\author{Autor de Ejemplo}
+
+\usepackage[spanish]{babel}
+
+\begin{document}
+\maketitle
+\pagenumbering{gobble}
+\newpage
+\pagenumbering{arabic}
+
+Primer texto del documento.
+
+\end{document}
+\end{verbatim}
+\end{figure}
+Como colofón final, se puede hacer el texto del título y el autor más grande
+utilizando los modificadores de tamaño del texto
+(ver Tabla \ref{tab:comLetSize}: \nameref{tab:comLetSize}).
+
+\subsection{Tablas de contenido}
+Para insertar una tabla de contenido, simplemente se puede incluir en el 
+contenido del documento, después de la portada (y de la orden
+\texttt{newpage}, la orden
+\texttt{\textbackslash{tableofcontents}}, si se desea que el siguiente
+texto después de la tabla aparezca en otra página, se puede volver a usar
+\texttt{newpage}. Recuerda incluir alguna sección para que el índice no esté
+vacío, por ejemplo, incluiremos la sección <<prueba>>. Con estos cambios,
+el documento quedaría así:
+
+\begin{figure}[H]
+\begin{verbatim}
+\documentclass{article}
+\title{Título}
+\author{Autor de Ejemplo}
+\usepackage[spanish]{babel}
+\begin{document}
+\maketitle
+\pagenumbering{gobble}
+\newpage
+\pagenumbering{arabic}
+\tableofcontents
+\newpage
+\section{Prueba}
+Primer texto del documento.
+\end{document}
+\end{verbatim}
+\end{figure}
+
+Para los índices de figuras y tablas, existen las órdenes \texttt{listoffigures}
+y \texttt{listoftables}. Recuerda añadir la orden \texttt{newpage} donde
+quieras que el texto salga en la página siguiente. El único problema es que,
+predeterminadamente, el paquete babel traduce <<tabla>> como <<cuadro>>, de tal
+modo que el título de nuestro índice de tablas es <<Índice de cuadros>>, para
+arreglar eso se debe añadir una opción al paquete babel, dejando la línea 
+donde se incluye como:
+\begin{verbatim}
+\usepackage[spanish,es-tabla]{babel}
+\end{verbatim}
+\subsection{Numeración de páginas}
+En algunas organizaciones o estilos, se recomienda que el índice -o índices-,
+prólogos, prefacios y demás contenido anterior al \textbf{cuerpo} del texto
+estén en páginas numeradas en números romanos y el resto en números arábigos.
+Vale la pena mencionar que, en español, se desaconseja utilizar números romanos
+en minúscula(\cite{raeRoman}). El resto de páginas (las del contenido del
+texto), se numeran en números arábigos. Además, personalmente recomiendo, al
+menos en el cuerpo del texto, incluir el número total de páginas. Esto es una
+medida de integridad, así, en caso de transmisión o impresión del texto, si
+alguna página del final se extraviare, el lector se daría cuenta de que faltan.
+
+En general, hay que modificar los encabezados y pies de página. Para esto,
+utilizaremos el paquete \texttt{fancyhdr}, que nos permite editar el contenido
+en tres posiciones del encabezado y del pie de página: izquierda, central y 
+derecha.
+
+Para hacer esto, se deben poner las siguientes órdenes, estas órdenes pueden
+ir en el preámbulo del documento o en el contenido. Si se ponen en el contenido
+debe tener en cuenta que sólo afectarán a las páginas posteriores a su situación
+en el código, es una buena manera de definir numeraciones distintas en distintas
+partes del documento como, de hecho, se ha hecho en este.
+
+\Huge{Terminar}\normalsize
 \newpage
 \section{Licencias y agradecimiento}
 Todas las páginas citadas son de sus respectivos creadores, yo sólo me limito
