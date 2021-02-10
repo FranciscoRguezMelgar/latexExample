@@ -1834,7 +1834,7 @@ par se usaría el comando \texttt{\textbackslash{cleardoublepage}}. Si se va
 a imprimir el documento a dos caras, sería recomendable usarlo tras la portada
 (para dejar una página en blanco que sería su parte de atrás) y después de los
 índices.
-\subsection{Tamaño de página y márgenes}
+\subsubsection{Tamaño de página y márgenes}
 Las clases de documento de \LaTeX{} tienen una distribución de página 
 predeterminada, en el caso de la clase \emph{article}, éstos son unos márgenes
 bastante anchos, a continuación se puede ver una comparación entra 
@@ -1876,7 +1876,7 @@ se puede indicar en la clase del documento con esta opción:
 \texttt{\textbackslash{documentclass[a4paper]\{article\}}}.
 \item Margen lateral.
 \item Margen inferior.
-\item Tamaño del encabezado.
+\item Tamaño del pie de página.
 \end{enumerate}
 
 \newpage\section{Licencias y agradecimiento}
