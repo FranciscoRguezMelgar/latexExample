@@ -62,8 +62,30 @@
 
 %Permite figuras de figuras
 \usepackage{subcaption}
-%%%%%%%%%%%%%%%%%%%% FIN SECCIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%coloreado syntaxis
+\usepackage{listings}
+% mejores colores
+\usepackage[dvipsnames]{xcolor}
 
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{lightYellow}{RGB}{251, 255, 212}
+%%%%%%%%%%%%%%%%%%%% FIN SECCIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\lstset{
+    basicstyle=\ttfamily,
+    numberstyle=\ttfamily,
+    frame=rlbt, % draw a frame at the top and bottom of the code block
+    tabsize=4, % tab space width
+    showstringspaces=false, % don't mark spaces in strings
+    numbers=left, % display line numbers on the left
+    commentstyle=\color{gray}, % comment color
+    keywordstyle=\color{blue}, % keyword color
+    stringstyle=\color{red}, % string color
+    backgroundcolor=\color{lightYellow},
+    captionpos=b,
+    breaklines=true
+}
+\renewcommand{\lstlistlistingname}{Lista de \lstlistingname s}
+\renewcommand{\lstlistingname}{Programa}
 % Vamos a permitir más niveles de título, hasta 5.
 \setcounter{secnumdepth}{5}
 % Esto hace que la tabla de contenidos muestre hasta el nivel 3.
@@ -353,12 +375,12 @@ se llaman <<comandos>>, y son órdenes que se le dan al renderizador de \LaTeX{}
 es decir, no se imprimirán en nuestro pdf (o no literalmente).
 Debido a que los comandos se incluyen
 con ese caracter especial, si quisiéramos escribir una barra inversa en el 
-documento, deberíamos usar el comando \texttt{\textbackslash textbackslash}, 
+documento, deberíamos usar el comando \verb|\textbackslash|, 
 seguido de un espacio. Si no, \LaTeX{} interpretaría que la siguiente palabra
 es un comando. Además, los comandos reciben argumentos, que van entre llaves.
 Como las llaves son otro carácter especial usado por el lenguaje, para 
 incluirlas en nuestro texto, éstas deben ir precedidas de una barra inclinada
-inversa, es decir, son otro comando: \texttt{\textbackslash \{} produciría:
+inversa, es decir, son otro comando: \verb|\textbackslash \{}| produciría:
 <<\{>> (sin las comillas).
 
 La clase del documento será una palabra que definirá un estilo de documento
@@ -372,13 +394,13 @@ es muy difícil cambiarla una vez se han escrito y formateado una cuantas
 páginas.
 
 Todo lo que hay antes de la línea donde pone 
-\texttt{\textbackslash begin\{document\}}, sin incluirla, se denomina el 
+\verb|\begin{document}|, sin incluirla, se denomina el 
 \textbf{preámbulo del documento}. Y lo que existe entre la línea
-\texttt{\textbackslash begin\{document\}} y la línea
-\texttt{\textbackslash end\{document\}} se considera el contenido del
+\verb|\begin{document}| y la línea
+\verb|\end{document}| se considera el contenido del
 documento. En el preámbulo se incluyen numerosas órdenes que afectarán a cómo
 el documento se renderiza, una de las más importantes es la inclusión de
-paquetes, esto se hace mediante la orden \texttt{\textbackslash usepackage}.
+paquetes, esto se hace mediante la orden \verb|\usepackage|.
 Estos paquetes permiten añadir muchas funcionalidades que son necesarias. De 
 hecho, hoy en día cualquier documento moderno incluye muchos paquetes. Si
 se observa el preámbulo de este documento, se verá que hay, de hecho, muchos.
@@ -404,7 +426,7 @@ texto en un archivo \texttt{.tex} que vaya en la misma línea que un signo de
 procentaje y después de él no se renderizará. \textbf{Esto incluye el salto
 de lína del final}. De nuevo, si se quiere incluir un signo de porcentaje
 en el texto, debemos incluir antes de él una barra inclinada inversa, es decir:
-\texttt{\textbackslash{\%}} generaría el signo de porcentaje.
+\verb|\%| generaría el signo de porcentaje.
 Veamos un ejemplo:
 \begin{verbatim}
 \documentclass{article}
@@ -485,7 +507,7 @@ podemos incluir texto en
 
 Si queremos escribir comandos u órdenes
 de programación, podemos ponerlo en monoespaciado con
-\texttt{\textbackslash{texttt}}, por ejemplo: \texttt{ls -la}.
+\verb|\texttt|, por ejemplo: \texttt{ls -la}.
 Además, el comando de énfasis (\texttt{emph}) nos maneja el énfasis
 automáticamente.
 Por ejemplo, el código:
@@ -528,7 +550,7 @@ de texto distintos, éstos son:
 
 Nótese que estos comandos cambian el tamaño de \textbf{todo el texto que vaya
 tras ellos}, para hacer que el texto siguiente vuelva a ser de tamaño normal,
-debe escribirse la orden \texttt{\textbackslash normalsize} al final del texto
+debe escribirse la orden \verb|\normalsize| al final del texto
 cuyo tamaño queramos modificar.
 
 Y, ya que se ha dicho que se pueden elegir tamaños distintos de letra para el
@@ -592,8 +614,9 @@ Ese código generaría la siguiente lista:
 En el momento en que nuestro documento sea ligeramente más largo que una página
 es probable que queramos añadir títulos de sección y de subsecciones.
 Como se puede ver en el código, una sección se define fácilmente, con la
- orden \texttt{\textbackslash{}section}, también existen \texttt{\textbackslash
-subsection} y \texttt{\textbackslash{}subsubsection}. 
+ orden \verb|\section{<título de la sección>}|, también existen
+\verb|\subsection{<título de la sección>}| y
+\verb|\subsubsection{<título de la sección>}|
 A partir de ahí, si se requieren títulos de un nivel más
 profundo, hay que usar otras órdenes. Esto depende de la clase de documento
 escogida. En este caso, article.
@@ -625,7 +648,7 @@ matemáticas de manera simple. Si queremos una ecuación matemática en bloque
 un línea nueva, la ecuación (que puede ocupar varias líneas) y otros dos signos
  de dolar. De nuevo, al ser el signo de dolar un símbolo especial de \LaTeX{},
 si queremos incluirlo de manera literal, debe ir precedido de una barra
-inclinada inversa: \texttt{\textbackslash{\$}}. Por ejemplo:
+inclinada inversa: \verb|\$|. Por ejemplo:
 \begin{verbatim}
 $$
 G\cdot\frac{m_1\cdot m_2}{d^2}
@@ -648,20 +671,19 @@ $ax^2+bx+c = d : a \ne 0$. Se ha escrito así:[...]
 \end{verbatim}
 Algunas de las órdenes más comunes en matemáticas son:
 \begin{enumerate}
-\item Superíndices: \texttt{\$base\^{}\{exponente\}\$} produce:
+\item Superíndices: \verb|$base^exponente$| produce:
 $base^{exponente}$.
 \item Subíndices:
-\texttt{\$base\_{}\{sub\textbackslash{acute}\{\textbackslash{\{imath\}}ndice\$}
-    produce: $base_{sub\acute{\imath}ndice}$.
+\verb|$base_{sub\acute{\imath}ndice}$| produce: $base_{sub\acute{\imath}ndice}$.
     \begin{enumerate}
-        \item La orden \texttt{\textbackslash{imath}} genera una i sin punto,
-        existe un análogo para la j, \texttt{\textbackslash{jmath}}.
-        \item la orden \texttt{\textbackslash{acute}} genera un acento agudo
+        \item La orden \verb|\imath| genera una i sin punto,
+        existe un análogo para la j, \verb|\jmath|.
+        \item la orden \verb|\acute| genera un acento agudo
         en la letra, sin el comando anteriormente mencionado, saldría encima
         del punto de la i.
     \end{enumerate}
-\item Fracciones:  \texttt{\$\textbackslash
-frac\{numerador\}\{denominador\}\$} produce: $\frac{numerador}{denominador}$.
+\item Fracciones:  \verb|$\frac{numerador}{denominador}$.|
+ produce: $\frac{numerador}{denominador}$.
 \end{enumerate}
 
 \subsubsection{Símbolos matemáticos avanzados}
@@ -681,7 +703,7 @@ $$
 $$
 En \LaTeX{}, si queremos rodear cualquier parte de una ecuación con símbolos como
 paŕentesis, corchetes y demás, lo tenemos que hacer con las órdenes 
-\texttt{\textbackslash left} y \texttt{\textbackslash right} seguidas del
+\verb|\left| y \verb|\right| seguidas del
 símbolo que queramos utilizar, por ejemplo si queremos una matriz rodeada
 de paréntesis, ponemos:
 \begin{verbatim}
@@ -712,25 +734,19 @@ Algunos delimitadores de left y right son:
 \texttt{[ ]} & \Large$\left[m\atop n\right]$\normalsize \\ 
 &\\\hline
 &\\
-\texttt{\textbackslash{\{} \textbackslash{\}}} &
-                                \Large$\left\{m\atop n\right\}$\normalsize \\ 
+\verb|{ }| &  \Large$\left\{m\atop n\right\}$\normalsize \\ 
 &\\\hline
 &\\
-\texttt{\textbackslash{lceil} \textbackslash{rceil}} &
-                       \Large$\left\lceil m\atop n\right\rceil$\normalsize \\ 
+\verb|\lceil \rceil| & \Large$\left\lceil m\atop n\right\rceil$\normalsize \\ 
 &\\\hline
 &\\
-\texttt{\textbackslash{lfloor} \textbackslash{rfloor}} &
-                       \Large$\left\lfloor m\atop n\right\rfloor$\normalsize \\ 
-&\\\hline
-
-&\\
-\texttt{<  >} &
-                               \Large$\left< m\atop n\right>$\normalsize \\ 
+\verb|\lfloor \rfloor|& \Large$\left\lfloor m\atop n\right\rfloor$\normalsize \\ 
 &\\\hline
 &\\
-\texttt{.  .} &
-                               \Large$\left. m\atop n\right.$\normalsize \\ 
+\texttt{<  >} & \Large$\left< m\atop n\right>$\normalsize \\ 
+&\\\hline
+&\\
+\texttt{.  .} & \Large$\left. m\atop n\right.$\normalsize \\ 
 &\\\hline
 \end{tabular}
 \caption{Delimitadores para los comandos left y right}
@@ -742,7 +758,7 @@ pero, de nuevo, no puede haber un comando left sin su correspondiente right,
 ni viceversa, aunque los delimitadores de ambos sean diferentes.
 
 Los símbolos del cálculo integral y diferencial son sencillos, la integral
-se escribe como \texttt{\textbackslash int\{\}}. Por ejemplo, el código:  
+se escribe como \verb|\int|. Por ejemplo, el código:  
 \begin{verbatim}
 $$
 \int{x \, dx }
@@ -752,7 +768,7 @@ Generaría la siguiente ecuación:
 $$
 \int{x \, dx }
 $$
-Nótese que es necesario poner \texttt{\textbackslash ,} para que se genere
+Nótese que es necesario poner \verb|\,| para que se genere
 un espacio entre la x y el diferencial de x. Si queremos generar integrales
 con límites, debemos usar la notación de superíndices y subíndices justo
 después del comando \texttt{int}.
@@ -786,7 +802,7 @@ $$
 \int{\int{\int_{0}^{10}{f(x,y,z)\,dx\,dy\,dz}}}
 $$
 Si se requiere la integral de superficie se puede usar la orden
-\texttt{\textbackslash oint}:
+\verb|\oint|:
 $$
 \oint{x\,dx}
 $$
@@ -803,7 +819,7 @@ $$
 \sen^2{(x)} +\cos^2{(x)} = 1;\, \frac{\sen{(x)}}{\cos{(x)}} = \tan{(x)}
 $$
 \end{verbatim}
-generaría el siguiente resultado (nótese el \texttt{\textbackslash{},}
+generaría el siguiente resultado (nótese el \verb|\,|
 para generar un espacio:
 $$
 \sen^2{(x)} +\cos^2{(x)} = 1;\, \frac{\sen{(x)}}{\cos{(x)}} = \tan{(x)}
@@ -819,35 +835,35 @@ son:
     \texttt{<} & $<$ &Es menor que\\ \hline
     \texttt{>} & $>$ &Es mayor que\\ \hline
     \texttt{=} & $=$ & Es igual a\\ \hline
-    \texttt{\textbackslash{}le} & $\leq$ &Menor o igual que\\ \hline
-    \texttt{\textbackslash{}ge} & $\geq$ &Mayor o igual que\\ \hline
-    \texttt{\textbackslash{}subset} & $\subset$ &Es subconjunto de\\ \hline
-    \texttt{\textbackslash{}supset} & $\supset$ &Es superconjunto de \\ \hline
-    \texttt{\textbackslash{}subseteq} & $\subseteq$ &Es subconjunto o igual a  \\ \hline
-    \texttt{\textbackslash{}supseteq} & $\supseteq$ &Es superconjunto o igual a \\ \hline
-    \texttt{\textbackslash{}in} & $\in$ & Está en\\ \hline
-    \texttt{\textbackslash{}prec} & $\prec$ & Precede a\\ \hline
-    \texttt{\textbackslash{}preceq} & $\preceq$ & Precede o es igual a\\ \hline
-    \texttt{\textbackslash{}succ} & $\succ$ & Antecede a\\ \hline
-    \texttt{\textbackslash{}succeq} & $\succeq$ & Antecede o es igual a\\ \hline
-    \texttt{\textbackslash{}equiv} & $\equiv$ & Equivale, coincide con\\ \hline
-    \texttt{\textbackslash{}approx} & $\approx$ & Es, aproximadamente\\ \hline
-    \texttt{\textbackslash{}cup} & $\cup$ & Unión de conjuntos\\ \hline
-    \texttt{\textbackslash{}cap} & $\cap$ & Intersección de conjuntos\\ \hline
-    \texttt{\textbackslash{}land} & $\land$ &Conjunción lógica\\ \hline
-    \texttt{\textbackslash{}lor} & $\lor$ &Disyunción lógica\\ \hline
-    \texttt{\textbackslash{}times} & $\times$ &Producto vectorial\\ \hline
-    \texttt{\textbackslash{}cdot} & $\cdot$ &Punto medio (producto)\\ \hline
-    \texttt{\textbackslash{}oplus} & $\oplus$ &Disyunción exclusiva\\ \hline
-    \texttt{\textbackslash{}pm} & $\pm$ &Más menos\\ \hline
-    \texttt{\textbackslash{}mp} & $\mp$ &Menos más\\ \hline
+    \verb|\le| & $\leq$ &Menor o igual que\\ \hline
+    \verb|\ge| & $\geq$ &Mayor o igual que\\ \hline
+    \verb|\subset| & $\subset$ &Es subconjunto de\\ \hline
+    \verb|\supset| & $\supset$ &Es superconjunto de \\ \hline
+    \verb|\subseteq| & $\subseteq$ &Es subconjunto o igual a  \\ \hline
+    \verb|\supseteq| & $\supseteq$ &Es superconjunto o igual a \\ \hline
+    \verb|\in| & $\in$ & Está en\\ \hline
+    \verb|\prec| & $\prec$ & Precede a\\ \hline
+    \verb|\preceq| & $\preceq$ & Precede o es igual a\\ \hline
+    \verb|\succ| & $\succ$ & Antecede a\\ \hline
+    \verb|\succeq| & $\succeq$ & Antecede o es igual a\\ \hline
+    \verb|\equiv| & $\equiv$ & Equivale, coincide con\\ \hline
+    \verb|\approx| & $\approx$ & Es, aproximadamente\\ \hline
+    \verb|\cup| & $\cup$ & Unión de conjuntos\\ \hline
+    \verb|\cap| & $\cap$ & Intersección de conjuntos\\ \hline
+    \verb|\land| & $\land$ &Conjunción lógica\\ \hline
+    \verb|\lor| & $\lor$ &Disyunción lógica\\ \hline
+    \verb|\times| & $\times$ &Producto vectorial\\ \hline
+    \verb|\cdot| & $\cdot$ &Punto medio (producto)\\ \hline
+    \verb|\oplus| & $\oplus$ &Disyunción exclusiva\\ \hline
+    \verb|\pm| & $\pm$ &Más menos\\ \hline
+    \verb|\mp| & $\mp$ &Menos más\\ \hline
     \end{tabular}
     \label{tab:binOperators}
     \caption{Símbolos matemáticos de relaciones binarias}
 \end{table}
 Todos los símbolos pueden ser negados (tachados con una línea ligeramente 
-oblicua) si se preceden del operador \texttt{\textbackslash not}.
-Por ejemplo \texttt{\textbackslash not\textbackslash in} producirá $\not\in{}$.
+oblicua) si se preceden del operador \verb|\not|.
+Por ejemplo \verb|\not\in| producirá $\not\in{}$.
 También están disponibles las letras griegas, tanto mayúsculas como minúsculas:
 
 \begin{table}[H]
@@ -857,91 +873,91 @@ También están disponibles las letras griegas, tanto mayúsculas como minúscul
     \textbf{Letra} & \textbf{Mayúscula} &
         \textbf{Minúscula} & \textbf{Presentación} \\ \hline
 
-    alfa & \texttt{\textbackslash alpha} &
+    alfa & \verb|\alpha| &
         \texttt{A} & $\alpha\, A$ \\ \hline
 
-    beta & \texttt{\textbackslash beta} &
+    beta & \verb|\beta| &
         \texttt{B} & $\beta\, B$ \\ \hline
 
-    gamma & \texttt{\textbackslash gamma} &
-        \texttt{\textbackslash Gamma} & $\gamma\,\Gamma$ \\ \hline
+    gamma & \verb|\gamma| &
+        \verb|\Gamma| & $\gamma\,\Gamma$ \\ \hline
 
-    delta & \texttt{\textbackslash delta} &
-        \texttt{\textbackslash Delta} & $\delta\,\Delta$ \\ \hline
+    delta & \verb|\delta| &
+        \verb|\Delta| & $\delta\,\Delta$ \\ \hline
 
-    épsilon & \texttt{\textbackslash epsilon} &
+    épsilon & \verb|\epsilon| &
         \texttt{E} & $\epsilon\,E$ \\ \hline
 
-    varépsilon & \texttt{\textbackslash varepsilon} &
+    varépsilon & \verb|\varepsilon| &
         --& $\varepsilon$ \\ \hline
 
-    zeta & \texttt{\textbackslash zeta} &
-        \texttt{\textbackslash Zeta} & $\zeta\,Z$ \\ \hline
+    zeta & \verb|\zeta| &
+        \verb|\Zeta| & $\zeta\,Z$ \\ \hline
 
-    eta & \texttt{\textbackslash eta} &
-        \texttt{\textbackslash Eta} & $\eta\,H$ \\ \hline
+    eta & \verb|\eta| &
+        \verb|\Eta| & $\eta\,H$ \\ \hline
 
-    teta & \texttt{\textbackslash tetha} &
-        \texttt{\textbackslash Theta} & $\theta\,\Theta$ \\ \hline
+    teta & \verb|\tetha| &
+        \verb|\Theta| & $\theta\,\Theta$ \\ \hline
 
-    varteta & \texttt{\textbackslash vartetha} &
+    varteta & \verb|\vartetha| &
         --& $\vartheta$ \\ \hline
 
-    iota & \texttt{\textbackslash iota} &
+    iota & \verb|\iota| &
         \texttt{I} & $\iota\,I$ \\ \hline
 
-    kappa & \texttt{\textbackslash kappa} &
-        \texttt{\textbackslash Kappa} & $\kappa \, K$\\ \hline
+    kappa & \verb|\kappa| &
+        \verb|\Kappa| & $\kappa \, K$\\ \hline
 
-    lambda & \texttt{\textbackslash lambda} &
-        \texttt{\textbackslash Lambda} & $\lambda\,\Lambda$ \\ \hline
+    lambda & \verb|\lambda| &
+        \verb|\Lambda| & $\lambda\,\Lambda$ \\ \hline
 
-    mu & \texttt{\textbackslash mu} & \texttt{M} & $\mu\,M$ \\ \hline
+    mu & \verb|\mu| & \texttt{M} & $\mu\,M$ \\ \hline
 
-    nu & \texttt{\textbackslash nu} & \texttt{N} & $\nu\,N$ \\ \hline
+    nu & \verb|\nu| & \texttt{N} & $\nu\,N$ \\ \hline
 
-    xi & \texttt{\textbackslash xi} &
-        \texttt{\textbackslash Xi} & $\xi\,\Xi$ \\ \hline
+    xi & \verb|\xi| &
+        \verb|\Xi| & $\xi\,\Xi$ \\ \hline
 
     o & \texttt{o} & \texttt{O} &
         $o\,O$ \\ \hline
 
-    pi & \texttt{\textbackslash pi} &
-        \texttt{\textbackslash Pi} & $\pi\,\Pi$ \\ \hline
+    pi & \verb|\pi| &
+        \verb|\Pi| & $\pi\,\Pi$ \\ \hline
 
-    varpi & \texttt{\textbackslash varpi} &
+    varpi & \verb|\varpi| &
         --& $\varpi$ \\ \hline
 
-    rho & \texttt{\textbackslash rho} &
+    rho & \verb|\rho| &
         \texttt{P} & $\rho\,P$ \\ \hline
 
-    varrho & \texttt{\textbackslash varrho} &
+    varrho & \verb|\varrho| &
         --& $\varrho$ \\ \hline
 
-    sigma & \texttt{\textbackslash sigma} &
-        \texttt{\textbackslash Sigma} & $\sigma\,\Sigma$ \\ \hline
+    sigma & \verb|\sigma| &
+        \verb|\Sigma| & $\sigma\,\Sigma$ \\ \hline
 
-    varsigma & \texttt{\textbackslash varsigma} &--& $\varsigma$ \\ \hline
+    varsigma & \verb|\varsigma| &--& $\varsigma$ \\ \hline
 
-    tau & \texttt{\textbackslash tau} & \texttt{T} & $\tau\,T$ \\ \hline
+    tau & \verb|\tau| & \texttt{T} & $\tau\,T$ \\ \hline
 
-    upsilon & \texttt{\textbackslash upsilon} &
-        \texttt{\textbackslash Upsilon} & $\upsilon\,\Upsilon$ \\ \hline
+    upsilon & \verb|\upsilon| &
+        \verb|\Upsilon| & $\upsilon\,\Upsilon$ \\ \hline
 
-    fi & \texttt{\textbackslash phi} &
-        \texttt{\textbackslash Phi} & $\phi\,\Phi$ \\ \hline
+    fi & \verb|\phi| &
+        \verb|\Phi| & $\phi\,\Phi$ \\ \hline
 
-    varfi & \texttt{\textbackslash varphi} &
+    varfi & \verb|\varphi| &
         --& $\varphi$ \\ \hline
 
-    chi & \texttt{\textbackslash chi} &
+    chi & \verb|\chi| &
         \texttt{X} & $\chi\,X$ \\ \hline
 
-    psi & \texttt{\textbackslash psi} &
-        \texttt{\textbackslash Psi} & $\psi\,\Psi$ \\ \hline
+    psi & \verb|\psi| &
+        \verb|\Psi| & $\psi\,\Psi$ \\ \hline
 
-    omega & \texttt{\textbackslash omega} &
-        \texttt{\textbackslash Omega} & $\omega\,\Omega$ \\ \hline
+    omega & \verb|\omega| &
+        \verb|\Omega| & $\omega\,\Omega$ \\ \hline
 
     \end{tabular}
     \label{tab:greekLetters}
@@ -952,12 +968,12 @@ regla: se escribe, seguida, la dirección de origen de la flecha,
 después la de llegada, y si se pone la primera letra en mayúsculas, será una
 flecha doble:
 \begin{itemize}
-\item \texttt{\textbackslash rightarrow} genera $\rightarrow$.
-\item \texttt{\textbackslash Rightarrow} genera $\Rightarrow$.
-\item \texttt{\textbackslash leftarrow} genera $\leftarrow$.
-\item \texttt{\textbackslash lefttarrow} genera $\Leftarrow$.
-\item \texttt{\textbackslash leftrightarrow} genera $\leftrightarrow$.
-\item \texttt{\textbackslash Leftrightarrow} genera $\Leftrightarrow$.
+\item \verb|\rightarrow| genera $\rightarrow$.
+\item \verb|\Rightarrow| genera $\Rightarrow$.
+\item \verb|\leftarrow| genera $\leftarrow$.
+\item \verb|\lefttarrow| genera $\Leftarrow$.
+\item \verb|\leftrightarrow| genera $\leftrightarrow$.
+\item \verb|\Leftrightarrow| genera $\Leftrightarrow$.
 
 ...
 \end{itemize}
@@ -968,20 +984,20 @@ verdadero y falso lógico, existe, para todo...
 \begin{tabular}{|c|c|c|}
     \hline
     \textbf{Comando}&\textbf{Presentación}&\textbf{Descripción} \\ \hline
-    \texttt{\textbackslash infty} & $\infty$ & Símbolo del infinito\\ \hline
-    \texttt{\textbackslash forall} & $\forall$ &Para todo \\ \hline
-    \texttt{\textbackslash exists} & $\exists$ & Existe\\ \hline
-    \texttt{\textbackslash top} & $\top$ &Verdadero lógico \\ \hline
-    \texttt{\textbackslash bot} & $\bot$ &Falso lógico \\ \hline
-    \texttt{\textbackslash lnot} & $\lnot$ &Negación lógica\\ \hline
-    \texttt{\textbackslash partial} & $\partial$ &Derivada parcial \\ \hline
-    \texttt{\textbackslash mathcal\{L\}} & $\mathcal{L}$ &Tranformada de Laplace \\ \hline
-    \texttt{\textbackslash mathcal\{F\}} & $\mathcal{F}$ &Tranformada de Fourier \\ \hline
-    \texttt{\textbackslash propto} & $\propto$ &Es proporcional a \\ \hline
-    \texttt{\textbackslash dots} & $\dots$ &Puntos suspensivos \\ \hline
-    \texttt{\textbackslash ddots} & $\ddots$ &Puntos diagonal\\ \hline
-    \texttt{\textbackslash vdots} & $\vdots$ &Puntos verticales\\ \hline
-    \texttt{\textbackslash cdots} & $\cdots$ &Puntos centrales\\ \hline
+    \verb|\infty| & $\infty$ & Símbolo del infinito\\ \hline
+    \verb|\forall| & $\forall$ &Para todo \\ \hline
+    \verb|\exists| & $\exists$ & Existe\\ \hline
+    \verb|\top| & $\top$ &Verdadero lógico \\ \hline
+    \verb|\bot| & $\bot$ &Falso lógico \\ \hline
+    \verb|\lnot| & $\lnot$ &Negación lógica\\ \hline
+    \verb|\partial| & $\partial$ &Derivada parcial \\ \hline
+    \verb|\mathcal{L}| & $\mathcal{L}$ &Tranformada de Laplace \\ \hline
+    \verb|\mathcal{F}| & $\mathcal{F}$ &Tranformada de Fourier \\ \hline
+    \verb|\propto| & $\propto$ &Es proporcional a \\ \hline
+    \verb|\dots| & $\dots$ &Puntos suspensivos \\ \hline
+    \verb|\ddots| & $\ddots$ &Puntos diagonal\\ \hline
+    \verb|\vdots| & $\vdots$ &Puntos verticales\\ \hline
+    \verb|\cdots| & $\cdots$ &Puntos centrales\\ \hline
 \end{tabular}
 \caption{Símbolos matemáticos varios}
 \label{tab:miscSymbols}
@@ -1025,7 +1041,7 @@ Los acentos más comunes son:
 \end{table}
 
 Nótese que el acento de barra no sirve para poner una barra encima de textos
-largos, esto debe hacerse con el comando \texttt{\textbackslash{overline}}.
+largos, esto debe hacerse con el comando \verb|\overline|.
 Por ejemplo:
 \begin{verbatim}
 $$
@@ -1069,9 +1085,9 @@ Además, en matemáticas se usan fuentes especiales para indicar cosas, por
 ejemplo, una L mayúscula manuscrita es el símbolo de la transformada de Laplace.
 Hay dos comandos que crean estas fuentes:
 \begin{itemize}
-\item \texttt{\textbackslash mathcal\{ABCDEFG\}}: Genera letras escritas a mano
+\item \verb|mathcal\{ABCDEFG}|: Genera letras escritas a mano
 (sólo vale con mayúsculas)\\$\mathcal{ABCDEFG}$
-\item \texttt{\textbackslash mathbb\{PNZQRC\}}: Genera letras de doble trazo,
+\item \verb|mathbb\{PNZQRC}|: Genera letras de doble trazo,
 requiere el paquete amsfonts, incluido en el preámbulo: $\mathbb{PNZQRC}$.
 \end{itemize}
 Como es lógico, si sólo se requiere una letra, sólo ha de escribirse esa letra
@@ -1140,7 +1156,7 @@ para una lista sin numeración, pero en vez de \texttt{itemize} pondremos
 \end{enumerate}
 \subsection{Inclusión de figuras y tablas}
 Para poner imágenes hay que usar la orden 
-\texttt{\textbackslash includegraphics}. Esta orden tiene la siguiente sintaxis
+\verb|includegraphics|. Esta orden tiene la siguiente sintaxis
 % utilizo un bloque verbatim para que se vea en el pdf, pero sólo lo de dentro
 % es la orden
 \begin{verbatim}
@@ -1159,12 +1175,12 @@ la que sigue:
     `-- gatito.jpg
 \end{verbatim}
 
-Podríamos ejecutar la orden \texttt{\textbackslash graphicspath\{\{img/\}\}}
+Podríamos ejecutar la orden \verb|\graphicspath{{img/}}|
 y así sólo tendríamos que especificar el nombre de los archivos, no hace falta 
 especificar extensiones. Nótese que hay una barra inclinada después del nombre
 del directorio y que hay dos llaves, son necesarias ambas cosas. Esto es porque
 podríamos añadir más directorios separados por comas:
-\texttt{\textbackslash graphicspath\{\{img/\},\{images/\}\}} incluiría dos
+\verb|\graphicspath{{img/},{images/}}| incluiría dos
 directorios, uno llamado <<img>> y otro llamado <<images>>.
 Además, esta
 orden ha de ir en el \textbf{preámbulo} del texto.
@@ -1201,7 +1217,7 @@ referenciarla internamente.
     \item Esta línea es la que incluye la imagen propiamente dicha.
     \begin{itemize}
         \item La opción (entre corchetes)
-            \texttt{width=1.0\textbackslash{}hsize} hace que la imagen ocupe
+            \verb|width=1.0\hsize| hace que la imagen ocupe
             el 100 \% del ancho de la página. Si cambias el número ($1.0$) por 
             ejemplo a $0.5$ ocuparía el 50 \%.
         \item Como hemos usado la orden \texttt{graphicspath} en el preámbulo.
@@ -1269,9 +1285,9 @@ usaremos el comando \texttt{ref}. Este comando nos permite referenciar una
 figura (o cualquier objeto con una etiqueta). 
 
 Si ahora quieres referenciar una figura en un párrafo en \LaTeX{} puedes poner
-\texttt{ \textbackslash ref\{nombre de la referencia\}}. Esto insertará el 
-número de la figura. Si insertamos \texttt{\textbackslash{}nameref\{nombre
-de la referencia\}} aparecerá el título de la misma (la \textit{caption}).
+\verb|\ref{<nombre de la referencia>}|. Esto insertará el 
+número de la figura. Si insertamos \verb|\nameref{<nombre de la referencia>}|
+aparecerá el título de la misma (la \textit{caption}).
 
 Por ejemplo: como podemos ver en la Figura \ref{fig:gatitoNegro}:
 \nameref{fig:gatitoNegro}. A continuación, vamos a insertar una tabla.
@@ -1306,12 +1322,12 @@ deben aparecer en el mismo número que columnas queramos que tenga la tabla.
 \item Es una fila de la tabla, el texto irá en la misma celda hasta que haya
 un \textit{et} (\&), así se pasa de columna. Cuando se haya terminado la fila,
 se deben poner dos líneas inclinadas invertidas 
-(\textbackslash{}\textbackslash{}). 
+(\verb|\\|). 
 \item Siguiente fila, apréciese el uso de la orden 
-\texttt{\textbackslash{}EUR\{\}}. (ver: \textbf{\ref{ecuaciones}})
+\verb|\EUR{}|. (ver: \textbf{\ref{ecuaciones}})
 \item La siguiente fila.
 \item La última fila, nótese que se pueden poner celdas vacías poniendo
-dos \emph{et} (\&\&) Y que debe terminarse con \textbackslash{}\textbackslash{}.
+dos \emph{et} (\&\&) Y que debe terminarse con \verb|\\|.
 \item Termina la tabla
 \item Indica el título visible de la tabla.
 \item Etiqueta para referencias.
@@ -1346,8 +1362,8 @@ dos \emph{et} (\&\&) Y que debe terminarse con \textbackslash{}\textbackslash{}.
 \end{table}
 
 De nuevo, podemos referenciar el número de la tabla con 
-\texttt{\textbackslash ref\{tab:gastos\}} y su
-títulos con \nameref{tab:gastos}. \textbf{Nota sobre compilar 
+\verb|\ref{tab:gastos}| y su
+títulos con \verb|\nameref{tab:gastos}|. \textbf{Nota sobre compilar 
 referencias cruzadas:}
  a veces salen signos de
 interrogación en lugar de las referencias, no te preocupes, \LaTeX{} a 
@@ -1430,7 +1446,7 @@ plataformas de acceso online permiten copiar directamente el texto que debes
 incluir en tu archivo .bib. Más información sobre esto más adelante.
 
 Para citar el libro, utilizaremos el comando
-\texttt{\textbackslash cite\{<etiqueta de la fuente>\}}. Veamos un ejemplo, el
+\verb|\cite{<etiqueta de la fuente>}|. Veamos un ejemplo, el
 código siguiente:
 \begin{verbatim}
 <<El lenguaje C++ es un superconjunto del lenguaje C>> (\cite[p.~101]{cpppl})
@@ -1474,8 +1490,8 @@ Si quisiéramos cambiar el estilo para ajustarse al del IEEE, se cambiaría a:
 \end{verbatim}
 
 Además de citar, necesitaremos imprimir nuestra bibliografía completa en
-nuestro documento, para ello, usaremos el comando \texttt{\textbackslash 
-printbibliography}. Este comando inserta un título predeterminado que, en 
+nuestro documento, para ello, usaremos el comando \verb|\printbibliography|.
+Este comando inserta un título predeterminado que, en 
 español (recordemos, paquete babel spanish) es <<Referencias>>, que, además,
 no sale en la tabla de contenido. Si queremos omitirlo, podemos añadir la opción
 \texttt{heading=none} en la orden, es decir:
@@ -1489,7 +1505,7 @@ comando. Esto es lo que se ha hecho en este documento.
 Por otro lado, algunas organizaciones exigen que las citas bibliográficas se 
 incluyan en notas al pie allí donde se citen. Por suerte \LaTeX{} permite 
 crear notas al pie de manera sencilla, simplemente se utiliza el comando
-\texttt{\textbackslash footnote\{\}}. Veamos un ejemplo.
+\verb|\footnote{<nota al pie>}|. Veamos un ejemplo.
 
 \begin{verbatim}
 Al final de esta frase va a haber una nota al pie \footnote{Esta es la nota
@@ -1503,7 +1519,7 @@ al pie.}.
 Si queremos que en la nota el pie aparezca la cita, simplemente incluimos dentro
 del comando \texttt{footnote} el comando \texttt{cite}. Además, tenemos la
 opción de incluir en el texto la cita completa (tal y como aparecería en la
-bibliografía, con el comando \texttt{\textbackslash fullcite}. Veamos un ejemplo
+bibliografía, con el comando \verb|\fullcite{<etiqueta>}|. Veamos un ejemplo
 de una nota el pie con el texto completo de la cita; este código:
 \begin{verbatim}
 La metaprogramación es una de las características más importantes del lenguaje
@@ -1548,7 +1564,7 @@ que no hemos citado, no va a incluirlas hasta que las citemos.
 \textbf{Nota sobre el formato}: Algunos servicios de documentación, como
 el propio Google Books, eliminan los caracteres especiales de sus citas
 exportadas (las tildes, la eñe...) y los ponen por ejemplo: 
-\texttt{\{\textbackslash\'{}i\}}
+\verb|{\`i}|
 en vez de: í. Esto provoca errores, así que simplemente debe cambiarse por
 el carácter correspondiente. Otras permiten elegir la codificación, tal
 y como está configurado este documento, debe elegirse UTF8. Y debe revisarse
@@ -1569,7 +1585,60 @@ las fuentes bibliográficas, se debe acudir al menú:
 para que se genere la bibliografía, y se debe hacer \textbf{después} de 
 compilar una primera vez.
 
-\newpage\section{Decoración e indización}
+\subsection{Entornos \emph{enrironments} especiales}
+En esta sección enumeraré y explicaré bloques especiales que se pueden
+utilizar para cosas más concretas. Requieren la inclusión de más paquetes y,
+además, cumplen propósitos muy específicos.
+\subsubsection{Código con coloreado de sintaxis (\textit{listings})}
+El paquete \textit{listings} permite incluir un bloque parecido al bloque
+\textit{verbatim}, pero con la capacidad de colorear de una manera comprensible
+el código en diferentes lenguajes, añadir números de línea y definir estilos
+con marcos, colores de fondo y estilos de letra. La configuración de este
+paquete tiene tres pasos:
+\begin{enumerate}
+\item Incluir el paquete (como todos los demás).
+\item Definir el estilo del código.
+\item Definir el nombre de los fragmentos de código que incluyamos (esto es
+porque queremos que salga en español, predeterminadamente es \textit{listings})
+\item Definir el nombre de la lista de fragmentos de código, esto es por el
+mismo motivo que el punto anterior.
+\item Incluir algunos fragmentos.
+\end{enumerate}
+
+Para definir el estilo del código vamos a usar la orden \verb|\lstset{...}|,
+por ejemplo, el estilo que se ha creado aquí se ha tipificado así:
+\begin{lstlisting}[language={[LaTeX]TeX}, caption={Especificación del estilo de
+\textit{listings}}, label=lst:styleCode]
+\lstset{
+    basicstyle=\ttfamily,
+    numberstyle=\ttfamily,
+    frame=rlbt, % draw a frame at the top and bottom of the code block
+    tabsize=4, % tab space width
+    showstringspaces=false, % don't mark spaces in strings
+    numbers=left, % display line numbers on the left
+    commentstyle=\color{gray}, % comment color
+    keywordstyle=\color{blue}, % keyword color
+    stringstyle=\color{red}, % string color
+    backgroundcolor=\color{lightYellow},
+    captionpos=b,
+    breaklines=true
+}
+\end{lstlisting}
+\begin{lstlisting}[language=c++, caption={Ejemplo de Hola Mundo en C++},
+label=lst:helloWordCpp]
+#include<iostream>
+int main(int argc, const char* argv[]){
+    std::string nombre;
+    std::cout << "Dime tu nombre." << std::endl;
+    //program will block and wont follow this line until enter hit
+    std::cin >> nombre;
+    std::cout << "Hola, " << nombre << "!" << std::endl;
+    return EXIT_SUCCESS;
+}
+\end{lstlisting}
+
+
+\newpage \section{Decoración e indización}
 De momento no se han visto órdenes para crear índices, tablas de contenido,
 pies de página y encabezados ni portadas como las que tiene este documento.
 En esta sección veremos cómo se ha formateado este documento,
@@ -1583,14 +1652,14 @@ documento se han seguido estos pasos:
 \begin{enumerate}
     \item En el preámbulo del documento:
     \begin{enumerate}
-        \item Se ha usado el comando \texttt{\textbackslash{title}}
+        \item Se ha usado el comando \verb|\title|
         para indicar qué título ha de salir en la portada.
-        \item Se ha usado el comando \texttt{\textbackslash{author}}
+        \item Se ha usado el comando \verb|\author|
          para decir qué autor.
     \end{enumerate}
     \item En el contenido del documento:
     \begin{enumerate}
-        \item Se ha usado el comando \texttt{\textbackslash{maketile}}
+        \item Se ha usado el comando \verb|\maketile|
         para crear la portada propiamente dicha.
     \end{enumerate}
 \end{enumerate}
@@ -1617,18 +1686,18 @@ Las siguientes tareas que llevaremos a cabo son:
 \end{enumerate}
 
 Para conseguir la primera tarea, usaremos el comando 
-\texttt{\textbackslash{pagenumbering\{gobble\}}}, que hace que las páginas
+\verb|\pagenumbering{gobble}|, que hace que las páginas
 no se numeren. Este efecto dura hasta que se use otra orden que sobreescriba
 este comportamiento.
 Para la segunda, vamos a utilizar
 el comando \texttt{newpage}, que hace que el siguiente texto salga en la página
 siguiente. Ahora, para que las siguiente páginas sí se numeren, usaremos la
-orden \texttt{\textbackslash{pagenumbering\{arabic\}}},
+orden \verb|\pagenumbering{gobble}|,
 así se numerarán con números arábigos.
 Finalmente, para la tercera, vamos a utilizar el paquete babel, este
 paquete <<traduce>> los textos automáticos (títulos, fechas...) a español,
 y da mejor soporte a símbolos del español. En el preámbulo del documento
-pondremos simplemente: \texttt{\textbackslash{usepackage\{babel\}}}.
+pondremos simplemente: \verb|\usepackage[spanish]{babel}|.
 El contenido del documento debería ser, por tanto:
 \begin{figure}[H]
 \begin{verbatim}
@@ -1658,7 +1727,7 @@ utilizando los modificadores de tamaño del texto
 Para insertar una tabla de contenido, simplemente se puede incluir en el 
 contenido del documento, después de la portada (y de la orden
 \texttt{newpage}, la orden
-\texttt{\textbackslash{tableofcontents}}, si se desea que el siguiente
+\verb|\tableofcontents|, si se desea que el siguiente
 texto después de la tabla aparezca en otra página, se puede volver a usar
 \texttt{newpage}. Recuerda incluir alguna sección para que el índice no esté
 vacío, por ejemplo, incluiremos la sección <<prueba>>. Con estos cambios,
@@ -1716,11 +1785,11 @@ en él, es una buena manera de definir numeraciones distintas en distintas
 partes del documento como, de hecho, se ha hecho en este.
 
 \begin{enumerate}
-\item \texttt{\textbackslash{pagestyle\{fancy\}}}: esto indica que queremos
+\item \verb|\pagestyle{fancy}|: esto indica que queremos
 usar el estilo de encabezado y pie personalizado.
-\item \texttt{\textbackslash{fancyhf\{\}}}: Dibuja una línea fina en el 
+\item \verb|\fancyhf{}|: Dibuja una línea fina en el 
 encabezado que enmarca la página.
-\item \texttt{\textbackslash{fancyhead[<pos>]\{<contenido>\}}}: 
+\item \verb|\fancyhead[<pos>]{<contenido>}|: 
     \begin{enumerate}
         \item \texttt{<pos>} es la posición donde poner el contenido, se pueden
         poner: L, C, R, correspondientes a la izquierda, el centro y
@@ -1746,7 +1815,7 @@ Generan el encabezado que se puede ver en la Figura \ref{fig:3columnHeader}:
 \end{figure}
 
 Existe, además, la orden
-\texttt{\textbackslash{fancyfoot[<pos>]\{<contenido>\}}}, que es la que se usa
+\verb|\fancyfoot[<pos>]{<contenido>}|, que es la que se usa
 para añadir contenido al pie de página -en contraposición al encabeza, como 
 cabamos de ver-. Voy a listar, también, algunos comandos útiles
 para crear encabezados y pies más dinámicos:
@@ -1766,7 +1835,7 @@ el número de páginas de una sección si se pone una etiqueta justo al final de
 misma.
 \item \texttt{LastPage}: Requiere el paquete lastpage, es una etiqueta 
 automática al final del texto, así, se puede hacer
-\texttt{\textbackslash{}pageref\{LastPage\}}
+\verb|\pageref{LastPage}|
 \item \texttt{today}: inserta la fecha de hoy.
 \end{enumerate}
 
@@ -1809,7 +1878,7 @@ predeterminadamente, invisible.
 \end{enumerate}
 Además, si en la clase del documento se activa la opción \texttt{twoside}
 cambiando la línea donde se indica por esta:
-\texttt{\textbackslash{documentclass[twoside]\{article\}}} podremos seleccionar
+\verb|\documentclass[twoside]{article}| podremos seleccionar
 no sólo la columna donde aparece el contenido, sino también si lo hace en
 páginas pares o impares del documento. Por ejemplo:
 \begin{verbatim}
@@ -1830,7 +1899,7 @@ Hay que tener cuidado, porque si una página es par o impar viene dado por su
 absoluta, esto quiere decir que una página que se considera par por estar 
 numerada como dos puede imprimirse en una cara impar si anteriormente hay un
 número impar de páginas. Para forzar a que el siguiente texto empiece en página
-par se usaría el comando \texttt{\textbackslash{cleardoublepage}}. Si se va
+par se usaría el comando \verb|\cleardoublepage|. Si se va
 a imprimir el documento a dos caras, sería recomendable usarlo tras la portada
 (para dejar una página en blanco que sería su parte de atrás) y después de los
 índices.
@@ -1873,7 +1942,7 @@ Las órdenes que se han usado son las siguientes:
 \textit{article} no es DIN-A4, sino el tamaño carta del ANSI. En caso de no
 querer redefinir más opciones de la geometría, pero desear el tamaño DIN-A4,
 se puede indicar en la clase del documento con esta opción:
-\texttt{\textbackslash{documentclass[a4paper]\{article\}}}.
+\verb|\documentclass[a4paper]{article}|.
 \item Margen lateral.
 \item Margen inferior.
 \item Tamaño del encabezado.
