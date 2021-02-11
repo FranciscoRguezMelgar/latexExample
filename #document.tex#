@@ -1650,8 +1650,7 @@ decir, mostraría algo como <<''$\textrm{Hola,}\left\lfloor\_\right\rfloor
 \textit{right}, \textit{none}. Para mostrar los números a izquierda o derecha
 del código; o no mostrarlos.
 \item Define el estilo de los comentarios del lenguaje, aquí se ha especificado
-únicamente que se cambie su color a gris. Más información sobre colores en 
-\textbf{\ref{coloreado}}.
+únicamente que se cambie su color a gris.
 \item Define el estilo de las palabras clave de los lenguajes, por ejemplo, en
 C, serían palabras clave: int, double, void, char...
 \item Define el estilo de las cadenas de caracteres en el lenguaje.
@@ -1671,22 +1670,10 @@ Después, para definir el nombre de la lista de fragmentos, podemos utilizar
 \verb|\renewcommand{\lstlistlistingname}{Lista de \lstlistingname s}|. De este
 modo, la lista quedará configurada con el nombre <<Lista de Programas>>.
 
-
 Para incluir algunos fragmentos se hace, como con otros \textit{environments}, 
 con las órdenes \verb|\begin| y \verb|\end|. Además, el paquete recibe algunas
-opciones en la orden begin que nos permiten indicar el languaje (para que se
-destaquen las palabras clave automáticamente), la \textit{caption} (el título
-visible que saldrá en el documento) y la etiqueta (que será la que usemos para
-referencias). Por ejemplo:
-\begin{lstlisting}[language={[LaTeX]TeX}, caption={Ejemplo de lstlisting},
-label=lst:exampleListing]
-\begin{lstlisting}[language=c++,
-caption={Ejemplo de Hola Mundo en C++},
-label=lst:helloWordCpp]
-\end{lstlisting}
-Definirá el lenguaje, el título y la etiqueta del siguiente fragmento de código,
-nótese que no se incluye ni el cierre del entorno \verb|\lstlisting| ni el
-código C++ del ejemplo.
+opciones en la 
+
 \begin{lstlisting}[language=c++, caption={Ejemplo de Hola Mundo en C++},
 label=lst:helloWordCpp]
 #include<iostream>
@@ -1699,6 +1686,7 @@ int main(int argc, const char* argv[]){
     return EXIT_SUCCESS;
 }
 \end{lstlisting}
+
 
 \newpage \section{Decoración e indización}
 De momento no se han visto órdenes para crear índices, tablas de contenido,
@@ -2009,31 +1997,7 @@ se puede indicar en la clase del documento con esta opción:
 \item Margen inferior.
 \item Tamaño del encabezado.
 \end{enumerate}
-\subsection{Coloreado} \label{coloreado}
-LaTeX ofrece la posibilidad de colorear el texto \textit{ad-hoc} si así lo
-deseamos, por ejemplo \\\verb|\color{red} Texto\color{black}| generaría:
-<<\color{red} Texto\color{black}>>. Pero el catálogo de colores es limitado,
-por lo que se puede incluir el paquete \texttt{xcolor}, que incluye
-la capacidad de definir nuevos colores con el comando \verb|definecolor|, 
-que se usa de este modo:
-\begin{lstlisting}[language={[LaTeX]Tex}, caption={Uso de \texttt{definecolor}},
-label={lst:definecolor}]
-%Esquema de uso
-%\definecolor{<nombre del color>}{rgb}{rValue, gValue, bValue}
-%Ejemplo real
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\end{lstlisting}
-El primer argumento del comando es el nombre que le vamos a dar al color,
-el segundo es el esquema de colores que vamos a usar, existen varios:
-\begin{enumerate}
-\item rgb: recibe tres cifras representando los valores de rojo, verde y azul
-del color, normalizadas entre cero y uno.
-\item RGB: como el anterior, pero las cifras están entre cero y 255.
-\item hsb: Recibe valores de tono, saturación y luminosidad entre cero y uno.
-\item HSB: Igual que el anterior, pero los valores van de 0 a 240.
-\end{enumerate}
-Y, finalmente, el último argumento son los tres valores que necesite nuestro
-esquema de color.
+
 \newpage\section{Licencias y agradecimiento}
 Todas las páginas citadas son de sus respectivos creadores, yo sólo me limito
 a recopilar sus soluciones o información en un mismo documento. Todas las
