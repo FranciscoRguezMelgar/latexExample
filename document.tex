@@ -93,7 +93,7 @@
     breaklines=true
 }
 \renewcommand{\lstlistingname}{Programa}
-\renewcommand{\lstlistlistingname}{Lista de \lstlistingname s}
+\renewcommand{\lstlistlistingname}{Índice de \MakeLowercase{\lstlistingname}s}
 % Vamos a permitir más niveles de título, hasta 5.
 \setcounter{secnumdepth}{5}
 % Esto hace que la tabla de contenidos muestre hasta el nivel 3.
@@ -195,6 +195,7 @@
 % Incluye el texto "pág. X de Y" en el pie de pág. a la derecha.
     % estoy referenciando una etiqueta que añadí, se verá luego.
 \rfoot{pág. \textsc{\thepage{}} de \textsc{\pageref{startSectionContent}}} 
+\fancyfoot[L]{\today}
 % Incluye una línea en el pie de página.
 \renewcommand{\footrulewidth}{0.5pt}
 %decimos que se numeren las páginas en romano hasta nueva orden
@@ -216,7 +217,9 @@
 %\renewcommand{\listtablename}{Índice de tablas}
 %inserta el índice de tablas
 \listoftables
+\newpage
 
+\lstlistoflistings
 % Esta orden (label) inserta etiquetas invisibles en el texto, al ponerla justo
     % antes del salto de página del último índice de la sección, me permite
     % referenciar este punto, así es como consigo que salga "Pág. i de iii".
@@ -388,7 +391,7 @@ seguido de un espacio. Si no, \LaTeX{} interpretaría que la siguiente palabra
 es un comando. Además, los comandos reciben argumentos, que van entre llaves.
 Como las llaves son otro carácter especial usado por el lenguaje, para 
 incluirlas en nuestro texto, éstas deben ir precedidas de una barra inclinada
-inversa, es decir, son otro comando: \verb|\textbackslash \{}| produciría:
+inversa, es decir, son otro comando: \verb|\{| produciría:
 <<\{>> (sin las comillas).
 
 La clase del documento será una palabra que definirá un estilo de documento
@@ -411,7 +414,7 @@ el documento se renderiza, una de las más importantes es la inclusión de
 paquetes, esto se hace mediante la orden \verb|\usepackage|.
 Estos paquetes permiten añadir muchas funcionalidades que son necesarias. De 
 hecho, hoy en día cualquier documento moderno incluye muchos paquetes. Si
-se observa el preámbulo de este documento, se verá que hay, de hecho, muchos.
+se observa el preámbulo de este documento, se verá que hay muchos.
 
 \textbf{Nota sobre paquetes:} para realizar muchas de las tareas que se explican
 aquí se han incluido paquetes, para saber qué paquete es necesario para cada
@@ -451,13 +454,13 @@ dos párrafos son uno, porque se eliminan las líneas enteras, así que habría
 que poner una línea en blanco entre el último comentario y el segundo
 párrafo.
 
-Al ser los documentos de \texttt{.tex} documentos de texto plano, podríamos
+Al ser los documentos \texttt{.tex} documentos de texto plano, podríamos
 incluir potencialmente los caracteres que quisiéramos, pero, sin paquetes 
 adicionales (ver sección de inclusión de paquetes en el código de este
 documento) no se pueden incluir algunos símbolos. Así que hay que tener cuidado
 con los símbolos especiales que se usan, pueden renderizarse mal o no permitir
-que el pdf se genere. Si se usan los símbolos del idioma español: tildes, la eñe
-diéresis en la u y demás, no debería haber problemas. Ej.: áéíóú, ÁÉÍÓÚ, üÜ, ñÑ.
+que el pdf se genere. Si se usan los símbolos del idioma español: tildes, la
+eñe, diéresis en la u y demás, no debería haber problemas. Ej.: áéíóú, ÁÉÍÓÚ, üÜ, ñÑ.
 
 \subsection{Escritura de texto en \LaTeX{}}
 Como se ha visto en la sección anterior, dentro del contenido del documento es
@@ -1191,7 +1194,7 @@ Los bloques verbatim son bloques donde el texto se incluye sin tomar en
 cuenta comandos de latex, interpretándolo literalmente y en letra 
 monoespaciada. Son los bloques que he utilizado para incluir los fragmentos
 de código \LaTeX{} que se han ido viendo en este documento.
-Se suelen usar para justo eso introducir código, en \LaTeX{} o en otros
+Se suelen usar para justo eso: introducir código, en \LaTeX{} o en otros
 lenguajes.
 Por ejemplo, este es un programa que dice hola al usuario por su nombre
 en el lenguaje C++.
@@ -1237,8 +1240,8 @@ base para el comando anterior. Supongamos una estructura de directorios como
 la que sigue:
 \begin{verbatim}
 .
-|-- briefing.pdf
-|-- briefing.tex
+|-- document.pdf
+|-- document.tex
 |-- img
     `-- gatito.jpg
 \end{verbatim}
@@ -1249,13 +1252,11 @@ especificar extensiones. Nótese que hay una barra inclinada después del nombre
 del directorio y que hay dos llaves, son necesarias ambas cosas. Esto es porque
 podríamos añadir más directorios separados por comas:
 \verb|\graphicspath{{img/},{images/}}| incluiría dos
-directorios, uno llamado <<img>> y otro llamado <<images>>.
+directorios, uno llamado <<img>> y otro llamado <<images>>. Hay que ser
+cauteloso, incluir un espacio después de la coma que separa los directorios
+haría que no funcionase.
 Además, esta
 orden ha de ir en el \textbf{preámbulo} del texto.
-
-% Así se incluye una imagen. Predeterminadamente, se incluye a su tamaño 
-% original
-\includegraphics{gatito}
 
 Con la opción \texttt{scale} podemos hacerla más pequeña -o más grande-.
 Pero las imágenes en \LaTeX{} no están hechas para insertarse así, sino en una
@@ -1265,7 +1266,7 @@ y demás propiedades. La siguiente figura está insertada con este código:
 \begin{verbatim}
 1   \begin{figure}[H]
 2       \centering 
-3       \includegraphics[width=1.0\hsize]{gatito}
+3       \includegraphics[width=.333\hsize]{gatito}
 4       \caption{Un gato blanco}
 5       \label{fig:gatitoBlanco} 
 6   \end{figure}
@@ -1285,9 +1286,9 @@ referenciarla internamente.
     \item Esta línea es la que incluye la imagen propiamente dicha.
     \begin{itemize}
         \item La opción (entre corchetes)
-            \verb|width=1.0\hsize| hace que la imagen ocupe
-            el 100 \% del ancho de la página. Si cambias el número ($1.0$) por 
-            ejemplo a $0.5$ ocuparía el 50 \%.
+            \verb|width=.333\hsize| hace que la imagen ocupe
+            el 33,3 \% del ancho de la página. Si cambias el número ($.333$)
+             por ejemplo a $0.5$ ocuparía el 50 \%.
         \item Como hemos usado la orden \texttt{graphicspath} en el preámbulo.
         Podemos escribir simplemente el nombre del archivo, sin extensión.
     \end{itemize}
@@ -1315,7 +1316,7 @@ El resultado es el siguiente:
     % Con width=1.0\hsize hacemos que la imagen sea tan ancha como el párrafo,
     % yo lo recomiendo para que las cosas queden alineadas, salvo que por x
     % motivo quieras una imagen más pequeña, entonces cambia 1.0 por otro nº.
-    \includegraphics[width=1.0\hsize]{gatito}
+    \includegraphics[width=.333\hsize]{gatito}
     % Título de la figura que se ve
     \caption{Un gato blanco}
     % Etiqueta interna, se usa para referencias la imagen. Esta orden debe ir
@@ -1532,13 +1533,13 @@ tabla en blanco.
         \item Definimos que va a ocupar cuatro filas.
         \item El siguiente argumento es el ancho de la columna, con un asterisco
 indicamos que va a ser ajuste automático.
-        \item El siguiente argumento (que es opcional) indica que el rexto
+        \item El siguiente argumento (que es opcional) indica que el texto
 ha de salir un poco más abajo que al inicio de la celda. Finalmente, indicamos
 el contenido de la celda. Más adelante desarrollaré esto, de momento simplemente
 pensar que el contenido de la celda se escribe ahí.
     \end{itemize}
 \item Siguiente fila, nótese que las celdas <<ocupadas>> por el multifila deben
-estar en blanco, pero sus símbolos et deben aparecer.
+estar en blanco, pero sus símbolos \textit{et} deben aparecer.
 \item Nótese el uso de cline en estas celdas.
 \end{enumerate}
 
@@ -1570,9 +1571,9 @@ referencias cruzadas:}
 Cuando no se encuentra una referencia (por ejemplo porque se ha escrito
 una etiqueta que no existe) salen signos de
 interrogación en lugar de las referencias,
-Si te pasa y has comprobado que la referencia está bien escrita
+si te pasa y has comprobado que la referencia está bien escrita
  no te preocupes, \LaTeX{} a veces necesita dos compilaciones para crear
-la base de datos de referencias. Compilar otra vez para asegurarte que no es 
+la base de datos de referencias. Compila otra vez para asegurarte que no es 
 ése el problema.
 En el makefile proporcionado ya se compila dos veces, pero si no lo utilizas,
 simplemente llama al comando dos veces seguidas.
@@ -1680,7 +1681,7 @@ de los estilos permitidos son:
     MLA & mla\\\hline
     APA & apa\\\hline
 \end{tabular}
-\caption{Estilo de citación permitidos por el paquete biblatex}
+\caption{Estilos de citación permitidos por el paquete biblatex}
 \label{tab:biblatexStyles}
 \end{table}
 Para elegir estos estilos, debe irse a la línea del preámbulo donde hayamos
@@ -1837,7 +1838,7 @@ Las líneas hacen lo siguiente:
 \item Inicia el comando para definir el estilo.
 \item Indica que el texto de los \textit{listings} debe salir en fuente
 monoespaciada (o de máquina de escribir).
-\item Indica que los números de línea deben salir cambien en fuente
+\item Indica que los números de línea deben salir también en fuente
 monoespaciada.
 \item El argumento frame puede recibir un subconjunto de $\{t,r,b,l\}$,
 que define qué bordes del cuadrado que lo engloba se dibujan. El orden en que
@@ -1848,7 +1849,7 @@ se ponen las letras es irrelevante.
 \item b es por \textit{bottom}, abajo.
 \item l es por \textit{left}, izquierda.
 \end{enumerate}
-\item Indica el tamaño del caracter tabulador, si tabulas con espacios no 
+\item Indica el tamaño del carácter tabulador, si tabulas con espacios no 
 tiene efecto.
 \item Indica si los espacios en las cadenas de caracteres debe mostrarse, es
 decir, mostraría algo como <<''$\textrm{Hola,␣} \textrm{mundo!}$''>>
@@ -1863,10 +1864,10 @@ del código; o no mostrarlos.
 \item Define el estilo de las palabras clave de los lenguajes, por ejemplo, en
 C, serían palabras clave: int, double, void, char...
 \item Define el estilo de las cadenas de caracteres en el lenguaje.
-\item Define un color de fondo, en este caso un clor personalizado amarillo
+\item Define un color de fondo, en este caso un color personalizado amarillo
 claro.
 \item El argumento \texttt{captionpos} puede ser b (por \textit{bottom}, abajo)
-o t (por\textit{top}, arriba), indica dónde ha de aparecer la \textit{caption}.
+o t (por \textit{top}, arriba), indica dónde ha de aparecer la \textit{caption}.
 \item Indica si las líneas más largas deben romperse automáticamente o no,
 si se deja en \textit{false}, se comportará como los bloques
 \textit{verbatim} y los desbordará por la derecha si la línea es muy larga.
@@ -1876,8 +1877,8 @@ Para definir el nombre de los fragmentos de código que incluyamos debemos usar
 la orden \verb|\renewcommand{\lstlistingname}{<nombre>}|, donde 
 \texttt{<nombre>} es el nombre que queramos darle a los fragmentos de código.
 Después, para definir el nombre de la lista de fragmentos, podemos utilizar
-\verb|\renewcommand{\lstlistlistingname}{Lista de \lstlistingname s}|. De este
-modo, la lista quedará configurada con el nombre <<Lista de Programas>>.
+\verb|\renewcommand{\lstlistlistingname}{Lista de \\MakeLowercase{\lstlistingname s}}|.
+De este modo, la lista quedará configurada con el nombre <<Lista de Programas>>.
 
 
 Para incluir algunos fragmentos se hace, como con otros \textit{environments}, 
@@ -1886,7 +1887,12 @@ opciones en la orden begin que nos permiten indicar el languaje (para que se
 destaquen las palabras clave automáticamente), la \textit{caption} (el título
 visible que saldrá en el documento) y la etiqueta (que será la que usemos para
 referencias). Por ejemplo:
-\lstinline[language={[LaTeX]TeX}]!\begin{lstlisting}[language=c++,caption={Ejemplo de Hola Mundo en C++},label=lst:helloWordCpp]\end{ lstlisting}!
+\begin{lstlisting}[language={[LaTeX]TeX},mathescape=true]
+\begin{lstlisting}[ language={c++},
+                    caption={Ejemplo de Hola Mundo en C++},
+                    label=lst:helloWordCpp]
+\end{$ $lstlisting}
+\end{lstlisting}
 
 
 Definirá el lenguaje, el título y la etiqueta del siguiente fragmento de código,
@@ -1910,7 +1916,7 @@ la necesidad de crear figuras de figuras, es decir, una figura que se compone
 de varias imágenes, cada una de las cuales tiene su propio título, en este
 documento esto se puede ver en la Figura \ref{fig:compMarg}. El paquete que 
 hay que incluir es \texttt{subcaption}. Para utilizar las subfiguras simplemente
-se crear un entorno \texttt{subfigure} dentro del entorno figure. Aunque
+se crea un entorno \texttt{subfigure} dentro del entorno figure. Aunque
 hay que tener cuidado con elementos como la anchura de las figuras y subfiguras.
 Un ejemplo de este uso sería esta figura compuesta de 3 imágenes:
 \begin{figure}[H]
@@ -1983,7 +1989,7 @@ referencias pero en este caso no se ha hecho.
 
 \subsection{Citas}
 A veces queremos crear una cita en nuestro texto, por ejemplo en un artículo
-científico,en vez de parafrasear la fuente, queremos incluir una cita de 
+científico, en vez de parafrasear la fuente, queremos incluir una cita de 
 varias líneas. Quizás queremos una presentación más atractiva de una cita
 célebre, o quizá queremos destacar una parte del texto, de un artículo,
 por ejemplo. Para esto existe el entorno \textit{quote}, que nos permite
@@ -2014,7 +2020,7 @@ que huele como Cheetah>>.
 
 Se conseguiría así:
 \begin{lstlisting}[language={[LaTeX]TeX},
-caption={Ejemplo de citación adornos}, label={lst:quoteWithDecoration}]
+caption={Ejemplo de citación con adornos}, label={lst:quoteWithDecoration}]
 \begin{quote}
 \LARGE\color{lightBlue}
 \rule[2mm]{\linewidth}{.5pt}
@@ -2034,7 +2040,7 @@ se ha creado otra regla y se ha vuelvo a cambiar el estilo.
 
 \newpage \section{Decoración e indización}
 De momento no se han visto órdenes para crear índices, tablas de contenido,
-pies de página y encabezados ni portadas como las que tiene este documento.
+pies de página, encabezados ni portadas como las que tiene este documento.
 En esta sección veremos cómo se ha formateado este documento,
 pero lo recomendable es que se quiere copiar alguna característica, simplemente
 se incluya el código en tus propios documentos.
@@ -2086,7 +2092,7 @@ este comportamiento.
 Para la segunda, vamos a utilizar
 el comando \texttt{newpage}, que hace que el siguiente texto salga en la página
 siguiente. Ahora, para que las siguiente páginas sí se numeren, usaremos la
-orden \verb|\pagenumbering{gobble}|,
+orden \verb|\pagenumbering{arabic}|,
 así se numerarán con números arábigos.
 Finalmente, para la tercera, vamos a utilizar el paquete babel, este
 paquete <<traduce>> los textos automáticos (títulos, fechas...) a español,
@@ -2210,15 +2216,15 @@ Generan el encabezado que se puede ver en la Figura \ref{fig:3columnHeader}:
 
 Existe, además, la orden
 \verb|\fancyfoot[<pos>]{<contenido>}|, que es la que se usa
-para añadir contenido al pie de página -en contraposición al encabeza, como 
+para añadir contenido al pie de página -en contraposición al encabezado, como 
 cabamos de ver-. Voy a listar, también, algunos comandos útiles
 para crear encabezados y pies más dinámicos:
 \begin{enumerate}
 \item \texttt{leftmark}: inserta el número y título del nivel de título más
 alto que este justo antes de donde se inserte, por ejemplo, aquí insertaría:
 <<\leftmark>>
-\item \texttt{rightmark}: Añade el número y título del nivel de título
-siguiente, por ejemplo aquí insertaría <<\rightmark>>.
+\item \texttt{rightmark}: Añade el número y título del siguiente epígrafe
+de nivel de título más grande, por ejemplo aquí insertaría <<\rightmark>>.
 \item \texttt{thepage}: Añade el número de la página actual. Esto es muy
 versátil porque añadirá el número de la página tal y como se haya numerado,
 por ejemplo, este comando imprimirá números romanos si se configuró la 
