@@ -65,11 +65,19 @@
 %coloreado syntaxis
 \usepackage{listings}
 % mejores colores
-\usepackage[dvipsnames]{xcolor}
+\usepackage[dvipsnames,table]{xcolor}
+    \definecolor{gray}{rgb}{0.5,0.5,0.5}
+    \definecolor{lightYellow}{RGB}{251, 255, 212}
+    \definecolor{lightBlue}{RGB}{56,184,255}
+% Permite tachar ecuaciones
+\usepackage{cancel}
+% Permite celdas de varias filas en tablas
+\usepackage{multirow}
+\usepackage{array}
+% Permite rotar texto
+\usepackage{rotating}
 
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\definecolor{lightYellow}{RGB}{251, 255, 212}
-%%%%%%%%%%%%%%%%%%%% FIN SECCIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FIN SECCIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \lstset{
     basicstyle=\ttfamily,
     numberstyle=\ttfamily,
@@ -283,7 +291,7 @@ sudo apt install make
 \end{verbatim}
 
 Si quieres preparar un entorno para compilar archivos (en Linux) que hayas
-escrito tú, simplemente crea un directorio en sitio sencillo (por ejemplo tu
+escrito tú, simplemente crea un directorio en un sitio sencillo (por ejemplo tu
 carpeta personal) y, dentro del mismo, un archivo .tex. Por ejemplo, con estos
 comandos de terminal se puede hacer:
 \begin{verbatim}
@@ -385,7 +393,7 @@ inversa, es decir, son otro comando: \verb|\textbackslash \{}| produciría:
 
 La clase del documento será una palabra que definirá un estilo de documento
 concreto que nos permita empezar a escribir sin tener que formatearlo todo
-desde 0. Las más populares son: article, book y report; pero hay muchas más.
+desde cero. Las más populares son: article, book y report; pero hay muchas más.
 Si se quiere compilar el primer documento en LaTeX, se puede copiar ese código,
 pero debe sustituirse \texttt{<clase del documento>} por \texttt{article}.
 Este documento se ha escrito con la clase de documento article. Como las clases
@@ -430,7 +438,7 @@ en el texto, debemos incluir antes de él una barra inclinada inversa, es decir:
 Veamos un ejemplo:
 \begin{verbatim}
 \documentclass{article}
-\begin{document} % Aquí puedo escribir lo que quiera
+\begin{document} % Aquí puedo escribir lo que quiera; no va a salir
 Algún texto de un párrafo.
 % Este exto no va a salir
 % Este tampoco.
@@ -570,14 +578,8 @@ Además de texto, es natural que en un
 documento tengamos que poner listas, ya sean éstas numeradas o sin numerar.
 A continuación vemos cómo se hace.
 \begin{verbatim}
-%%% Ejemplo de lista
-% Este tipo de listas no son numeradas. Son listas de puntos (bullets)
 \begin{itemize}
-% Un item es una fila de la lista, un punto, en este caso.
 \item Sector primario
-% Si quieres subniveles, creas una lista dentro de esta.
-% Tiene que haber un item antes de empezar la sublista, como aquí que está
-% el item sector primario.
 \begin{itemize}
     \item Ganadería
         \begin{itemize}
@@ -609,6 +611,26 @@ Ese código generaría la siguiente lista:
     \item Sector Secundario
     \item Sector Servicios
 \end{itemize}
+
+Para crear una lista con numeración se utilizará el mismo código que 
+para una lista sin numeración, pero en vez de \texttt{itemize} pondremos
+\texttt{enumerate}. El resultado sería:
+
+\begin{enumerate}
+    \item Sector primario
+    \begin{enumerate}
+        \item Ganadería
+        \begin{enumerate}
+            \item Porcina
+            \item Bovina
+            \item Avícola
+        \end{enumerate}
+        \item Pesca
+    \end{enumerate}
+    \item Sector Secundario
+    \item Sector Servicios
+\end{enumerate}
+% Lista con enumeración (Nótese que entre llaves pone enumerate)
 \subsection{Jerarquización del texto}
 En el momento en que nuestro documento sea ligeramente más largo que una página
 es probable que queramos añadir títulos de sección y de subsecciones.
@@ -726,27 +748,15 @@ Algunos delimitadores de left y right son:
 \begin{tabular}{|c|c|}
 \hline
 \textbf{Delimitador}& \textbf{Ejemplo}\\\hline
-&\\
-\texttt{( )} & \Large$\left(m\atop n\right)$\normalsize \\ 
-&\\\hline
-&\\
-\texttt{[ ]} & \Large$\left[m\atop n\right]$\normalsize \\ 
-&\\\hline
-&\\
-\verb|{ }| &  \Large$\left\{m\atop n\right\}$\normalsize \\ 
-&\\\hline
-&\\
-\verb|\lceil \rceil| & \Large$\left\lceil m\atop n\right\rceil$\normalsize \\ 
-&\\\hline
-&\\
-\verb|\lfloor \rfloor|& \Large$\left\lfloor m\atop n\right\rfloor$\normalsize \\ 
-&\\\hline
-&\\
-\texttt{<  >} & \Large$\left< m\atop n\right>$\normalsize \\ 
-&\\\hline
-&\\
-\texttt{.  .} & \Large$\left. m\atop n\right.$\normalsize \\ 
-&\\\hline
+\texttt{( )} &$\displaystyle\left(m\atop n\right)\vphantom{\matrix{\cr\cr}}$  \\\hline 
+\texttt{[ ]} &$\displaystyle\left[m\atop n\right]\vphantom{\matrix{\cr\cr}}$  \\\hline 
+\verb|{ }| &$\displaystyle\left\{m\atop n\right\}\vphantom{\matrix{\cr\cr}}$\\\hline 
+\verb|\lceil \rceil| &
+        $\displaystyle\left\lceil m\atop n\right\rceil\vphantom{\matrix{\cr\cr}}$ \\\hline 
+\verb|\lfloor \rfloor|& 
+        $\displaystyle\left\lfloor m\atop n\right\rfloor\vphantom{\matrix{\cr\cr}}$ \\\hline 
+\verb!< >! &$\displaystyle\left< m\atop n\right>\vphantom{\matrix{\cr\cr}}$\\\hline 
+\texttt{. .} &$\displaystyle\left. m\atop n\right.\vphantom{\matrix{\cr\cr}}$\\\hline 
 \end{tabular}
 \caption{Delimitadores para los comandos left y right}
 \label{tab:delimForLeftRight}
@@ -755,74 +765,81 @@ Todos los delimitadores que se ven en la Tabla \ref{tab:delimForLeftRight}:
 \nameref{tab:delimForLeftRight} se pueden combinar entre ellos arbitrariamente,
 pero, de nuevo, no puede haber un comando left sin su correspondiente right,
 ni viceversa, aunque los delimitadores de ambos sean diferentes.
-
-Los símbolos del cálculo integral y diferencial son sencillos, la integral
-se escribe como \verb|\int|. Por ejemplo, el código:  
-\begin{verbatim}
+Hay que mencionar también los llamados <<operadores grandes>> que son aquéllos
+como sumatorios, integrales... En general, se incluyen con un comando y 
+con las órdenes de superíndice y subíndice después de él, se establecen
+sus argumentos, por ejemplo:
 $$
-\int{x \, dx }
-$$
-\end{verbatim}
-Generaría la siguiente ecuación:
-$$
-\int{x \, dx }
-$$
-Nótese que es necesario poner \verb|\,| para que se genere
-un espacio entre la x y el diferencial de x. Si queremos generar integrales
-con límites, debemos usar la notación de superíndices y subíndices justo
-después del comando \texttt{int}.
-
-\begin{verbatim}
-$$
-\int_{0}^{10}{x \, dx}
-$$
-\end{verbatim}
-Generaría esta integral:
-$$
-\int_{0}^{10}{x \, dx}
-$$
-Se podría combinar con otros comandos, por ejemplo, veamos la definición de
-la integración por partes:
-\begin{verbatim}
-$$
-\int{u \, dv} = u \cdot v - \int{v \, du}
-$$
-\end{verbatim}
-generaría:
-$$
-\int{u \, dv} = u \cdot v - \int{v \, du}
-$$
-Si se requieren más niveles de integración, se pueden concatenar:
-\begin{verbatim}
-\int{\int{\int_{0}^{10}{f(x,y,z)\,dx\,dy\,dz}}}
-\end{verbatim}
-generaría:
-$$
-\int{\int{\int_{0}^{10}{f(x,y,z)\,dx\,dy\,dz}}}
-$$
-Si se requiere la integral de superficie se puede usar la orden
-\verb|\oint|:
-$$
-\oint{x\,dx}
+\sum_{i=1}^{n}{\frac{1}{n}}
 $$
 
-Las derivadas son más sencillas porque simplemente se pone el símbolo
-\texttt{'} (el apóstrofo). Por ejemplo:
-$$
-y'' + 4y = t^2-2t+5
-$$
-\LaTeX{} tiene funciones incorporadas, como las funciones trigonométricas. El 
-siguiente código:
+Se crearía con el ćodigo:
+
 \begin{verbatim}
-$$
-\sen^2{(x)} +\cos^2{(x)} = 1;\, \frac{\sen{(x)}}{\cos{(x)}} = \tan{(x)}
-$$
+\sum_{i=1}^{n}{\frac{1}{n}}
 \end{verbatim}
-generaría el siguiente resultado (nótese el \verb|\,|
-para generar un espacio:
-$$
-\sen^2{(x)} +\cos^2{(x)} = 1;\, \frac{\sen{(x)}}{\cos{(x)}} = \tan{(x)}
-$$
+
+Las diferentes partes de esa ecuación serían:
+\begin{itemize}
+\item \verb|\sum|: comando que indica el sumatorio.
+\item \verb|_{i=1}|: subíndice del sumatorio, indica lo que saldrá debajo de él.
+\item \verb|^{n}|: Superíndice del sumatorio, indica lo que habrá encima.
+\item \verb|{\frac{1}{n}}|: cuerpo del sumatorio, en este caso una fracción.
+\end{itemize}
+
+En la tabla \ref{tab:bigoperators} se presentan los operadores grandes con 
+superíndices y subíndices. En algunos de estos operadores el superíndice no se
+suele utilizar y sólo se muestra con motivo de presentación. En estos casos
+éste será un asterisco: <<$*$>>.
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Comando} & \textbf{Ejemplo} & \textbf{Descripción} \\\hline
+\verb|\sum| &$\displaystyle\sum_{i=1}^{n}{\frac{1}{n}}$ & Sumatorio\\\hline
+\verb|\prod| & $\displaystyle\prod_{i=1}^{n}{\frac{1}{n}}$&Producto \\\hline
+\verb|\coprod| & $\displaystyle\coprod_{j\in J}^{*}{\frac{1}{n}}$& Coproducto \\\hline
+\verb|\int| &$\displaystyle \int_{0}^{\infty}{x\,dx} \vphantom{\matrix{1\cr1\cr1\cr}}$& Integral\\\hline
+\verb|\oint| &$\displaystyle \oint_{0}^{\infty}{x\,dx}\vphantom{\matrix{1\cr1\cr1\cr}}$ & Integral de superficie\\\hline
+\verb|\bigoplus| & $\displaystyle\bigoplus_{i=0}^{*}{s_i}$&Suma booleana exclusiva \\\hline
+\verb|\bigotimes| & $\displaystyle\bigotimes_{i=0}^{n}{s_i}$&Producto tensorial \\\hline
+\verb|\bigodot| & $\displaystyle\bigodot_{i=0}^{n}{s_i}$&Varios significados\\\hline
+\verb|\bigcup| & $\displaystyle\bigcup_{i=1}^{n}{A_i}$& Unión de conjuntos\\\hline
+\verb|\bigcap| & $\displaystyle\bigcap_{i=1}^{n}{A_i}$& Intersección de conjuntos\\\hline
+\verb|\biguplus| & $\displaystyle\biguplus_{i=1}^{n}{A_i}$& Unión disjunta de conjuntos\\\hline
+\verb|\bigsqcup| & $\displaystyle\bigsqcup_{i=1}^{n}{A_i}$&Variante de la unión\\\hline
+\verb|\bigvee| & $\displaystyle\bigvee_{i=1}^{n}{p_i}$&  Disyunción lógica\\\hline
+\verb|\bigwedge| & $\displaystyle\bigwedge_{i=1}^{n}{p_i}$&Conjunción lógica\\\hline
+\verb|\lim| & $\displaystyle\lim_{x\to\infty}^{*}{\frac{1}{x}}\vphantom{\matrix{1\cr1\cr1\cr}}$&Límite\\\hline
+\end{tabular}
+\caption{Operadores matemáticos grandes}
+\label{tab:bigoperators}
+\end{table}
+
+Además, como es lógico, \LaTeX{} incorpora las funciones matemáticas más usadas.
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Comando}&\textbf{Presentación}&\textbf{Función}\\\hline
+\multicolumn{3}{|c|}{\textbf{Funciones básicas}}\\\hline
+\verb|\sqrt[<grado>]{<argumento>}| &$\sqrt[3]{8}=2$ & Raíz enésima\\\hline
+\multicolumn{3}{|c|}{\textbf{Funciones trigonométricas}}\\\hline
+\verb|\sen| &$\sen{\alpha}$ & Seno\\\hline
+\verb|\cos| &$\cos{\alpha}$& Coseno\\\hline
+\verb|\tan| &$\tan{\alpha}$&Tangente \\\hline
+\verb|\arcsen| &$\arcsen{x} $&Arcoseno \\\hline
+\verb|\arccos| &$\arccos{x} $&Arcocoseno \\\hline
+\verb|\arctan| &$\arctan{x} $&Arcotangente\\\hline
+\verb|\sec| &$\sec{x}$&Secante \\\hline
+\verb|\cosec| &$\cosec{x}$& Cosecante\\\hline
+\verb|\cot| &$\cot{x}$&Cotangente \\\hline
+\multicolumn{3}{|c|}{\textbf{Logaritmos}}\\\hline
+\verb|\ln| &$\ln{x} $&Logaritmo neperiano\\\hline
+\verb|\log_{<base>}{<argumento>}| &$\log_{3}{x}$&Logaritmo \\\hline
+
+\end{tabular}
+\end{table}
 
 Hay, además, hay muchos operadores que son necesarios, algunos de ellos
 son:
@@ -856,6 +873,9 @@ son:
     \verb|\oplus| & $\oplus$ &Disyunción exclusiva\\ \hline
     \verb|\pm| & $\pm$ &Más menos\\ \hline
     \verb|\mp| & $\mp$ &Menos más\\ \hline
+    \verb|\forall| & $\forall$ &Para todo\\ \hline
+    \verb|\exists| & $\exists$ &Existe\\ \hline
+    
     \end{tabular}
     \label{tab:binOperators}
     \caption{Símbolos matemáticos de relaciones binarias}
@@ -863,6 +883,33 @@ son:
 Todos los símbolos pueden ser negados (tachados con una línea ligeramente 
 oblicua) si se preceden del operador \verb|\not|.
 Por ejemplo \verb|\not\in| producirá $\not\in{}$.
+El comando \texttt{not}, sin embargo, no vale para tachar partes de fórmulas,
+para eso usaremos el paquete cancel, que permite tanto tachar como indicar
+que una fórmula se cancela a un valor:
+$$
+\frac{225}{150} = 
+\frac{\cancel{15}\cdot 15}{\cancel{15}\cdot 10}=
+\frac{15}{10} = 
+\frac{3\cdot \cancel{5}}{2\cdot \cancel{5}} = \frac{3}{2}
+$$
+$$
+\frac{1}{\sqrt{2}} =
+\frac{\sqrt{2}}{\cancelto{2}{\sqrt{2}\sqrt{2}}}\:\:\:\:= 
+\frac{\sqrt{2}}{2}
+$$
+
+Dicho paquete -cancel- ofrece 4 órdenes:
+\begin{itemize}
+\item \verb|\cancel{<fórmula a tachar>}|: tacha la fórmula con una barra 
+inclinada hacia delante: $\cancel{y}$
+\item \verb|\bcancel{<fórmula a tachar>}|: tacha con una barra hacia atrás:
+$\bcancel{y}$
+\item \verb|\xcancel{<fórmula a tachar>}|: tacha con los dos comandos
+anteriores. $\xcancel{y}$
+\item \verb|\cancelto{<valor al que cancela>}{<fórmula a tachar>}|:
+$3+3=\cancelto{6}{5}$
+\end{itemize}
+
 También están disponibles las letras griegas, tanto mayúsculas como minúsculas:
 
 \begin{table}[H]
@@ -967,7 +1014,8 @@ regla: se escribe, seguida, la dirección de origen de la flecha,
 después la de llegada, y si se pone la primera letra en mayúsculas, será una
 flecha doble:
 \begin{itemize}
-\item \verb|\rightarrow| genera $\rightarrow$.
+\item \verb|\rightarrow| genera $\rightarrow$ (también disponible como
+\verb|\to|).
 \item \verb|\Rightarrow| genera $\Rightarrow$.
 \item \verb|\leftarrow| genera $\leftarrow$.
 \item \verb|\lefttarrow| genera $\Leftarrow$.
@@ -1029,7 +1077,7 @@ Los acentos más comunes son:
     \texttt{bar} & $\bar{v}$ \\\hline
     \texttt{hat} & $\hat{v}$ \\\hline
     \texttt{widehat} & $\widehat{v,\,w}
-                                 \vphantom{\matrix{ \cr \cr \cr}}$ \\\hline
+                                 \vphantom{\matrix{ \cr \cr}}$ \\\hline
     \texttt{acute} & $\acute{v}$ \\\hline
     \texttt{grave} & $\grave{v}$ \\\hline
     \texttt{dot} & $\dot{v}$ \\\hline
@@ -1052,6 +1100,36 @@ $$
 p\land q \equiv \overline{\left(\bar{p}\lor\bar{q}\right)}
 $$
 Existe, además, el comando \texttt{underline} para subrayar en modo matemático.
+
+Ya para ir terminando los comandos básicos de matemáticas, existen maneras de
+añadir espacios a las ecuaciones, éstos serían:
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Comando}&\textbf{Ejemplo}&\textbf{Comentario}\\\hline
+\verb|<nada>|&$||$&Espacio normal\\\hline
+\verb|\,|&$|\,|$&Pequeño\\\hline
+\verb|\:|&$|\:|$&Mediano\\\hline
+\verb|\;|&$|\;|$&Grande\\\hline
+\verb|\!|&$|\!|$&Negativo\\\hline
+\end{tabular}
+\caption{Comandos de espaciado en ecuaciones}
+\label{tab:spaceEq}
+\end{table}
+
+Es remarcable el uso del espacio negativo presentado en la tabla
+\ref{tab:spaceEq}. Uno de los usos más comunes es para la presentación de
+números combinatorios. Cuando los mismos se escriben en forma matricial
+(con el comando \verb!matrix!), se crean paréntesis muy lejos de los números:
+\verb!\left(\matrix{7\cr3}\right)!
+$$
+\left(\matrix{7\cr3}\right)
+$$
+sin embargo, si lo hacemos con el espacio negativo:\verb|\left(\!\matrix{7\cr3}\!\right)|
+$$
+\left(\!\matrix{7\cr3}\!\right)
+$$
 
 \subsubsection{Matrices como herramienta}
 Es evidente que el uso principal del comando \texttt{matrix} es crear matrices
@@ -1129,30 +1207,21 @@ int main(void){
 }
 \end{verbatim}
 
+En caso de querer incluir texto de este tipo dentro de un párrafo, usaríamos
+\verb|\verb|\texttt{|}\texttt{<comandos>|}. Por ejemplo: <<puede insertar
+una barra inclinada inversa con \verb|\textbackslash|>>
+
 Gracias a que hemos cargado el paquete babel español (ver preámbulo del código),
-podemos utilizar \texttt{<}\texttt{<} y \texttt{>}\texttt{>} para poner comillas latinas.
-Por ejemplo:
+podemos utilizar \texttt{<}\texttt{<} y \texttt{>}\texttt{>} para poner
+comillas latinas. Por ejemplo:
+\begin{quote}
+<<El día que la mierda tenga algún valor, los pobres nacerán sin culo>>
 
-<<El día que la mierda tenga algún valor, los pobres nacerán sin culo>> \\
-% Dos guiones son un guion largo
 -- Gabriel García Mázquez
+\end{quote}
 
-Para crear una lista con numeración se utilizará el mismo código que 
-para una lista sin numeración, pero en vez de \texttt{itemize} pondremos
-\texttt{enumerate}. El resultado sería:
-% Lista con enumeración (Nótese que entre llaves pone enumerate)
-\begin{enumerate}
-\item Croacia.
-    \item Francia.
-        \begin{enumerate} %sublista
-            \item Lloris.
-                \begin{enumerate}
-                    \item Ha tenido 0 expulsiones.
-                \end{enumerate}
-            \item Varane.
-        \end{enumerate}
-    \item Inglaterra.
-\end{enumerate}
+% Dos guiones son un guion largo
+
 \subsection{Inclusión de figuras y tablas}
 Para poner imágenes hay que usar la orden 
 \verb|includegraphics|. Esta orden tiene la siguiente sintaxis
@@ -1289,7 +1358,44 @@ número de la figura. Si insertamos \verb|\nameref{<nombre de la referencia>}|
 aparecerá el título de la misma (la \textit{caption}).
 
 Por ejemplo: como podemos ver en la Figura \ref{fig:gatitoNegro}:
-\nameref{fig:gatitoNegro}. A continuación, vamos a insertar una tabla.
+\nameref{fig:gatitoNegro}.
+
+\subsection{Tablas}
+Las tablas son una de las herramientas más complejas de \LaTeX{}, empezaremos
+insertando tablas básicas (donde todas las celdas estén ocupadas) y después
+veremos cómo combinarlas y añadir formato más elaborado.
+A continuación, vamos a insertar la primera tabla:
+
+% Esto no sirve para hacer la tabla en sí misma, sino para ponerle captions y
+% esas cosas. Es equivalente a \begin{figure} que no inserta una imagen, pero
+% nos prepara las cosas para que se comporte como una figura, así podemos
+% ponerle título y referenciarla.
+\begin{table}[H]
+    \centering
+    % Aquí defines la tabla en sí misma, tienes que poner tantas letras como
+    % columnas vaya a tener la tabla, y puedes poner líneas verticales entre
+    % ellas escribiendo este símbolo entre las letras. Estas letras son los
+    % especificadores de alineación. Si pones l, la columna se alinea a la
+    % izquierda, si pones c, al centro, y si pones r, a la derecha.
+    \begin{tabular}{|c|r|c|r|}
+    % Esta orden genera una línea entre filas de la tabla.
+    \hline
+    % En las tablas las celdas se separan con & y las filas con \\
+    % Puede haber celdas vacías, pero todas las filas deben tener las mismas
+    % celdas.
+    Concepto & Precio Unitario & Cantidad & Subtotal\\ \hline
+    Placa base & \EUR{89,99} & 1 & \EUR{89,99}\\ \hline
+    RAM 8GB DDR4 3200 MHz & \EUR{40,44} & 4 & \EUR{161,76} \\ \hline
+    % Aquí podemos ver que hemos puedo celdas vacías. (dos & seguidos)
+    \textbf{Total}&&&\textbf{\EUR{251,75}} \\ \hline
+\end{tabular}
+    % De nuevo, el título que se ve
+    \caption{Gastos de la reparación}
+    % La referencia interna. 
+    \label{tab:gastos}
+\end{table}
+
+La tabla ha sido creada de este modo:
 
 \begin{verbatim}
 1   \begin{table}[H]
@@ -1331,44 +1437,146 @@ dos \emph{et} (\&\&) Y que debe terminarse con \verb|\\|.
 \item Indica el título visible de la tabla.
 \item Etiqueta para referencias.
 \end{enumerate}
-% Esto no sirve para hacer la tabla en sí misma, sino para ponerle captions y
-% esas cosas. Es equivalente a \begin{figure} que no inserta una imagen, pero
-% nos prepara las cosas para que se comporte como una figura, así podemos
-% ponerle título y referenciarla.
+
+Además de tablas básicas, se pueden crear tablas más complejas, con celdas
+combinadas, por ejemplo: a veces es deseable crear celdas que ocupen es
+espacio de otras, en la tabla \ref{tab:animals} se ven celdas que ocupan
+varias columnas.
+
 \begin{table}[H]
     \centering
-    % Aquí defines la tabla en sí misma, tienes que poner tantas letras como
-    % columnas vaya a tener la tabla, y puedes poner líneas verticales entre
-    % ellas escribiendo este símbolo entre las letras. Estas letras son los
-    % especificadores de alineación. Si pones l, la columna se alinea a la
-    % izquierda, si pones c, al centro, y si pones r, a la derecha.
-    \begin{tabular}{|c|r|c|r|}
-    % Esta orden genera una línea entre filas de la tabla.
-    \hline
-    % En las tablas las celdas se separan con & y las filas con \\
-    % Puede haber celdas vacías, pero todas las filas deben tener las mismas
-    % celdas.
-    Concepto & Precio Unitario & Cantidad & Subtotal\\ \hline
-    Placa base & \EUR{89,99} & 1 & \EUR{89,99}\\ \hline
-    RAM 8GB DDR4 3200 MHz & \EUR{40,44} & 4 & \EUR{161,76} \\ \hline
-    % Aquí podemos ver que hemos puedo celdas vacías. (dos & seguidos)
-    \textbf{Total}&&&\textbf{\EUR{251,75}} \\ \hline
-\end{tabular}
-    % De nuevo, el título que se ve
-    \caption{Gastos de la reparación}
-    % La referencia interna. 
-    \label{tab:gastos}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \multicolumn{4}{|c|}{\textbf{Animales}} \\\hline
+        \multicolumn{2}{|c|}{\textbf{Mamíferos}} & \multicolumn{2}{c|}{\textbf{Aves}}\\\hline
+        Oso&Perro&Cigüeña & Gorrión \\\hline
+        \multicolumn{1}{|r|}{500 Kg}&
+            \multicolumn{1}{r|}{10 Kg}&
+            \multicolumn{1}{r|}{6 Kg} &
+            \multicolumn{1}{r|}{0,02 Kg} \\\hline 
+    \end{tabular}
+    \caption{Peso medio de animales}
+    \label{tab:animals}
 \end{table}
+
+Para hacer esto se usa la orden \verb|\multicolumn|, que tiene esta sintaxis:
+\begin{verbatim}
+\multicolumn{<número de columnas>}{<alineación>}{<contenido>}
+\end{verbatim}
+El número de columnas no nececita explicación. La alineación indicará cómo
+se alineará el texto de esta celda grande, funciona como las de la propia tabla,
+es decir, se puede poner l, r o c y con barras a los lados (o sólo a uno), para
+dividir las columnas. El contenido es el texto de la celda combinada. Por 
+ejemplo, la celda donde pone <<Animales>> se ha creado con esta orden:
+\verb!\multicolumn{4}{|c|}{\textbf{Animales}}!. Ocupa cuatro columnas, su
+contenido está centrado, y tiene barras a ambos lados de la celda. Es
+importante recordar que hay que omitir los et (\&) de las columnas
+que se hayan omitido, es decir, al haber hecho una celda de 4 columnas con
+la orden anterior, no se ha de poner ningún et.
+
+
+Aparte de esto, quizá sea necesario que una celda ocupe varias filas, por
+ejemplo en la tabla \ref{tab:multirows}.
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \cline{3-6}
+        \multicolumn{2}{c|}{}&\multicolumn{4}{c|}{Pruebas} \\\cline{3-6}
+        \multicolumn{2}{c|}{}&T-01&T-02&T-03&T-04\\\hline
+        \multirow{4}{*}[-.2em]{\begin{sideways}Requisitos\end{sideways}}&REQ-01&OK&ERROR&OK&ERROR\\\cline{2-6} 
+        &REQ-02&OK&OK&OK&OK\\\cline{2-6}
+        &REQ-03&OK&OK&OK&OK\\\cline{2-6}
+        &REQ-04&OK&ERROR&OK&ERROR\\\hline 
+    \end{tabular}
+    \caption{Trazabilidad -- Ejemplo de tabla con \emph{multirows}}
+    \label{tab:multirows}
+\end{table}
+
+Esta tabla se ha creado con este código:
+\begin{figure}[H]
+\begin{lstlisting}[language={[LaTeX]TeX},
+                    caption={Código de celda multifila},
+                    label={lst:multirowTable}]
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \cline{3-6}
+        \multicolumn{2}{c|}{}&\multicolumn{4}{c|}{Pruebas} \\\cline{3-6}
+        \multicolumn{2}{c|}{}&T-01&T-02&T-03&T-04\\\hline
+        \multirow{4}{*}[-.2em]{\begin{sideways}Requisitos\end{sideways}}&REQ-01&OK&ERROR&OK&ERROR\\\cline{2-6} 
+        &REQ-02&OK&OK&OK&OK\\\cline{2-6}
+        &REQ-03&OK&OK&OK&OK\\\cline{2-6}
+        &REQ-04&OK&ERROR&OK&ERROR\\\hline 
+    \end{tabular}
+    \caption{Trazabilidad -- Ejemplo de tabla con \emph{multirows}}
+    \label{tab:multirows}
+\end{table}
+\end{lstlisting}
+\end{figure}
+
+\begin{enumerate}
+\item Inicio de tabla.
+\item Centrar la tabla.
+\item Empezar la definición de las celdas.
+\item Primer comando nuevo: cline es equivalente a hline, pero permite
+especificar un intervalo de celdas que tendrán la línea, en este caso,
+queremos que sean las 3 últimas de la tabla, porque las dos primeras no las
+queremos dibujar.
+\item Comando multicolumn, se puede ver que se define una celda de dos columnas
+con alineación central y sin barra dibujada a la izquierda (\verb!c|!), se
+crea vacía, es la esquina que <<falta>> de la tabla.
+\item Mismo procedimiento respecto al multicolumn para dejar esa parte de la
+tabla en blanco.
+\item Empieza la multifila:
+    \begin{itemize}
+        \item Definimos que va a ocupar cuatro filas.
+        \item El siguiente argumento es el ancho de la columna, con un asterisco
+indicamos que va a ser ajuste automático.
+        \item El siguiente argumento (que es opcional) indica que el rexto
+ha de salir un poco más abajo que al inicio de la celda. Finalmente, indicamos
+el contenido de la celda. Más adelante desarrollaré esto, de momento simplemente
+pensar que el contenido de la celda se escribe ahí.
+    \end{itemize}
+\item Siguiente fila, nótese que las celdas <<ocupadas>> por el multifila deben
+estar en blanco, pero sus símbolos et deben aparecer.
+\item Nótese el uso de cline en estas celdas.
+\end{enumerate}
+
+Para poner el texto girado 90 º a la izquierda se ha usado el paquete
+\texttt{rotating}, que introduce el entorno \verb|sideways|, que escribe
+el texto de este modo. Por ejemplo:
+\begin{verbatim}
+\begin{sideways}
+Estoy girado.
+\end{sideways}
+\end{verbatim}
+
+generaría el siguiente párrafo:
+
+\begin{sideways}
+Estoy girado.
+\end{sideways}
+
+
+
+
+
+
 
 De nuevo, podemos referenciar el número de la tabla con 
 \verb|\ref{tab:gastos}| y su
 títulos con \verb|\nameref{tab:gastos}|. \textbf{Nota sobre compilar 
 referencias cruzadas:}
- a veces salen signos de
-interrogación en lugar de las referencias, no te preocupes, \LaTeX{} a 
-veces necesita dos compilaciones para crear la base de datos de referencias.
+Cuando no se encuentra una referencia (por ejemplo porque se ha escrito
+una etiqueta que no existe) salen signos de
+interrogación en lugar de las referencias,
+Si te pasa y has comprobado que la referencia está bien escrita
+ no te preocupes, \LaTeX{} a veces necesita dos compilaciones para crear
+la base de datos de referencias. Compilar otra vez para asegurarte que no es 
+ése el problema.
 En el makefile proporcionado ya se compila dos veces, pero si no lo utilizas,
 simplemente llama al comando dos veces seguidas.
+
 
 \subsubsection{Utilización alternativa de las figuras}
 Una de las ventajas de utilizar figuras es que el contenido de las mismas no se
@@ -1643,8 +1851,8 @@ se ponen las letras es irrelevante.
 \item Indica el tamaño del caracter tabulador, si tabulas con espacios no 
 tiene efecto.
 \item Indica si los espacios en las cadenas de caracteres debe mostrarse, es
-decir, mostraría algo como <<''$\textrm{Hola,}\left\lfloor\_\right\rfloor
-\textrm{mundo!}$''>> en vez de <<''Hola, mundo!''>>, puede ser \textit{true} o
+decir, mostraría algo como <<''$\textrm{Hola,␣} \textrm{mundo!}$''>>
+en vez de <<''Hola, mundo!''>>, puede ser \textit{true} o
 \textit{false}.
 \item La opción \textit{numbers} puede ser: \textit{left},
 \textit{right}, \textit{none}. Para mostrar los números a izquierda o derecha
@@ -1678,12 +1886,9 @@ opciones en la orden begin que nos permiten indicar el languaje (para que se
 destaquen las palabras clave automáticamente), la \textit{caption} (el título
 visible que saldrá en el documento) y la etiqueta (que será la que usemos para
 referencias). Por ejemplo:
-\begin{lstlisting}[language={[LaTeX]TeX}, caption={Ejemplo de lstlisting},
-label=lst:exampleListing]
-\begin{lstlisting}[language=c++,
-caption={Ejemplo de Hola Mundo en C++},
-label=lst:helloWordCpp]
-\end{lstlisting}
+\lstinline[language={[LaTeX]TeX}]!\begin{lstlisting}[language=c++,caption={Ejemplo de Hola Mundo en C++},label=lst:helloWordCpp]\end{ lstlisting}!
+
+
 Definirá el lenguaje, el título y la etiqueta del siguiente fragmento de código,
 nótese que no se incluye ni el cierre del entorno \verb|\lstlisting| ni el
 código C++ del ejemplo.
@@ -1699,6 +1904,133 @@ int main(int argc, const char* argv[]){
     return EXIT_SUCCESS;
 }
 \end{lstlisting}
+\subsection{Subfiguras}
+A veces, cuando se quieren mostrar varias imágenes relacionadas, se puede tener
+la necesidad de crear figuras de figuras, es decir, una figura que se compone
+de varias imágenes, cada una de las cuales tiene su propio título, en este
+documento esto se puede ver en la Figura \ref{fig:compMarg}. El paquete que 
+hay que incluir es \texttt{subcaption}. Para utilizar las subfiguras simplemente
+se crear un entorno \texttt{subfigure} dentro del entorno figure. Aunque
+hay que tener cuidado con elementos como la anchura de las figuras y subfiguras.
+Un ejemplo de este uso sería esta figura compuesta de 3 imágenes:
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.3333\hsize}
+    \centering
+    \includegraphics[width=.9\linewidth]{naranja}
+    \caption{Una naranja}
+\end{subfigure}%
+\begin{subfigure}{.3333\hsize}
+    \centering
+    \includegraphics[width=.9\linewidth]{manzana}
+    \caption{Una manzana}
+\end{subfigure}%
+\begin{subfigure}{.3333\hsize}
+    \centering
+    \includegraphics[width=.9\linewidth]{pera}
+    \caption{Una pera}
+\end{subfigure}
+\label{fig:frutas}
+\caption{Unas cuantas frutas}
+\end{figure}
+
+Se ha incluido en las imágenes un marco para que se vean sus límites exactos.
+El código utilizado para generar la figura compuesta ha sido este:
+\begin{lstlisting}[language={[LaTeX]TeX},
+                   caption={Ejemplo de subfigura},
+                   label={lst:subfigure}]
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.3333\hsize}
+    \centering
+    \includegraphics[width=.9\linewidth]{naranja}
+    \caption{Una naranja}
+\end{subfigure}%
+\begin{subfigure}{.3333\hsize}
+    \centering
+    \includegraphics[width=.9\linewidth]{manzana}
+    \caption{Una manzana}
+\end{subfigure}%
+\begin{subfigure}{.3333\hsize}
+    \centering
+    \includegraphics[width=.9\linewidth]{pera}
+    \caption{Una pera}
+\end{subfigure}
+\label{fig:frutas}
+\caption{Unas cuantas frutas}
+\end{figure}
+\end{lstlisting}
+
+El código que permite la creación de figuras compuestas es bastante explicativo,
+pero hay ciertas salvedades que hay que comentar:
+\begin{itemize}
+\item Cada subfigura ocupa un tamaño concreto, por lo que hay que asegurarse
+de que caben en la pantalla, en las líneas 4, 9 y 14 se puede ver que se ha 
+configurado para que cada subfigura ocupe aproximadamente un tercio del espacio
+horizontal disponible.
+\item Además, la imagen que va dentro de cada subfigura no puede usar el 
+parámetro \verb|\hsize|, sino \verb|\linewidth|. Ese parámetro mide tanto
+como el ancho de la \textbf{subfigura}, por lo que es recomendable multiplicarlo
+por $0,9$ para darle <<aire>> a las imágenes.
+\item Entre el final de una subfigura y el inicio de la siguiente \textbf{debe
+haber un comentario} para eliminar el salto de línea entre ellas, si no, las
+subfiguras \textbf{no} saldrán a la misma altura, sino una encima de la
+siguiente.
+\item Cada subfigura puede tener su propia \textit{caption}, que se
+numera con una letra. Se le puede añadir una etiqueta (\textit{label}), para
+referencias pero en este caso no se ha hecho.
+\end{itemize}
+
+\subsection{Citas}
+A veces queremos crear una cita en nuestro texto, por ejemplo en un artículo
+científico,en vez de parafrasear la fuente, queremos incluir una cita de 
+varias líneas. Quizás queremos una presentación más atractiva de una cita
+célebre, o quizá queremos destacar una parte del texto, de un artículo,
+por ejemplo. Para esto existe el entorno \textit{quote}, que nos permite
+hacer un bloque de cita, por ejemplo:
+\begin{quote}
+«Un hippie es alguien que tiene las pintas de Tarzán, que camina como Jane y
+que huele como Cheetah». 
+
+-- Ronald W. Reagan, presidente de los Estados Unidos.
+\end{quote}
+
+El bloque anterior se ha creado simplemente inlcuyendo el texto en un entorno
+\textit{quote}, con la salvedad de que se han creado dos párrafos, uno para
+la cita y otro para indicar el autor.
+
+Además, si se quieren decorar más, se pueden combinar con tamaños distintos, 
+o colores, por ejemplo:
+\begin{quote}
+\LARGE\color{lightBlue}
+\rule[2mm]{\linewidth}{.5pt}
+<<Un hippie es alguien que tiene las pintas de Tarzán, que camina como Jane y
+que huele como Cheetah>>. 
+\rule[2mm]{\linewidth}{.5pt}
+\normalsize
+
+\color{blue}-- Ronald W. Reagan, presidente de los Estados Unidos.\color{black}
+\end{quote}
+
+Se conseguiría así:
+\begin{lstlisting}[language={[LaTeX]TeX},
+caption={Ejemplo de citación adornos}, label={lst:quoteWithDecoration}]
+\begin{quote}
+\LARGE\color{lightBlue}
+\rule[2mm]{\linewidth}{.5pt}
+<<Un hippie es alguien que tiene las pintas de Tarzan, que camina como Jane y
+que huele como Cheetah>>. 
+\rule[2mm]{\linewidth}{.5pt}
+\normalsize
+
+\color{blue}-- Ronald W. Reagan, presidente de los Estados Unidos. \color{black}
+\end{quote}
+\end{lstlisting}
+
+En el ejemplo anterior se puede ver que simplemente se ha modificado el estilo
+del texto con los domandos \verb|\LARGE| y \verb|\color|, se ha creado una
+línea horizontal con el comando \verb|rule| y se ha escrito el texto, después,
+se ha creado otra regla y se ha vuelvo a cambiar el estilo.
 
 \newpage \section{Decoración e indización}
 De momento no se han visto órdenes para crear índices, tablas de contenido,
@@ -2036,7 +2368,51 @@ Y, finalmente, el último argumento son los tres valores que necesite nuestro
 esquema de color.
 \newpage\section{Licencias y agradecimiento}
 Todas las páginas citadas son de sus respectivos creadores, yo sólo me limito
-a recopilar sus soluciones o información en un mismo documento. Todas las
+a recopilar sus soluciones o información en un mismo documento. Además, quiero
+recoger aquí los nombres de lso creadores de los paquetes utilizados y darles
+las gracias para permitir que la comunidad haga documentos con funcionalidades
+avanzadas.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Paquete}&\textbf{Autor}\\\hline
+fontenc&El equipo \LaTeX{} \\\hline
+titlesec&Javier Bezos\\\hline
+babel&Johannes Braams, Javier Bezos \textit{et al.} \\\hline
+eurosym& Henrik Theiling\\\hline
+graphicx&David Carlisle, Sebastian Rahtz\\\hline
+float& Anselm Lingnau \\\hline
+hyperref&Sebastian Rahtz, Heiko Oberdiek, El equipo \LaTeX{}\\\hline
+fancyhdr& Pieter van Oostrum\\\hline
+lastpage&Hans-Martin Münch, Jeffrey Goldberg \\\hline
+biblatex&Philipp Lehman, Joseph Wright, Audrey Boruvka y Philip Kime\\\hline
+geometry&Hideo Umeki, David Carlisle\\\hline
+inputenc&Frank Mittelbach, Alan Jeffrey y el equipo \LaTeX{} \\\hline
+amsfonts&American Mathematical Society\\\hline
+subcaption&Axel Sommerfeldt\\\hline
+listings& Carsten Heinz, Brooks Moses y Jobst Hoffmann\\\hline
+xcolor& Dr. Uwe Kern\\\hline
+cancel&Donald Arseneau\\\hline
+multirow&Jerry Leichter, Pieter van Oostrum \\\hline
+array& El equipo \LaTeX{} \\\hline
+rotating&Sebastian Rahtz, Leonor Barroca, Robin Fairbairns y El equipo \LaTeX{}  \\\hline
+
+\end{tabular}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+
+Todas las
 imágenes utilizadas son de licencia libre, ver:
 \href{https://pixabay.com/service/faq/}{FAQ de Pixabay} o de creación propia.
 \newpage
