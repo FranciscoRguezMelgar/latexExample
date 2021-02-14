@@ -59,7 +59,6 @@
 
 %Permite utilizar la fuente de trazo doble en ecuaciones.
 \usepackage{amsfonts}
-
 %Permite figuras de figuras
 \usepackage{subcaption}
 %coloreado syntaxis
@@ -244,8 +243,18 @@
 % La sección es el primer nivel de título que se permite en esta clase de 
     % documento. Introduce un título de primer nivel
 \section{Presentación}
+Lo primero que debemos saber es qué es \LaTeX{}. \LaTeX{} es una herramienta
+que nos permite crear documentos para mostrar, generalmente PDF
+(\textit{Portable Document Format}), a través de la escritura de archivos de
+texto plano. De una manera similar a como se escribe el código para crear
+programas en lenguajes de programación como C, C++ o Java. Para crear los
+archivos de texto nos valdrá cualquier editor, y para que se generen los PDF
+usaremos un <<motor>>. Que no es más que un programa que leerá las órdenes
+que hayamos incluido en el archivo de texto plano y generará el PDF a partir de
+él.
+
 Este documento pretende ser un ejemplo de varias tareas que se suelen realizar
-en LaTeX. Se recomienda compilar el código y ver el pdf y el código a la
+en \LaTeX{}. Se recomienda compilar el código y ver el pdf y el código a la
 vez para ver los resultados. En los comentarios del código explico lo que se va
 haciendo y qué órdenes son necesarias para crear lo que se ve en el PDF.
 Además, incluyo un \textit{script} de compilación mínimo que debería compilar
@@ -283,12 +292,10 @@ por favor, consulte la documentación específica de cómo instalar paquetes de
 
 Una vez instalados estos paquetes, se puede compilar con el comando
 \texttt{pdflatex}, este comando debería ejecutarse sobre un archivo .tex.
-(ver \textbf{\ref{ArchivosTex}}).
-
-Una vez instalado todo esto, en sistemas Linux se puede compilar este 
-documento con el comando \texttt{make}. Para ello debe instalarle si no se
-tiene ya instalado. Para hacerlo, de nuevo, en distribuciones derivadas de
-Debian con este comando:
+(ver \textbf{\ref{ArchivosTex}}). Este tutorial se puede compilar
+con el comando \texttt{make}. Para ello se debe tener instalada la utilidad 
+\texttt{make}. Para hacerlo, de nuevo, en distribuciones derivadas de
+Debian, se usa este comando:
 \begin{verbatim}
 sudo apt install make
 \end{verbatim}
@@ -315,13 +322,12 @@ En sistemas Windows, la instalación se realiza como otras herramientas de
 del instalador. En nuestro caso, debemos instalar dos programas:
 \begin{itemize}
     \item MikTex, el <<motor>> de \LaTeX{}, que nos permitiría compilar,
-         pero sin ofrecernos asistencia a la edición.
-        Este programa se puede descargar desde
-         \href{https://miktex.org/download}{aquí}. 
+pero sin ofrecernos asistencia a la edición.
+Este programa se puede descargar desde \href{https://miktex.org/download}{aquí}. 
     \item TexStudio, el editor de documentos \LaTeX{}, que nos permite compilar
-        sin tener que usar la línea de comandos de Windows. Y nos ofrece
-        asistencia a la edición y funcionalidades como corrector ortográfico.
-        Se puede descargar desde \href{https://www.texstudio.org/}{aquí}.
+sin tener que usar la línea de comandos de Windows. Y nos ofrece
+asistencia a la edición y funcionalidades como corrector ortográfico.
+Se puede descargar desde \href{https://www.texstudio.org/}{aquí}.
 \end{itemize}
 
 Durante el proceso de
@@ -1107,18 +1113,18 @@ Existe, además, el comando \texttt{underline} para subrayar en modo matemático
 Ya para ir terminando los comandos básicos de matemáticas, existen maneras de
 añadir espacios a las ecuaciones, éstos serían:
 \begin{table}[H]
-\centering
-\begin{tabular}{|c|c|c|}
-\hline
-\textbf{Comando}&\textbf{Ejemplo}&\textbf{Comentario}\\\hline
-\verb|<nada>|&$||$&Espacio normal\\\hline
-\verb|\,|&$|\,|$&Pequeño\\\hline
-\verb|\:|&$|\:|$&Mediano\\\hline
-\verb|\;|&$|\;|$&Grande\\\hline
-\verb|\!|&$|\!|$&Negativo\\\hline
-\end{tabular}
-\caption{Comandos de espaciado en ecuaciones}
-\label{tab:spaceEq}
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Comando}&\textbf{Ejemplo}&\textbf{Comentario}\\\hline
+        \verb|<nada>|&$||$&Espacio normal\\\hline
+        \verb|\,|&$|\,|$&Pequeño\\\hline
+        \verb|\:|&$|\:|$&Mediano\\\hline
+        \verb|\;|&$|\;|$&Grande\\\hline
+        \verb|\!|&$|\!|$&Negativo\\\hline
+    \end{tabular}
+    \caption{Comandos de espaciado en ecuaciones}
+    \label{tab:spaceEq}
 \end{table}
 
 Es remarcable el uso del espacio negativo presentado en la tabla
@@ -1129,7 +1135,8 @@ números combinatorios. Cuando los mismos se escriben en forma matricial
 $$
 \left(\matrix{7\cr3}\right)
 $$
-sin embargo, si lo hacemos con el espacio negativo:\verb|\left(\!\matrix{7\cr3}\!\right)|
+sin embargo, si lo hacemos
+con el espacio negativo:\verb|\left(\!\matrix{7\cr3}\!\right)|
 $$
 \left(\!\matrix{7\cr3}\!\right)
 $$
@@ -1151,7 +1158,6 @@ $$
 -x&\textrm{para}&x<0\cr
 x&\textrm{para}&x\geq0}\right.
 $$
-
 Hay varias cosas que comentar sobre este código:
 \begin{enumerate}
 \item El comanto \texttt{textrm} permite introducir texto (sin cursiva) en
@@ -1160,6 +1166,123 @@ ecuaciones.
 para alinear los elementos, de este modo, en todas las filas la palabra <<para>>
 está alineada con las demás.
 \end{enumerate}
+
+Aparte de este uso de las matrices, hay que tener en cuentra situaciones en las
+que una matriz debe tener símbolos dentro, como por ejemplo la expresión
+abreviada de un sistema de ecuaciones lineales.
+
+$$
+\left(
+    \left.
+        \matrix{
+            3   &   2        &   1   \cr
+            2   &   2        &   4   \cr
+           -1   &\frac{1}{2} &  -1
+        }
+    \right|
+    \matrix{
+            1\cr
+           -2\cr
+            0
+    }
+\right)
+$$
+El código que se ha utilizado es este:
+\begin{lstlisting}[language={[LaTeX]Tex}, caption={Ejemplo de matriz con barra},
+label={lst:barMatrix}]
+\left(
+    \left.
+        \matrix{
+            3   &   2        &   1   \cr
+            2   &   2        &   4   \cr
+           -1   &\frac{1}{2} &  -1
+        }
+    \right|
+    \matrix{
+            1\cr
+           -2\cr
+            0
+    }
+\right)
+\end{lstlisting}
+
+Lo que se ha hecho aquí es crear una matrix de $3\times3$, sin delimitador
+izquierdo y con una barra vertical como delimitador derecho (líneas 2-8),
+después se ha creado una matrix de 3 filas con una columa justo al lado y
+se ha rodeado todo con paréntesis con \verb!\left! y \verb!\right!.
+
+Otro de los ejemplos que hay que utilizar es cuando se necesita una matriz 
+rodeada de paréntesis con elementos externos, es decir:
+
+$$
+\matrix{
+        a_{x,1} & a_{x,2} & a_{x,3}\cr 
+        \left(
+        \matrix{
+            1  \cr
+            4  \cr
+            7
+        }\right. &
+        \matrix{
+            1  \cr
+            4  \cr
+            7
+        } &
+        \left.
+        \matrix{
+            1  \cr
+            4  \cr
+            7
+        }
+        \right)
+}
+\!\!
+\matrix{\cr a_{1,y}\cr a_{2,y}\cr a_{1,y}}
+$$
+\begin{minipage}[c]{\hsize}
+\begin{lstlisting}[language={[LaTeX]Tex}, caption={Ejemplo de matriz con una 
+matriz dentro},
+label={lst:matrixOfMatrix}]
+\matrix{
+        a_{x,1} & a_{x,2} & a_{x,3}\cr 
+        \left(
+        \matrix{
+            1  \cr
+            4  \cr
+            7
+        }\right. &
+        \matrix{
+            1  \cr
+            4  \cr
+            7
+        } &
+        \left.
+        \matrix{
+            1  \cr
+            4  \cr
+            7
+        }
+        \right)
+}
+\matrix{\cr a_{1,y}\cr a_{2,y}\cr a_{1,y}}
+\end{lstlisting}
+\end{minipage}
+El principal obstáculo que debemos superar para conseguir esto es que
+no se pueden utilizar los operadores \verb!\left(! y \verb!\right)! entre
+elementos de una fila de una matriz (es decir, que estén separados por un
+\textit{et} (\&). Por esto, lo que hemos hecho es definir la matriz como una
+matriz de $2\times 3$ (línea 1), donde la primera fila (línea 2) van a ser
+los elementos <<externos>> y la segunda todos los demás,
+rodeados de paréntesis. En la segunda fila de la matriz pondremos tres matrices
+que, a su vez, tendrán tres filas. Es decir: la primera columna
+de la matriz entre paréntesis está definida entre las líneas y 8, la segunda
+entre las líneas 9 y 13 y la última entre las líneas 15 y 19
+Finalmente, hay que poner los paréntesis, esto se hará rodeando el primer
+elemento de la segunda fila con un paréntesis por la izquierda
+(orden left de la línea 3)  y el último
+con uno por la derecha (orden right de la línea 20). Finalmente, después de
+todo esto se aáde una matrix de $4\times 1$, donde la primera fila está vacía
+(línea 22).
 
 Además, en matemáticas se usan fuentes especiales para indicar cosas, por 
 ejemplo, una L mayúscula manuscrita es el símbolo de la transformada de Laplace.
@@ -1478,6 +1601,7 @@ la orden anterior, no se ha de poner ningún et.
 
 Aparte de esto, quizá sea necesario que una celda ocupe varias filas, por
 ejemplo en la tabla \ref{tab:multirows}.
+
 \begin{table}[H]
     \centering
     \begin{tabular}{|c|c|c|c|c|c|}
@@ -1494,7 +1618,8 @@ ejemplo en la tabla \ref{tab:multirows}.
 \end{table}
 
 Esta tabla se ha creado con este código:
-\begin{figure}[H]
+
+\begin{minipage}[c]{\hsize}
 \begin{lstlisting}[language={[LaTeX]TeX},
                     caption={Código de celda multifila},
                     label={lst:multirowTable}]
@@ -1513,7 +1638,7 @@ Esta tabla se ha creado con este código:
     \label{tab:multirows}
 \end{table}
 \end{lstlisting}
-\end{figure}
+\end{minipage}
 
 \begin{enumerate}
 \item Inicio de tabla.
@@ -1614,7 +1739,31 @@ dividiera, podríamos incluirla en un bloque de figura, esta lista, por ejemplo:
 \end{itemize}
 \end{figure}
 Esto debe usarse con cuidado, empero, pues generaría muchos espacios en blanco
-en nuestro documento.
+en nuestro documento. Y, además, se causaría un espacio en blanco entre los
+párrafos que estuvieran antes y después que la figura, si se desea evitar esto
+se debe usar el entorno \emph{minipage}. Por ejemplo, para este caso de uso
+se haría de este modo:
+
+\begin{minipage}[c]{\hsize}
+    \begin{lstlisting}[ language={[LaTeX]TeX},
+                        caption={Uso de minipage para impedir división entre
+                         páginas},
+                        label=lst:styleCode]
+\begin{minipage}[c]{\hsize}
+\begin{itemize}
+% items de la lista...
+\end{itemize}
+\end{minipage}
+\end{lstlisting}
+\end{minipage}
+
+Si se usa la solución de \emph{minipage} debe tenerse cuidado porque el entorno
+debe estar separado por una línea en blanco del párrafo anterior, o producirá
+que la última línea del párrafo salga a la izquierda de la minipágina. Además, 
+a veces ese espacio posterior que añade el bloque figure es deseable. Por todo
+esto, el uso de una figura o de \emph{minipage} queda a discreción del
+escritor.
+
 \subsection{Bibliografía; referencias bibliográficas}
 Además de referenciar otras partes de nuestro propio documento (ver
 \textbf{\ref{subsubsec:referencias cruzadas}}) es común necesitar una lista
