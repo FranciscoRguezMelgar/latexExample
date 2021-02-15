@@ -5,11 +5,13 @@ español para facilitar a los hablantes de este idioma el empezar con la
 composición de texto.
 El grueso del tutorial está hecho con LaTeX y se renderizará en un PDF,
 en este _readme_ sólo indicaré cómo se debe compilar el documento
-(document.tex) para conseguir el tutorial íntegro, propiamente dicho.
+(`document.tex`) para conseguir el tutorial íntegro, propiamente dicho. Para poder compilar un documento escrito en LaTeX debe instalarse LaTeX en el equipo, en los siguientes puntos detallo el proceso de instalación en Windows y Linux y cómo se compilaría.
+
 ## Instalación en Windows:
-En sistemas windows, la instalación de reliza como otras herramientas de
+En sistemas Windows, la instalación de realiza como otras herramientas de
 _software_, se descarga un `.exe` y se siguen las instrucciones
 del instalador. En nuestro caso, debemos instalar dos programas:
+
 * MikTex, el «motor» de LaTeX, que nos permitiría compilar
 mediante línea de comandos. Este programa se puede descargar desde 
 [aquí](https://miktex.org/downloadi).
@@ -39,29 +41,32 @@ para LaTeX están en los repositorios oficiales, en las distribuciones derivadas
 de Debian se pueden instalar mediante el siguiente comando:
 
 ```bash
-$ sudo apt install texlive-base \
+sudo apt install texlive-base \
 texlive-latex-recommended \
 texlive-latex-extra \
 texlive-full
 ```
 Esto nos dejará disponible el programa `pdflatex` que es el que se usaría
-en términos generales para compilar un document .tex a un documento pdf.
+en términos generales para compilar un documento .tex a un documento PDF.
 En caso de querer utilizar el `makefile` proporcionado por este repositorio,
-deberá tenerse instalada la utilidad `make`.
+deberá tenerse instalada la utilidad `make`. Dicha utilidad se puede instalar, de nuevo, en distribuciones derivadas de Debian con este comando:
 
-Si utiliza otra distribución, por favor, consulte la documentacińo específica
+```bash
+sudo apt install make
+```
+
+Si utiliza otra distribución, por favor, consulte la documentación específica
 de la misma sobre cómo instalar paquetes de _software_ en ella.
 
 ## Compilación del documento.
 En Windows, como ya se ha dicho en la sección anterior, se compila el documento
 abriéndolo con TexStudio y pulsando F5 (nótese que si se usa el documento de
-ejemplo, el resto de directorios (img y lib) deben permanecer como están o, 
+ejemplo, el resto de directorios (`img` y `lib`) deben permanecer como están o, 
 en caso de no encontrarlos, la compilación podría fallar.
 
 En Linux, simplemente se puede ejecutar `pdflatex document.tex`, en la raíz del
 repositorio. Esto, sin embargo; nos generará en esta raíz muchos archivos 
-auxiliares. Para evitar esto se ha incluido un makefile que mediante la orden
+auxiliares. Para evitar esto se ha incluido un `makefile` que mediante la orden
 `make` en la raíz del repositorio se encargará de compilar el documento LaTeX
-y escribir los archivos auxiliares a un directorio aparte (build), dejando
-el pdf compilado en la raíz.
-
+y escribir los archivos auxiliares a un directorio aparte (_build_), dejando
+el PDF compilado en la raíz.
