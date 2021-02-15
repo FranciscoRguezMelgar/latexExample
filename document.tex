@@ -52,7 +52,6 @@
     bottom=35mm, %margen inferior
     headheight=25mm    %margen superior
 }
-
 % Permite el uso de más caracteres, aunque algunos especiales siguen sin
 % estar disponibles.
 \usepackage[utf8]{inputenc}
@@ -75,6 +74,17 @@
 \usepackage{array}
 % Permite rotar texto
 \usepackage{rotating}
+%Permite definir nuevos entornos flotantes (como las figures
+\usepackage{newfloat}
+% Permite añadir captions a cosas personalizadas
+\usepackage{caption}
+
+\DeclareFloatingEnvironment[fileext=ecc,
+                            placement={H},
+                            name=Ecuación,
+                            listname={Índice de ecuaciones}]
+                            {ecuacion}
+\captionsetup[ecuacion]{labelfont=normal}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FIN SECCIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \lstset{
@@ -89,7 +99,22 @@
     stringstyle=\color{red}, % string color
     backgroundcolor=\color{lightYellow},
     captionpos=b,
-    breaklines=true
+    breaklines=true,
+    literate=
+            {Á}{{\'{A}}}1
+            {É}{{\'{E}}}1
+            {Í}{{\'{I}}}1
+            {Ó}{{\'{O}}}1
+            {Ú}{{\'{U}}}1
+            {á}{{\'{a}}}1
+            {é}{{\'{e}}}1
+            {í}{{\'{i}}}1
+            {ó}{{\'{o}}}1
+            {ú}{{\'{u}}}1
+            {ñ}{{\~{n}}}1
+            {Ñ}{{\~{N}}}1
+            {ü}{{\"{u}}}1
+            {Ü}{{\"{U}}}1
 }
 \renewcommand{\lstlistingname}{Programa}
 \renewcommand{\lstlistlistingname}{Índice de \MakeLowercase{\lstlistingname}s}
@@ -219,6 +244,8 @@
 \newpage
 
 \lstlistoflistings
+\newpage
+\listofecuacions
 % Esta orden (label) inserta etiquetas invisibles en el texto, al ponerla justo
     % antes del salto de página del último índice de la sección, me permite
     % referenciar este punto, así es como consigo que salga "Pág. i de iii".
@@ -716,6 +743,7 @@ $base^{exponente}$.
  produce: $\frac{numerador}{denominador}$.
 \end{enumerate}
 
+
 \subsubsection{Símbolos matemáticos avanzados}
 Hay muchos símbolos y objetos matemáticos más avanzados que esos, aquí veremos
 una selección de ellos. Probablemente añada más en el futuro. El primero
@@ -846,9 +874,24 @@ Además, como es lógico, \LaTeX{} incorpora las funciones matemáticas más usa
 \multicolumn{3}{|c|}{\textbf{Logaritmos}}\\\hline
 \verb|\ln| &$\ln{x} $&Logaritmo neperiano\\\hline
 \verb|\log_{<base>}{<argumento>}| &$\log_{3}{x}$&Logaritmo \\\hline
-
 \end{tabular}
+\caption{Algunas de las funcines incorporadas en \LaTeX{}}
+\label{tab:foos}
 \end{table}
+
+Si se necesita una función que no esté aquí, por ejemplo digamos una llamada
+foo, simplemente se puede usar el comando \verb!\textrm! para que el nombre
+de la función se escriba sin estilo matemático, por ejemplo:
+\begin{verbatim}
+\textrm{foo}\,(x, y)
+\end{verbatim}
+sería equivale a esto:
+$$
+\textrm{sen}\,\alpha
+$$
+nótese que hay que poner \verb!\,! para que lo que vaya después de la <<nueva
+función>> se separe un poco de ella y quede como si fuera una de las de 
+\LaTeX{}.
 
 Hay, además, hay muchos operadores que son necesarios, algunos de ellos
 son:
@@ -1141,7 +1184,7 @@ $$
 \left(\!\matrix{7\cr3}\!\right)
 $$
 
-\subsubsection{Matrices como herramienta}
+\subsubsection{Matrices como herramienta}\label{sec:matrixTools}
 Es evidente que el uso principal del comando \texttt{matrix} es crear matrices
 que contengan elementos algebraicos, pero en general nos permite crear rejillas
 o tablas en nuestras ecuaciones que puede resultar útiles para muchas cosas, 
@@ -1297,14 +1340,71 @@ requiere el paquete amsfonts, incluido en el preámbulo: $\mathbb{PNZQRC}$.
 Como es lógico, si sólo se requiere una letra, sólo ha de escribirse esa letra
 entre las llaves.
 
-Además, podemos poner símbolos monetarios gracias a algunos paquetes especiales
+Podemos poner símbolos monetarios gracias a algunos paquetes especiales
 (ver comentarios en donde se incluyen los paquetes). Esta camisa cuesta
 \EUR{10,99}. Para poner un dolar se pone una barra inclinada inversa 
 <<\textbackslash>> y el signo de dolar. El resultado es: \$. Por ejemplo:
 Esta mañana me he ido de compras por Nueva York y he gastado 500 \$.
+\subsection{Paquete \texttt{amsmath}}
+El paquete \verb!amsmath! es un paquete que añade soporte a múltiples artefactos 
+matemáticos avanzados, como macros para crear matrices con los símbolos
+incorporados y hacer más fácil la creación de matrices más complejas como 
+las que se han visto en \ref{sec:matrixTools}. El problema de este paquete es
+que es \textbf{incompatible} con todo lo realizado hasta ahora en ecuaciones, 
+por dos motivos, el primero es la notación utilizada para los bloques
+matemáticos hasta ahora.
 
-\newpage
-\section{Bloques especiales; figuras y tablas}
+La notación que se ha visto para los bloques matemáticos (con signos de dolar)
+es un legado de TeX (que es el origen de LaTex, que es un conjunto de macros
+sobre él). En el LaTeX moderno se pueden denotar las ecuaciones con \verb!\[ \]!
+y \verb!\( \)!, siendo el primero equivalente a los dos signos de dolar y el
+segundo a único simbo de dólar. Es decir
+\begin{verbatim}
+$$
+1+2=3
+$$
+\end{verbatim}
+es equivalente a 
+\begin{verbatim}
+\[
+1+2=3
+\]
+\end{verbatim}
+Y \verb!\(1+2=3\)! lo es a \verb!$1+2=3$!. Esta es la notación que
+\texttt{amsmath} requiere para funcionar. Además, amsmath no funciona con el 
+comando \verb!\matrix! sino que requiere el uso de un entorno que él mismo
+proporciona, llamado del mismo modo. Para ilustrar el código que se realizaría
+con ese paquete, se ha creado otro archivo .tex en la raíz del directorio que
+no se compila automáticamente con \texttt{make}, sino que se debe compilar
+a mano con \verb!pdflatex! o con el comando \verb!make amsmath!. Que generará
+un PDF distinto al de este tutorial.
+
+Alguna de las funcionalidades que quiero destacar de las
+que ofrece este paquete son las siguientes:
+\begin{enumerate}
+\item Permite crear matrices con delimitadores incorporados sin el uso de
+\verb!\left! y \verb!\right!.
+\item Incorporación de los comandos \verb!\underbrace! y \verb!\overbrace!
+que permiten dibujar una llave debajo o encima de un bloque con un texto
+indicativo.
+\item Permite rodear partes de una ecuación con un cuadrado con el comando
+\verb!\boxed!.
+\item incorporación de los comandos \verb!\int!, \verb!\iint! e \verb!\iiint!
+que permiten integrales anidadas más atractivas. Y junto con ellas, el comando
+\verb!\limits!, que permite que se sitúen los límites de las integrales encima
+y debajo del símbolo.
+\end{enumerate}
+El paquete tiene muchas más funciones que pueden ser estudiadas en su
+\href{https://texdoc.org/serve/amsmath/0}{documentación}. Si se quieren
+ver ejemplo simples de las funciones citadas enteriormente se puede ver el 
+código del archivo \verb!amsmath.tex!
+
+En resumen sobre este paquete: es muy útil para matemáticas muy avanzadas, pero
+si no se va a usar intensamente ninguna de las funcionalidades del mismo y ya
+se tienen muchas ecuaciones escritas, incluir este paquete es un cambio que 
+nos obligará a reescribir nuestras ecuaciones y hay que tener esto en cuenta.
+
+\newpage \section{Bloques especiales; figuras y tablas}
 Hay varios tipos de bloques especiales que nos permiten insertar cosas
 más complejas en el texto que párrafos y listas. Los que vamos a tratar aquí
 son:
@@ -1965,6 +2065,8 @@ mismo motivo que el punto anterior.
 
 Para definir el estilo del código vamos a usar la orden \verb|\lstset{...}|,
 por ejemplo, el estilo que se ha creado aquí se ha tipificado así:
+
+\begin{minipage}[c]{\hsize}
 \begin{lstlisting}[ language={[LaTeX]TeX},
                     caption={Especificación del estilo de \textit{listings}},
                     label=lst:styleCode]
@@ -1980,9 +2082,25 @@ por ejemplo, el estilo que se ha creado aquí se ha tipificado así:
     stringstyle=\color{red}, % string color
     backgroundcolor=\color{lightYellow},
     captionpos=b,
-    breaklines=true
+    breaklines=true,
+    literate=
+            {Á}{{\'{A}}}1
+            {É}{{\'{E}}}1
+            {Í}{{\'{I}}}1
+            {Ó}{{\'{O}}}1
+            {Ú}{{\'{U}}}1
+            {á}{{\'{a}}}1
+            {é}{{\'{e}}}1
+            {í}{{\'{i}}}1
+            {ó}{{\'{o}}}1
+            {ú}{{\'{u}}}1
+            {ñ}{{\~{n}}}1
+            {Ñ}{{\~{N}}}1
+            {ü}{{\"{u}}}1
+            {Ü}{{\"{U}}}1
 }
 \end{lstlisting}
+\end{minipage}
 Las líneas hacen lo siguiente:
 \begin{enumerate}
 \item Inicia el comando para definir el estilo.
@@ -2021,6 +2139,10 @@ o t (por \textit{top}, arriba), indica dónde ha de aparecer la \textit{caption}
 \item Indica si las líneas más largas deben romperse automáticamente o no,
 si se deja en \textit{false}, se comportará como los bloques
 \textit{verbatim} y los desbordará por la derecha si la línea es muy larga.
+\item A partir de aquí estas líneas sirven para que cuando lstlisting se
+encuentre un carácter del especial del español lo sepa procesar. Si necesitas
+añadir más caracteres simplemente añade una línea exactamente igual pero cambia
+la letras (por ejemplo Á) y el comando. 
 \end{enumerate}
 
 Para definir el nombre de los fragmentos de código que incluyamos debemos usar
@@ -2187,6 +2309,78 @@ En el ejemplo anterior se puede ver que simplemente se ha modificado el estilo
 del texto con los domandos \verb|\LARGE| y \verb|\color|, se ha creado una
 línea horizontal con el comando \verb|rule| y se ha escrito el texto, después,
 se ha creado otra regla y se ha vuelvo a cambiar el estilo.
+\subsection{Flotantes personalizados}
+Además de los flotantes que hemos visto (\texttt{table},
+ \texttt{figure} y \texttt{lstlisting}) se pueden definir flotantes propios
+que nos permitan crear nuestras propias listas de rótulos. Por ejemplo, si
+quisiéramos crear un flotante para incluir ecuaciones usaríamos el siguiente
+código:
+\begin{lstlisting}[language={
+    [LaTeX]TeX},
+    caption={Establecimiento de un flotante llamado ecuación},
+    label={lst:newFloat}]
+\usepackage{newfloat}
+\usepackage{caption}
+\DeclareFloatingEnvironment[fileext=ecc,
+                            placement={H},
+                            name=Ecuación,
+                            listname={Índice de ecuaciones}]
+                            {ecuacion}
+\captionsetup[ecuacion]{labelfont=normal}
+\end{lstlisting}
+
+\begin{enumerate}
+\item Incluye el paquete \emph{newfloat}.
+\item Incluye el paquete \emph{caption}.
+\item Empieza la orden y establece que la extensión del archivo para estos
+flotantes es <<ecc>>, este parámetro debe ser \textbf{distinto} para cada
+flotante que definamos (y distinto de los que ya existen).
+\item Indica que estos flotantes se pondrán siempre donde sean escritos.
+\item Indica el nombre que tendrán, el equivalente a <<tabla>> o <<figura>>.
+\item Indica el nombre de la lista de este tipo de flotantes.
+\item Indica el nombre de nuestro flotante (como lo pondremos en begin y end).
+No puede tener ningún carácter especial, así que en este caso hemos escrito
+<<ecuacion>> por <<ecuación>>.
+\item Indica que el \emph{caption} de este flotante estará en estilo normal.
+\end{enumerate}
+
+Si quisiéramos incluir una ecuación con nombre el código que usaríamos sería:
+\begin{lstlisting}[language={
+    [LaTeX]TeX},
+    caption={Inclusión de un flotante personalizado ecuación},
+    label={lst:newFloat}]
+\begin{ecuacion}
+$$
+G\cdot\frac{m_1\cdot m_2}{r^2}
+$$
+\caption{Ley de la gravedad}
+\label{ecc:gravity}
+\end{ecuacion}
+\end{lstlisting}
+El resultado sería:
+
+\begin{ecuacion}
+$$
+G\cdot\frac{m_1\cdot m_2}{r^2}
+$$
+\caption{Ley de la gravedad}
+\label{ecc:gravity}
+\end{ecuacion}
+
+\begin{enumerate}
+\item Inicia el \emph{environment}.
+\item Inicia el bloque matemático.
+\item La fórmula en sí misma.
+\item Termina el bloque matemático.
+\item Incluye la \emph{caption}
+\item Crea la \emph{label} para referencias. Por ejemplo, voy a referenciarla
+aquí: Ecuación \ref{ecc:gravity}: \nameref{ecc:gravity}
+\end{enumerate}
+
+Para introducir la lista de nuestro nuevo flotante, en este caso, la lista de
+ecuaciones, usaremos la orden \verb"\listof<nombre del flotante>s", por ejemplo,
+en nuestro caso: \verb"\listofecuacions". \textbf{Cuidado con la s del final
+que es necesaria}.
 
 \newpage \section{Decoración e indización}
 De momento no se han visto órdenes para crear índices, tablas de contenido,

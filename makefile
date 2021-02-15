@@ -28,3 +28,4 @@ all : document.pdf
 clean:
 	@echo $(l_red)"Cleaning all aux files and pdf outputs."
 	@rm -fr ./build *.pdf
+amsmath : amsmath.pdf
