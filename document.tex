@@ -280,12 +280,55 @@ usaremos un <<motor>>. Que no es más que un programa que leerá las órdenes
 que hayamos incluido en el archivo de texto plano y generará el PDF a partir de
 él.
 
+Aunque en este documento no voy a hablar de las características históricas o de
+lo que es el \textit{typesetting}. Sí voy a explicar someramente qué ventajas
+tiene, por qué es una alternativa a un editor de texto <<normal>> y qué se puede
+hacer con él. Además, comentaré en qué entornos es más usado.
+
+\LaTeX{} es un sistema de creación de documentos donde el contenido del
+documento y su formato están separados, es decir, no vemos el formato cuando
+estamos editando el contenido del documento. Esto es muy distinto a lo que la 
+mayoría de personas entiende por editar texto, en la mayoría de editores
+modernos, el usuario ve lo que está editando con el formato que le está
+añadiendo. Este tipo de editores de texto se llaman WYSIWYG, por las frase en
+inglés, \textit{What You See Is What You Get}, es decir: lo que ves, es lo que
+consigues. La principal desventaja de esto es que las opciones de maquetación
+se <<ponen en el camino>> de nuestro contenido, impidiéndonos concentrar
+nuestros esfuerzos en él. En \LaTeX{} esto no pasa.
+
+Otra de las ventajas de \LaTeX{} es que, al utilizar texto plano la mayoría del
+tiempo, en lugar de un documento completo, se puede editar en dispositivos con
+pocos recursos, sólo necesitaremos más recursos en el proceso de visualizado de
+nuestros PDF, pero no en la edición, y la compilación podrá llevar más tiempo,
+pero el motor no corre el riesgo de cerrarse inesperadamente por falta de
+recursos. Y, si lo hiciera, no perderíamos contenido, ni trabajo. Como nota
+añadida, al utilizar ficheros de texto plano, nos permite utilizar en nuestro
+documentos herramientas de control de versiones, como Git, si eres tecnológo,
+especialmente informático, probablemente estés familiarizado con ellas, y las
+uses diariamente.
+
+Con \LaTeX{}, además, podemos crear muchos tipos de documentos PDF: libros de
+texto, libros de ficción, presentaciones de transparencias (vulgarmente
+llamadas \textit{powerpoints}), artículos científicos, tesis o tesinas de
+universidad... En este tutorial intentaré dar datos para componer una variedad
+de documentos distintos, en general explicaré cómo se hacen las cosas y cada
+uno podrá generar el documento con las opciones que desee.
+
+Esta versatilidad que hace \LaTeX{} sea muy utilizado en entornos
+científico-técnicos. Muchos artículos científicos, conocidos como
+\textit{papers}, son escritos con él. Si compilas este documento y lo 
+observas, y alguna vez te has preguntado por qué tantos artículos <<se ven
+igual>>, te darás cuenta de que es, en efecto, porque están escritos con
+\LaTeX{}.
+
 Este documento pretende ser un ejemplo de varias tareas que se suelen realizar
-en \LaTeX{}. Se recomienda compilar el código y ver el pdf y el código a la
-vez para ver los resultados. En los comentarios del código explico lo que se va
-haciendo y qué órdenes son necesarias para crear lo que se ve en el PDF.
-Además, incluyo un \textit{script} de compilación mínimo que debería compilar
-sin problemas. Los prerrequisitos para utilizar la compilación automática son:
+en \LaTeX{}. Se recomienda compilarlo y ver el PDF y el código a la
+vez para ver los resultados. En los comentarios del código (en secciones 
+posteriores explico lo que son los comentarios, si no lo sabes aún) explico lo 
+que se va haciendo y qué órdenes son necesarias para crear lo que se ve en el
+PDF. Además, incluyo un \textit{script} de compilación mínimo que debería
+compilar sin problemas. Los prerrequisitos para utilizar la compilación
+automática son:
 
 \begin{itemize}
     \item Sistema UNIX like (GNU/Linux o Mac OS).
@@ -314,7 +357,7 @@ texlive-latex-extra \
 texlive-full
 \end{verbatim} 
 En otras distribuciones, 
-por favor, consulte la documentación específica de cómo instalar paquetes de
+por favor, consulta la documentación específica de cómo instalar paquetes de
 \textit{software}.
 
 Una vez instalados estos paquetes, se puede compilar con el comando
@@ -359,7 +402,7 @@ Se puede descargar desde \href{https://www.texstudio.org/}{aquí}.
 
 Durante el proceso de
 instalación de MikTex se nos hará decidir la ruta de instalación y si permitimos
-que el programa descargue de internet los paquetes necesarios. Yo
+que el programa descargue de Internet los paquetes necesarios. Yo
 recomiendo permitirle hacerlo. Para ello se deben dejar las opciones como
 se ve en la Figura \ref{fig:miktex}: \nameref{fig:miktex}.
 \begin{figure}[H]
@@ -372,8 +415,8 @@ se ve en la Figura \ref{fig:miktex}: \nameref{fig:miktex}.
 Cuando se tengan los dos programas instalados, deberá abrirse el fichero
 \texttt{document.tex} que se encuentra en esta carpeta
 con el segundo programa (TexStudio). Una vez hecho hecho, debe pulsarse la tecla
-F5, que nos compilará el documento, generará el pdf y mostrará el resultado a la
-derecha como se puede ver en la figura \ref{fig:texstudio}:
+F5, que nos compilará el documento, generará el PDF y mostrará el resultado a la
+derecha como se puede ver en la Figura \ref{fig:texstudio}:
 \nameref{fig:texstudio}. Como este ejemplo incluye referencias bibliográficas,
 no se van a crear bien, porque hacen falta pasos adicionales para eso, pero
 se generará el PDF, y en secciones posteriores se explica lo que hay que hacer.
@@ -388,19 +431,17 @@ se generará el PDF, y en secciones posteriores se explica lo que hay que hacer.
 Este documento está diseñado para ser una guía básica sobre Latex, pero para
 poder generarse, se usarán comandos en el mismo documento antes de explicarlos.
 Si se sabe algo sobre \LaTeX{} es recomendable leer el código primero, si no, 
-mejor leer primero el pdf compilado.
+mejor leer primero el PDF compilado.
 
 \newpage\section{Comandos básicos de \LaTeX{}}
-Aunque en este documento no voy a hablar de las características históricas o de
-lo que es el \textit{typesetting}. Sí voy a explicar someramente qué es
-\LaTeX{}. \LaTeX{} es un lenguaje que nos permite crear documentos con formato a
-través de archivos de texto plano, que no contienen en sí mismos información
-sobre el formato, sino que utilizan secuencias especiales de caracteres para
-indicar cómo ha de presentarse el contenido en un documento distinto.
+En esta sección veremos los comandos más elementales de \LaTeX{}, cómo insertar
+formatos simples, insertas secciones... Y, sobre todo, al principio explicaré
+cómo crear tu primer documento con esta herramienta.
+
 \subsection{Archivos .tex} \label{ArchivosTex}
 Un archivo .tex es donde escribimos el código \LaTeX{}, es decir, la sucesión
 de contenido y comandos que generará un documento. El
-programa que genera el documento (generalmente pdf) a partir del código LaTeX
+programa que genera el documento (generalmente PDF) a partir del código LaTeX
 se llama motor o renderizador. Hay varios, con diferencias técnicas. Esta guía
 y los comandos que se listan están desarrollados para el motor
 \texttt{pdflatex}.
@@ -416,7 +457,7 @@ Algún texto.
 
 Para empezar: las palabras que van precedidas de una barra inclinada inversa
 se llaman <<comandos>>, y son órdenes que se le dan al renderizador de \LaTeX{},
-es decir, no se imprimirán en nuestro pdf (o no literalmente).
+es decir, no se imprimirán en nuestro PDF (o no literalmente).
 Debido a que los comandos se incluyen
 con ese caracter especial, si quisiéramos escribir una barra inversa en el 
 documento, deberíamos usar el comando \verb|\textbackslash|, 
@@ -455,7 +496,7 @@ cosa, acuda a los comentarios del código.
 
 Ahora que ya hemos visto el contenido mínimo de un archivo .tex, puedes abrir
 aquél que creaste en el punto \ref{instGNULinux} y copiar los ejemplos
-que estamos viendo en él, para compilarlo en Linux y crear un pdf, puedes
+que estamos viendo en él, para compilarlo en Linux y crear un PDF, puedes
 ejecutar (recuerda situarte en el directorio donde creaste el archivo):
 \begin{verbatim}
 pdflatex holaMundo.tex
@@ -492,7 +533,7 @@ incluir potencialmente los caracteres que quisiéramos, pero, sin paquetes
 adicionales (ver sección de inclusión de paquetes en el código de este
 documento) no se pueden incluir algunos símbolos. Así que hay que tener cuidado
 con los símbolos especiales que se usan, pueden renderizarse mal o no permitir
-que el pdf se genere. Si se usan los símbolos del idioma español: tildes, la
+que el PDF se genere. Si se usan los símbolos del idioma español: tildes, la
 eñe, diéresis en la u y demás, no debería haber problemas. Ej.: áéíóú, ÁÉÍÓÚ, üÜ, ñÑ.
 
 \subsection{Escritura de texto en \LaTeX{}}
@@ -518,11 +559,12 @@ comandos para manipular la presentación del texto.
 \begin{itemize}
     \item \textbf{emph:} Pone el texto en énfasis.
     \item \textbf{textit:} Pone el texto en itálica (o cursiva).
-    \item \textbf{textbf:} Pone el texto en negrita. 
+        \textit{ejemplo}
+    \item \textbf{textbf:} Pone el texto en negrita. \textbf{ejemplo}
     \item \textbf{texttt:} Utiliza fuente monoespaciada (como la de las máquinas
-        de escribir).
+        de escribir). \texttt{ejemplo}
     \item \textbf{textsc:} Pone el texto en versalitas (letras del mismo tamaño
-    que las minúsculas, pero que se escriben como mayúsculas).
+    que las minúsculas, pero que se escriben como mayúsculas). \textsc{ejemplo}.
 \end{itemize}
 Estos comandos deben ponerse en nuestros archivos \texttt{.tex}
 con una barra inclinada hacia atrás delante, como todos los comandos de 
@@ -694,9 +736,15 @@ respectivamente para que se vea la sintaxis en el código. Esto se ha conseguido
 redefiniendo las órdenes \texttt{paragraph} y \texttt{subparagraph}. Por lo que
 serán éstas las que se han de utilizar. 
 \paragraph{Párrafo}
-Ejemplo
+Este texto está bajo un epígrafe de nivel cuatro,
+un párrafo, creado con la orden
+\\ \verb"\paragraph{Párrafo}".
+
 \subparagraph{Subpárrafo}
-Este es el último nivel de jerarquía admitido. 5 niveles de jerarquía parecen
+Este texto está bajo un epígrafe de nivel cinco, un párrafo, creado con la orden
+\\ \verb"\subparagraph{Subpárrafo}". Este es el último nivel de jerarquía
+admitido.
+Cinco niveles de jerarquía parecen
 más que suficientes para cualquier documento razonable.
 \subsection{Ecuaciones en \LaTeX{}} \label{ecuaciones}
 Uno de los puntos más fuertes de \LaTeX{} es la capacidad de incluir ecuaciones
@@ -778,7 +826,8 @@ Left y right son muy versátiles, porque permiten que utilizar muchos
 delimitadores (tipos de paréntesis, por así decir) y, además, permiten que sean
 distintos a un lado de la ecuación que a otro. Todo comando left debe cerrarse
 con un comando right, pero los delimitadores especificados en ambos lados
-pueden ser distintos.
+pueden ser distintos, es decir: podríamos rodear una ecuación con un paréntesis
+por la izquierda y un corchete por la derecha: $\left(n\atop k\right]$
 Algunos delimitadores de left y right son:
 \begin{table}[H]
 \centering
@@ -889,8 +938,8 @@ sería equivale a esto:
 $$
 \textrm{sen}\,\alpha
 $$
-nótese que hay que poner \verb!\,! para que lo que vaya después de la <<nueva
-función>> se separe un poco de ella y quede como si fuera una de las de 
+nótese que hay que poner <<\verb!\,!>> para que lo que vaya después de la
+<<nueva función>> se separe un poco de ella y quede como si fuera una de las de 
 \LaTeX{}.
 
 Hay, además, hay muchos operadores que son necesarios, algunos de ellos
@@ -1319,13 +1368,13 @@ matriz de $2\times 3$ (línea 1), donde la primera fila (línea 2) van a ser
 los elementos <<externos>> y la segunda todos los demás,
 rodeados de paréntesis. En la segunda fila de la matriz pondremos tres matrices
 que, a su vez, tendrán tres filas. Es decir: la primera columna
-de la matriz entre paréntesis está definida entre las líneas y 8, la segunda
+de la matriz entre paréntesis está definida entre las líneas 4 y 8, la segunda
 entre las líneas 9 y 13 y la última entre las líneas 15 y 19
 Finalmente, hay que poner los paréntesis, esto se hará rodeando el primer
 elemento de la segunda fila con un paréntesis por la izquierda
 (orden left de la línea 3)  y el último
 con uno por la derecha (orden right de la línea 20). Finalmente, después de
-todo esto se aáde una matrix de $4\times 1$, donde la primera fila está vacía
+todo esto se añade una matrix de $4\times 1$, donde la primera fila está vacía
 (línea 22).
 
 Además, en matemáticas se usan fuentes especiales para indicar cosas, por 
@@ -1357,7 +1406,7 @@ matemáticos hasta ahora.
 La notación que se ha visto para los bloques matemáticos (con signos de dolar)
 es un legado de TeX (que es el origen de LaTex, que es un conjunto de macros
 sobre él). En el LaTeX moderno se pueden denotar las ecuaciones con \verb!\[ \]!
-y \verb!\( \)!, siendo el primero equivalente a los dos signos de dolar y el
+y \verb!\( \)!, siendo el primero equivalente a los dos signos de dólar y el
 segundo a único simbo de dólar. Es decir
 \begin{verbatim}
 $$
@@ -1396,7 +1445,7 @@ y debajo del símbolo.
 \end{enumerate}
 El paquete tiene muchas más funciones que pueden ser estudiadas en su
 \href{https://texdoc.org/serve/amsmath/0}{documentación}. Si se quieren
-ver ejemplo simples de las funciones citadas enteriormente se puede ver el 
+ver ejemplos simples de las funciones citadas enteriormente se puede ver el 
 código del archivo \verb!amsmath.tex!
 
 En resumen sobre este paquete: es muy útil para matemáticas muy avanzadas, pero
@@ -1435,8 +1484,13 @@ int main(void){
 \end{verbatim}
 
 En caso de querer incluir texto de este tipo dentro de un párrafo, usaríamos
-\verb|\verb|\texttt{|}\texttt{<comandos>|}. Por ejemplo: <<puede insertar
-una barra inclinada inversa con \verb|\textbackslash|>>
+\verb!\verb|<comandos|!. Por ejemplo: <<puede insertar
+una barra inclinada inversa con \verb|\textbackslash|>> Además, los caracteres
+que se usan para delimitar a verb pueden ser una gran variedad, es decir:
+\verb!\verb|<comandos>|! es equivalente a \verb|\verb!<comandos>!|. Esto último
+es muy útil cuando tenemos que usar caracteres especiales dentro de un
+gramento verb, por ejemplo, en los ejemplos que estado introduciendo yo en este
+mismo párrafo.
 
 Gracias a que hemos cargado el paquete babel español (ver preámbulo del código),
 podemos utilizar \texttt{<}\texttt{<} y \texttt{>}\texttt{>} para poner
@@ -1452,7 +1506,7 @@ comillas latinas. Por ejemplo:
 \subsection{Inclusión de figuras y tablas}
 Para poner imágenes hay que usar la orden 
 \verb|includegraphics|. Esta orden tiene la siguiente sintaxis
-% utilizo un bloque verbatim para que se vea en el pdf, pero sólo lo de dentro
+% utilizo un bloque verbatim para que se vea en el PDF, pero sólo lo de dentro
 % es la orden
 \begin{verbatim}
     \includegraphics{<ruta a la imagen>}  
@@ -1464,7 +1518,7 @@ base para el comando anterior. Supongamos una estructura de directorios como
 la que sigue:
 \begin{verbatim}
 .
-|-- document.pdf
+|-- document.PDF
 |-- document.tex
 |-- img
     `-- gatito.jpg
@@ -1570,8 +1624,8 @@ del mismo, por ejemplo, si quisiéramos referenciar aquí la figura titulada
 <<Un gato negro>>, podríamos ponerlo a mano en el texto: Como se puede ver
 en la Figura 2: Un gato negro. Pero, ¿qué pasaría si cambiáramos ese título?
 ¿Y si incluyéramos una imagen antes de esta y su número cambiara? Tendríamos
-que rastrear todas las veces que la hemos mencionado en el documento y cambiarlo
-, lo cual sería tedioso y llamaría a errores frecuentes.
+que rastrear todas las veces que la hemos mencionado en el documento y
+cambiarlo, lo cual sería tedioso y llamaría a errores frecuentes.
 
 Para eso
 usaremos el comando \texttt{ref}. Este comando nos permite referenciar una
@@ -1688,7 +1742,7 @@ Para hacer esto se usa la orden \verb|\multicolumn|, que tiene esta sintaxis:
 \begin{verbatim}
 \multicolumn{<número de columnas>}{<alineación>}{<contenido>}
 \end{verbatim}
-El número de columnas no nececita explicación. La alineación indicará cómo
+El número de columnas no necesita explicación. La alineación indicará cómo
 se alineará el texto de esta celda grande, funciona como las de la propia tabla,
 es decir, se puede poner l, r o c y con barras a los lados (o sólo a uno), para
 dividir las columnas. El contenido es el texto de la celda combinada. Por 
@@ -2015,7 +2069,7 @@ Ahora lo podemos citar:
 
 <<El imperio romano cayó, en parte, por...>> (\cite{gibbon2016historia})
 
-Y se añadirá a nuestra colección de cita en la sección de bibliografía. Bibtex
+Y se añadirá a nuestra colección de citas en la sección de bibliografía. Bibtex
 tiene la ventaja de que aunque en nuestras fuentes bibliográficas haya fuentes
 que no hemos citado, no va a incluirlas hasta que las citemos.
 
@@ -2155,7 +2209,7 @@ De este modo, la lista quedará configurada con el nombre <<Lista de Programas>>
 
 Para incluir algunos fragmentos se hace, como con otros \textit{environments}, 
 con las órdenes \verb|\begin| y \verb|\end|. Además, el paquete recibe algunas
-opciones en la orden begin que nos permiten indicar el languaje (para que se
+opciones en la orden begin que nos permiten indicar el lenguaje (para que se
 destaquen las palabras clave automáticamente), la \textit{caption} (el título
 visible que saldrá en el documento) y la etiqueta (que será la que usemos para
 referencias). Por ejemplo:
@@ -2270,7 +2324,7 @@ hacer un bloque de cita, por ejemplo:
 «Un hippie es alguien que tiene las pintas de Tarzán, que camina como Jane y
 que huele como Cheetah». 
 
--- Ronald W. Reagan, presidente de los Estados Unidos.
+-- Ronald W. Reagan, presidente de los Estados Unidos (1981-1989).
 \end{quote}
 
 El bloque anterior se ha creado simplemente inlcuyendo el texto en un entorno
@@ -2287,7 +2341,8 @@ que huele como Cheetah>>.
 \rule[2mm]{\linewidth}{.5pt}
 \normalsize
 
-\color{blue}-- Ronald W. Reagan, presidente de los Estados Unidos.\color{black}
+\color{blue}-- Ronald W. Reagan, presidente de los Estados Unidos (1981-1989).
+\color{black}
 \end{quote}
 
 Se conseguiría así:
@@ -2306,7 +2361,7 @@ que huele como Cheetah>>.
 \end{lstlisting}
 
 En el ejemplo anterior se puede ver que simplemente se ha modificado el estilo
-del texto con los domandos \verb|\LARGE| y \verb|\color|, se ha creado una
+del texto con los comandos \verb|\LARGE| y \verb|\color|, se ha creado una
 línea horizontal con el comando \verb|rule| y se ha escrito el texto, después,
 se ha creado otra regla y se ha vuelvo a cambiar el estilo.
 \subsection{Flotantes personalizados}
@@ -2586,32 +2641,31 @@ automática al final del texto, así, se puede hacer
 Uno puede ser muy creativo con esta parte del diseño de su documento, por 
 ejemplo, aquí se incluye el código que se ha usado para esta sección del
 documento:
-\begin{verbatim}
-1    \pagestyle{fancy}
-2    \fancyhf{}
-3    \fancyhead[C]{
- \   \Large\titulo\normalsize\\
-  |  \rule[1mm]{0.3\hsize}{.5pt}\\
-  |  \leftmark
-  \- }
-4    \fancyhead[R]{\includegraphics[height=2cm]{escudo}}
-5    \fancyfoot[R]{pág. \thepage{} de \pageref{LastPage}}
-6    \fancyfoot[L]{\today}
-7    \renewcommand{\footrulewidth}{0.5pt}
-\end{verbatim}
-
+\begin{lstlisting}[language={[LaTeX]Tex}, caption={Establecimiento del
+encabezado y pie de página},
+label={lst:definecolor}]
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{
+    \Large\titulo\normalsize\\
+    \rule[1mm]{0.3\hsize}{.5pt}\\
+    \leftmark
+}
+\fancyhead[R]{\includegraphics[height=2cm]{escudo}}
+\fancyfoot[R]{pág. \thepage{} de \pageref{LastPage}}
+\fancyfoot[L]{\today}
+\renewcommand{\footrulewidth}{0.5pt}
+\end{lstlisting}
 \begin{enumerate}
 \item Habilitamos estilo a 3 columnas.
 \item Creamos la línea horizontal del encabezado
-\item Esta línea está dividida en cuatro porque es muy larga:
-    \begin{enumerate}
-        \item Establece el que el texto que se indique va a ir en el centro
-        del encabezado.
-        \item Imprime el título a tamaño grande e inserta un salto de línea.
-        \item Inserta una línea de un tercio del ancho de la página, de grosor
-        de medio punto y elevada 1 mm sobre la línea base de su párrafo.
-        \item Inserta la sección actual.
-    \end{enumerate} 
+\item Establece que el texto que se indique va a ir en el centro
+del encabezado.
+\item Imprime el título a tamaño grande e inserta un salto de línea.
+\item Inserta una línea de un tercio del ancho de la página, de grosor
+de medio punto y elevada 1 mm sobre la línea base de su párrafo.
+\item Inserta la sección actual.
+\item Cierra el comando de la línea 3.
 \item A la derecha incluímos una imagen con un alto de 2 cm. Aconsejo fijar el
 alto -en lugar del ancho- y usar imágenes más o menos cuadradas.
 \item Inserta el texto <<Pág. <XX> de <totales>{}>>. En la parte derecha del
@@ -2620,6 +2674,7 @@ alto -en lugar del ancho- y usar imágenes más o menos cuadradas.
 \item Redefine el grosor de la línea del pie de página que es, 
 predeterminadamente, invisible.
 \end{enumerate}
+
 Además, si en la clase del documento se activa la opción \texttt{twoside}
 cambiando la línea donde se indica por esta:
 \verb|\documentclass[twoside]{article}| podremos seleccionar
@@ -2719,7 +2774,7 @@ esquema de color.
 \newpage\section{Licencias y agradecimiento}
 Todas las páginas citadas son de sus respectivos creadores, yo sólo me limito
 a recopilar sus soluciones o información en un mismo documento. Además, quiero
-recoger aquí los nombres de lso creadores de los paquetes utilizados y darles
+recoger aquí los nombres de los creadores de los paquetes utilizados y darles
 las gracias para permitir que la comunidad haga documentos con funcionalidades
 avanzadas.
 
@@ -2748,8 +2803,9 @@ cancel&Donald Arseneau\\\hline
 multirow&Jerry Leichter, Pieter van Oostrum \\\hline
 array& El equipo \LaTeX{} \\\hline
 rotating&Sebastian Rahtz, Leonor Barroca, Robin Fairbairns y El equipo \LaTeX{}  \\\hline
-
 \end{tabular}
+\caption{Paquetes utilizados y sus creadores}
+\label{tab:packagesUsed}
 \end{table}
 
 
@@ -2763,8 +2819,8 @@ rotating&Sebastian Rahtz, Leonor Barroca, Robin Fairbairns y El equipo \LaTeX{} 
 
 
 Todas las
-imágenes utilizadas son de licencia libre, ver:
-\href{https://pixabay.com/service/faq/}{FAQ de Pixabay} o de creación propia.
+imágenes utilizadas son de licencia libre (ver:
+\href{https://pixabay.com/service/faq/}{FAQ de Pixabay}) o de creación propia.
 \newpage
 \section{Bibliografía}
 \printbibliography[heading=none]
