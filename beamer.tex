@@ -1,0 +1,51 @@
+\documentclass{beamer}
+\usefonttheme{serif}
+\usepackage[spanish]{babel}
+\uselanguage{Spanish}
+\languagepath{Spanish}
+\usetheme{Madrid}
+%\usecolortheme{beaver}
+\author[Rodríguez y Brown]{
+    Francisco Rodríguez Melgar\inst{1}\\
+    Dr. Emmett Lathrop Brown\inst{2}\\
+}
+\title[Ejemplo beamer]{
+    Ejemplo de presentación con \LaTeX{}
+}
+\subtitle{
+    Cómo hacer presentaciones con \LaTeX{} y Beamer
+}
+\institute[UdE y Caltech]{
+    \inst{1}Universidad de Ejemplo \\
+    Facultad de las cosas que molan\and
+    \inst{2}Instituto Tecnológico de California\\
+    Facultad de Viajes en el Tiempo
+
+}
+\date[Esp. Conf.]{
+    Conferencias Espaciales -- \today
+}
+\begin{document}
+    \begin{frame}
+        \titlepage
+    \end{frame}
+    \begin{frame}
+        \frametitle{Lista numerada}
+        \begin{enumerate}
+            \item Naranjas
+            \item Manzanas
+            \item Melones
+            \item Sandías
+        \end{enumerate}
+    \end{frame}
+    \section{Introducción}
+    \begin{frame}
+        \frametitle{Lista sin numerar}
+        \begin{itemize}
+            \item Naranjas
+            \item Manzanas
+            \item Melones
+            \item Sandías
+        \end{itemize}
+    \end{frame}
+\end{document}

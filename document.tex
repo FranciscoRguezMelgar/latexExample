@@ -269,7 +269,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%FIN SECCIÓN%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % La sección es el primer nivel de título que se permite en esta clase de 
     % documento. Introduce un título de primer nivel
-\section{Presentación}
+\section{Presentación}\label{sec:presentacion}
 Lo primero que debemos saber es qué es \LaTeX{}. \LaTeX{} es una herramienta
 que nos permite crear documentos para mostrar, generalmente PDF
 (\textit{Portable Document Format}), a través de la escritura de archivos de
@@ -1394,7 +1394,7 @@ Podemos poner símbolos monetarios gracias a algunos paquetes especiales
 \EUR{10,99}. Para poner un dolar se pone una barra inclinada inversa 
 <<\textbackslash>> y el signo de dolar. El resultado es: \$. Por ejemplo:
 Esta mañana me he ido de compras por Nueva York y he gastado 500 \$.
-\subsection{Paquete \texttt{amsmath}}
+\subsubsection{Paquete \texttt{amsmath}} \label{sec:amsmath}
 El paquete \verb!amsmath! es un paquete que añade soporte a múltiples artefactos 
 matemáticos avanzados, como macros para crear matrices con los símbolos
 incorporados y hacer más fácil la creación de matrices más complejas como 
@@ -1420,8 +1420,9 @@ es equivalente a
 \]
 \end{verbatim}
 Y \verb!\(1+2=3\)! lo es a \verb!$1+2=3$!. Esta es la notación que
-\texttt{amsmath} requiere para funcionar. Además, amsmath no funciona con el 
-comando \verb!\matrix! sino que requiere el uso de un entorno que él mismo
+\texttt{amsmath} requiere para funcionar. Además, \verb!amsmath!
+no funciona con el comando \verb!\matrix! sino que requiere el uso de un entorno
+que él mismo
 proporciona, llamado del mismo modo. Para ilustrar el código que se realizaría
 con ese paquete, se ha creado otro archivo .tex en la raíz del directorio que
 no se compila automáticamente con \texttt{make}, sino que se debe compilar
@@ -2771,11 +2772,273 @@ del color, normalizadas entre cero y uno.
 \end{enumerate}
 Y, finalmente, el último argumento son los tres valores que necesite nuestro
 esquema de color.
+\newpage\section{Presentaciones de transparencias}
+Como se dijo en \textbf{\ref{sec:presentacion}}, se puede utilizar \LaTeX{} para
+crear presentaciones de transparencias, utilizando una clase de documento
+muy especial llamada \textit{beamer}. Como ya hemos dicho, es muy difícil, si no
+imposible, cambiar la clase de un documento cuando éste tiene cierta extensión.
+Por lo que se ha creado otro documento llamada \texttt{beamer.tex} que se 
+compila con la orden \verb!make beamer.pdf! si se dispone de soporte para
+compilar con make. Ese documento será una presentación de transparencias
+con distintas características, en este documento explicaré cómo se han creado.
+
+La estructura básica de un documento con la clase beamer es la misma que la de 
+uno con cualquier otra clase de documento. Por ejemplo:
+\begin{lstlisting}[language={[LaTeX]TeX},
+                   label={lst:basicBeamer},
+                   caption={Documento básico con \textit{beamer}}]
+\documentclass{beamer}
+\begin{document}
+    \begin{frame}
+        Aquí ya puede ir algún texto, para que se incluya en la primera
+        transparencia.
+    \end{frame}
+\end{document}
+\end{lstlisting}
+Lo primero que llama la atención es el uso del entorno \verb!frame!, que es
+el que nos marca una transparencia. 
+Así, como se puede ver en, la figura \ref{fig:slide_text},
+se ha creado una transparencia
+con texto en el medio. Además, la clase \textit{beamer} incluye unos controles
+de nevegación en la parte inferior derecha de todas las transparencias sin que
+tengamos que hacer nada.
+\begin{figure}[H]
+    \includegraphics[width=\hsize]{slide_text}
+    \caption{Una transparencia simple con texto}
+    \label{fig:slide_text}
+\end{figure}
+
+Hay que tener cuidado, porque \LaTeX{} no maneja el tamaño del texto de la
+transparencia, porque si introducimos mucho, éste se desbordará como se puede
+ver en la figura \ref{fig:slide_overflow}
+
+\begin{figure}[H]
+\includegraphics[width=\hsize]{slide_overflow}
+\caption{Una transparencia en la que el texto se desborda}
+\label{fig:slide_overflow}
+\end{figure}
+
+Si incluimos varios entornos \textit{frame}, crearemos varias transparencias.
+
+\begin{lstlisting}[language={[LaTeX]TeX},
+                   label={lst:slide_two},
+                   caption={Código para dos transparencias}]
+\documentclass{beamer}
+\begin{document}
+    \begin{frame}
+        Aquí ya puede ir algún texto, para que se incluya en la primera
+        transparencia.
+    \end{frame}
+    \begin{frame}
+        Aquí iría el texto de la siguiente transparencia.
+    \end{frame}
+\end{document}
+\end{lstlisting}
+
+En la figura \ref{fig:slide_two} se pueden ver dos transparencias.
+\begin{figure}[H]
+\includegraphics[width=\hsize]{slide_two}
+\caption{Dos transparencias}
+\label{fig:slide_two}
+\end{figure}
+
+Antes de continuar, hay que hacer una serie de configuraciones y explicar una
+serie de salvedades sobre la clase beamer:
+\begin{enumerate}
+\item Beamer incluye en paquete \verb!amsmath! automáticamente, así que
+debemos tener en cuenta lo que se explica en \textbf{\ref{sec:amsmath}}.
+\item La fuente predeterminada de los documentos \verb!beamer! es sin serifas,
+incluso en ecuaciones matemáticas, si se quiere utilizar la fuente
+predeterminada del resto de documentos, debe usarse configurarse usando la
+orden \verb!\usefonttheme{serif}! en el preámbulo.
+\item Del mismo modo que pasaba con las tablas en este documento,
+para que los textos automáticos
+salgan en español, debe configurarse el idioma mediante el paquete \verb!babel!,
+pero requerimos, además, de dos instrucciones adicionales
+    \begin{lstlisting}[language={[LaTeX]TeX},
+                       label={lst:babel_beamer},
+                       caption={Configuración de \texttt{beamer} en español}]
+\usepackage[spanish]{babel}
+\uselanguage{Spanish}
+\languagepath{Spanish}
+    \end{lstlisting}
+\end{enumerate}
+
+Una de las funciones básicas de las transparencias es ponerle un título a las
+mismas, para eso hay que utilizar la orden \verb!\frametitle{<título>}!, de
+este modo, el título aparecerá en la parte superior de la transparencia.
+Además, si queremos que nuestras presentaciones sean más llamativas 
+debemos usar un <<tema>>, la manera de establecer este tema es con la orden
+\verb!\usetheme{<nombre del tema>}!. Por ejemplo, un de los temas más usados
+es el tema Madrid, así que en el preámbulo podemos introducir esa orden. Así,
+las trasnparencias quedarían como se ven en la figura \ref{fig:slide_madrid}.
+\begin{figure}[H]
+\includegraphics[width=\hsize]{slide_madrid}
+\caption{Transparencias con el tema Madrid}
+\label{fig:slide_madrid}
+\end{figure}
+El código para crearlas es el siguiente:
+
+\begin{minipage}[H]{\hsize}
+\begin{lstlisting}[language={[LaTeX]TeX},
+                   label={lst:slide_madrid},
+                   caption={Código de beamer usando un tema y títulos}]
+\documentclass{beamer}
+\usetheme{Madrid}
+\begin{document}
+    \begin{frame}
+        \frametitle{Primera transparencia}
+        Aquí ya puede ir algún texto, para que se incluya en la primera
+        transparencia.
+    \end{frame}
+    \begin{frame}
+        \frametitle{Segunda transparencia}
+        Aquí iría el texto de la siguiente transparencia.
+    \end{frame}
+\end{document}
+\end{lstlisting}
+\end{minipage}
+
+Como se puede ver, en la línea 2 se incluye el tema y en las líneas 5 y 10 se
+indican los títulos de las transparencias.
+
+Ahora que hemos visto lo básico de las transparencias, vamos a ver cómo crear
+una transparencia de título, una tabla de contenidos, bloques destacados y 
+transparencias a dos columnas. Para crear una transparencia de título se hace
+de un modo muy parecido a como
+se hace en un documento normal, se deben usar las órdenes \verb!\title!,
+\verb!\author! y, esta sí cambia: \verb!\titlepage!. Para crear una tabla de
+contenido, se debe utilizar la orden \verb!\tableofcontents! dentro de un
+\textit{frame}. Veamos un ejemplo completo de cómo incluir autores, títulos,
+subtítulos e instituciones:
+
+\begin{minipage}[c]{\hsize}
+\begin{lstlisting}[language={[LaTeX]TeX},
+                   label={lst:slide_titles},
+                   caption={Información de título en \texttt{beamer}}]
+\author[Rodríguez y Brown]{
+    Francisco Rodríguez Melgar\inst{1}\\
+    Dr. Emmett Lathrop Brown\inst{2}\\
+}
+\title[Ejemplo beamer]{
+    Ejemplo de presentación con \LaTeX{}
+}
+\subtitle{
+    Cómo hacer presentaciones con \LaTeX{} y Beamer
+}
+\institute[UdE y Caltech]{
+    \inst{1}Universidad de Ejemplo \\ Facultad de las cosas que molan\and
+    \inst{2}Instituto Tecnológico de California\\Facultad de Viajes en el Tiempo
+
+}
+\date[Esp. Conf.]{
+    Conferencias Espaciales -- \today
+}
+\end{lstlisting}
+\end{minipage}
+
+En la línea 1 se especifica el autor con el comando correspondiente, el
+argumento entre corchetes es la versión corta de los autores, que se mostrará
+en la barra inferior de las transparencias, después, entre llaves, en las líneas
+2 y 3 se especifica cada autor separado por un salto de línea. Los comandos
+\verb!\inst{<número>}! permiten que colocar un superíndice con un número que nos
+permitirá relacionar estos autores con las instituciones a las que pertencen.
+En la línea 5 se indica del mismo modo la versión corta del título de la
+presentación, y en la 6, la versión larga. En la 8, 9 y 10 se indica el
+subtítulo. En la 11 se especifican las instituciones con el comando
+\verb!\institute!, que nos permite, con el comando \verb!\and!, indicar más
+de una. Como se puede ver, se han utilizado los comandos \verb!\inst! antes
+de cada institución para asignales ese número y que aparezca en la
+transparencia. Finalmente, en las líneas 16 a 18 se indica el marco de
+conferencias en que se enmarca la presentación, del mismo modo, entre corchetes
+la versión corta (que aparecerá en la barra inferior) y entre llaves en versión
+larga, que aparecerá en la transparencia de título. Nótese que se debe usar
+el comando \verb!\today! para imprimir la fecha de creacion del documento,
+si no, sólo imprimiría el nombre de la conferencia.
+
+
+Hay que tener en cuenta que los títulos de las transparencias que se introducen
+con la orden \verb!\frametitle! no son los que aparecen en la tabla de
+contenido, los que aparecen son los títulos de secciones y subsecciones, que se
+usan del mismo modo que en documentos normales. Nótese que estas órdenes deben
+ir fuera del entorno frame.
+
+En algunas transparencias, quizás, querramos destacar un párrafo sobre los
+demás, porque, quizá, sea un teorema importante, para ello existen las órdenes:
+\begin{itemize}
+\item \textbf{block}: Nos permite introducir un bloque del color del tema con
+un título.
+\item \textbf{alertblock}: Nos permite introducir un bloque de color destacado
+(rojo, por ejemplo).
+\item \textbf{examples}: Crea un bloque de color intermedio que tiene de título
+<<Ejemplos>>. (Esto es posible gracias a la configuración de babel).
+\end{itemize}
+
+En el código \ref{lst:alertblocks} se pueden ver ejemplo de cómo se introducen
+y en la figura \ref{fig:slide_alertblocks} se puede ver el resultado.
+
+\begin{lstlisting}[language={[LaTeX]TeX},
+                   label={lst:alertblocks},
+                   caption={Ejemplo de bloques alerta de beamer}]
+% resto de transparencias, configuración...
+\begin{frame}
+    \frametitle{Introducción}
+        Aquí iría el texto de la siguiente transparencia.
+    \begin{block}{Teorema importante}
+    \[
+        |x|=\left\{
+        \begin{matrix}
+            -x&\textrm{para}&x<0\\
+            x&\textrm{para}&x\geq0
+        \end{matrix}
+        \right.
+    \]
+    \end{block}
+    \begin{alertblock}{Entrega del trabajo}
+        Recordad que el trabajo sobre \textit{cosas importantes} se debe
+        entregar el lunes que viene.
+    \end{alertblock}
+    \begin{examples}
+        \[
+            |-2|=2;\:|2|=2
+        \]
+    \end{examples}
+\end{frame}
+% más cosas...
+\end{lstlisting}
+En las líneas 5, 15 y 19 se puede ver la sintaxis para iniciar el entorno
+que nos introduce los bloques. Además, entre las líneas 6 y 13 podemos ver cómo
+se ha utilizado la notación matemática compatible con el paquete \verb!amsmath!.
+\begin{figure}[H]
+\includegraphics[width=\hsize]{slide_alertblocks}
+\caption{Ejemplo de bloques}
+\label{fig:slide_alertblocks}
+\end{figure}
+
+Por otro lado, las transparencias estilizan las listas numeradas o sin numerar
+de una manera atractiva dependiente del tema que se elija. Por ejemplo:
+\begin{figure}[H]
+    \begin{subfigure}{.5\hsize}
+        \centering
+        \includegraphics[width=.9\linewidth]{slide_enumerate}
+        \caption{Lista numerada en transparencia}
+    \end{subfigure}%
+    \begin{subfigure}{.5\hsize}
+        \centering
+        \includegraphics[width=.9\linewidth]{slide_itemize}
+        \caption{Lista no numerada en transparencia}
+    \end{subfigure}
+    \caption{Ejemplo de listas en transparencias}
+    \label{fig:slide_lists}
+\end{figure}
+
+
+
 \newpage\section{Licencias y agradecimiento}
 Todas las páginas citadas son de sus respectivos creadores, yo sólo me limito
 a recopilar sus soluciones o información en un mismo documento. Además, quiero
 recoger aquí los nombres de los creadores de los paquetes utilizados y darles
-las gracias para permitir que la comunidad haga documentos con funcionalidades
+las gracias por permitir que la comunidad haga documentos con funcionalidades
 avanzadas.
 
 \begin{table}[H]
