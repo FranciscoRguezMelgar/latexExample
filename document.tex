@@ -86,6 +86,8 @@
                             {ecuacion}
 \captionsetup[ecuacion]{labelfont=normal}
 
+\usepackage{multicol}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FIN SECCIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \lstset{
     basicstyle=\ttfamily,
@@ -534,9 +536,30 @@ adicionales (ver sección de inclusión de paquetes en el código de este
 documento) no se pueden incluir algunos símbolos. Así que hay que tener cuidado
 con los símbolos especiales que se usan, pueden renderizarse mal o no permitir
 que el PDF se genere. Si se usan los símbolos del idioma español: tildes, la
-eñe, diéresis en la u y demás, no debería haber problemas. Ej.: áéíóú, ÁÉÍÓÚ, üÜ, ñÑ.
+eñe, diéresis en la u y demás, no debería haber problemas.
+Ej.: áéíóú, ÁÉÍÓÚ, üÜ, ñÑ.
 
-\subsection{Escritura de texto en \LaTeX{}}
+Si se desea introducir texto a dos columnas, debe incluirse el paquete
+\verb!multicol!, y utilizar el entorno \verb!multicols!, que nos
+permite indicar el número de columnas del texto. 
+
+\begin{lstlisting}[ language={[LaTeX]Tex},
+                    caption={Ejemplo de texto a dos columnas},
+                    label={lst:two_columns}]
+\begin{multicol}{2}
+%el texto que se desee que salga a dos columnas
+\end{multicol}
+\end{lstlisting}
+
+En la figura \ref{fig:two_columns} se puede ver el resultado.
+
+\begin{figure}[H]
+\includegraphics[width=\hsize]{two_columns}
+\caption{Texto a dos columnas}
+\label{fig:two_columns}
+\end{figure}
+
+\subsection{Escritura de texto en \LaTeX{}} \label{subsec:write_text}
 Como se ha visto en la sección anterior, dentro del contenido del documento es
 donde se puede incluir texto. Ahora bien, si has experimentado con este archivo 
 \texttt{.tex}.
@@ -1423,8 +1446,10 @@ Y \verb!\(1+2=3\)! lo es a \verb!$1+2=3$!. Esta es la notación que
 \texttt{amsmath} requiere para funcionar. Además, \verb!amsmath!
 no funciona con el comando \verb!\matrix! sino que requiere el uso de un entorno
 que él mismo
-proporciona, llamado del mismo modo. Para ilustrar el código que se realizaría
-con ese paquete, se ha creado otro archivo .tex en la raíz del directorio que
+proporciona, llamado del mismo modo. En este entorno debe usarse \verb|\\|
+en lugar de \verb!\cr! para indicar la siguiente fila de una matriz, lee el
+código del documento \verb!amsmath.tex! para ver los ejemplos,
+este documento
 no se compila automáticamente con \texttt{make}, sino que se debe compilar
 a mano con \verb!pdflatex! o con el comando \verb!make amsmath!. Que generará
 un PDF distinto al de este tutorial.
@@ -2774,16 +2799,18 @@ Y, finalmente, el último argumento son los tres valores que necesite nuestro
 esquema de color.
 \newpage\section{Presentaciones de transparencias}
 Como se dijo en \textbf{\ref{sec:presentacion}}, se puede utilizar \LaTeX{} para
-crear presentaciones de transparencias, utilizando una clase de documento
-muy especial llamada \textit{beamer}. Como ya hemos dicho, es muy difícil, si no
-imposible, cambiar la clase de un documento cuando éste tiene cierta extensión.
-Por lo que se ha creado otro documento llamada \texttt{beamer.tex} que se 
-compila con la orden \verb!make beamer.pdf! si se dispone de soporte para
-compilar con make. Ese documento será una presentación de transparencias
-con distintas características, en este documento explicaré cómo se han creado.
-
+crear presentaciones de transparencias, usando una clase de documento
+muy especial llamada \textit{beamer}. Ya se ha explica que  es muy difícil, si
+no imposible, cambiar la clase de un documento cuando éste tiene cierta
+extensión. Por lo que se ha creado otro documento llamada \texttt{beamer.tex}
+que se compila con la orden \verb!make beamer.pdf! si se dispone de soporte para
+compilar con \verb!make!. En este documento incluiré el código para crear la
+presentación de transparencias del mismo modo que he hecho con el que ya 
+se ha visto, pero incluiré, además, capturas del resultado.
+ 
 La estructura básica de un documento con la clase beamer es la misma que la de 
-uno con cualquier otra clase de documento. Por ejemplo:
+uno con cualquier otra clase de documento, pero el contenido
+del mismo es lo que cambia:
 \begin{lstlisting}[language={[LaTeX]TeX},
                    label={lst:basicBeamer},
                    caption={Documento básico con \textit{beamer}}]
@@ -2809,8 +2836,8 @@ tengamos que hacer nada.
 \end{figure}
 
 Hay que tener cuidado, porque \LaTeX{} no maneja el tamaño del texto de la
-transparencia, porque si introducimos mucho, éste se desbordará como se puede
-ver en la figura \ref{fig:slide_overflow}
+transparencia por lo que, si introducimos mucho, éste se desbordará como se
+puede ver en la figura \ref{fig:slide_overflow}
 
 \begin{figure}[H]
 \includegraphics[width=\hsize]{slide_overflow}
@@ -2843,18 +2870,18 @@ En la figura \ref{fig:slide_two} se pueden ver dos transparencias.
 \end{figure}
 
 Antes de continuar, hay que hacer una serie de configuraciones y explicar una
-serie de salvedades sobre la clase beamer:
+serie de salvedades sobre la clase \textit{beamer}:
 \begin{enumerate}
-\item Beamer incluye en paquete \verb!amsmath! automáticamente, así que
-debemos tener en cuenta lo que se explica en \textbf{\ref{sec:amsmath}}.
-\item La fuente predeterminada de los documentos \verb!beamer! es sin serifas,
-incluso en ecuaciones matemáticas, si se quiere utilizar la fuente
-predeterminada del resto de documentos, debe usarse configurarse usando la
-orden \verb!\usefonttheme{serif}! en el preámbulo.
-\item Del mismo modo que pasaba con las tablas en este documento,
-para que los textos automáticos
-salgan en español, debe configurarse el idioma mediante el paquete \verb!babel!,
-pero requerimos, además, de dos instrucciones adicionales
+    \item Beamer incluye en paquete \verb!amsmath! automáticamente, así que
+    debemos tener en cuenta lo que se explica en \textbf{\ref{sec:amsmath}}.
+    \item La fuente predeterminada de los documentos \verb!beamer! es sin
+    serifas, incluso en ecuaciones matemáticas, si se quiere utilizar la fuente
+    predeterminada del resto de documentos, debe configurarse usando la
+    orden \verb!\usefonttheme{serif}! en el preámbulo.
+    \item Del mismo modo que pasaba con las tablas en este documento,
+    para que los textos automáticos
+    salgan en español, debe configurarse el idioma mediante el paquete
+    \verb!babel!, pero requerimos, además, de dos instrucciones adicionales
     \begin{lstlisting}[language={[LaTeX]TeX},
                        label={lst:babel_beamer},
                        caption={Configuración de \texttt{beamer} en español}]
@@ -2940,8 +2967,9 @@ subtítulos e instituciones:
 En la línea 1 se especifica el autor con el comando correspondiente, el
 argumento entre corchetes es la versión corta de los autores, que se mostrará
 en la barra inferior de las transparencias, después, entre llaves, en las líneas
-2 y 3 se especifica cada autor separado por un salto de línea. Los comandos
-\verb!\inst{<número>}! permiten que colocar un superíndice con un número que nos
+2 y 3 se especifica cada autor separado por un salto de línea (\verb!\\!).
+Los comandos
+\verb!\inst{<número>}! permiten colocar un superíndice con un número que nos
 permitirá relacionar estos autores con las instituciones a las que pertencen.
 En la línea 5 se indica del mismo modo la versión corta del título de la
 presentación, y en la 6, la versión larga. En la 8, 9 y 10 se indica el
@@ -2955,15 +2983,29 @@ la versión corta (que aparecerá en la barra inferior) y entre llaves en versi�
 larga, que aparecerá en la transparencia de título. Nótese que se debe usar
 el comando \verb!\today! para imprimir la fecha de creacion del documento,
 si no, sólo imprimiría el nombre de la conferencia.
+El resultado se puede ver en la figura \ref{fig:slide_title}.
 
+\begin{figure}[H]
+\includegraphics[width=\hsize]{slide_title}
+\caption{Transparencia de título}
+\label{fig:slide_title}
+\end{figure}
 
 Hay que tener en cuenta que los títulos de las transparencias que se introducen
-con la orden \verb!\frametitle! no son los que aparecen en la tabla de
+con la orden \verb!\frametitle! \textbf{no son} los que aparecen en la tabla de
 contenido, los que aparecen son los títulos de secciones y subsecciones, que se
 usan del mismo modo que en documentos normales. Nótese que estas órdenes deben
-ir fuera del entorno frame.
+ir fuera del entorno frame. En la figura \ref{fig:slide_content} se puede ver
+cómo quedaría una tabla de contenido con siete secciones y una subsección.
 
-En algunas transparencias, quizás, querramos destacar un párrafo sobre los
+\begin{figure}[H]
+\includegraphics[width=\hsize]{slide_content}
+\caption{Transparencia de tabla de contenido}
+\label{fig:slide_content}
+\end{figure}
+
+
+En algunas transparencias, quizás, queramos destacar un párrafo sobre los
 demás, porque, quizá, sea un teorema importante, para ello existen las órdenes:
 \begin{itemize}
 \item \textbf{block}: Nos permite introducir un bloque del color del tema con
@@ -2974,9 +3016,11 @@ un título.
 <<Ejemplos>>. (Esto es posible gracias a la configuración de babel).
 \end{itemize}
 
-En el código \ref{lst:alertblocks} se pueden ver ejemplo de cómo se introducen
+En el programa \ref{lst:alertblocks} se puede ver un 
+ejemplo de cómo se introducen;
 y en la figura \ref{fig:slide_alertblocks} se puede ver el resultado.
 
+\begin{minipage}[c]{\hsize}
 \begin{lstlisting}[language={[LaTeX]TeX},
                    label={lst:alertblocks},
                    caption={Ejemplo de bloques alerta de beamer}]
@@ -3006,6 +3050,8 @@ y en la figura \ref{fig:slide_alertblocks} se puede ver el resultado.
 \end{frame}
 % más cosas...
 \end{lstlisting}
+\end{minipage}
+
 En las líneas 5, 15 y 19 se puede ver la sintaxis para iniciar el entorno
 que nos introduce los bloques. Además, entre las líneas 6 y 13 podemos ver cómo
 se ha utilizado la notación matemática compatible con el paquete \verb!amsmath!.
@@ -3031,7 +3077,6 @@ de una manera atractiva dependiente del tema que se elija. Por ejemplo:
     \caption{Ejemplo de listas en transparencias}
     \label{fig:slide_lists}
 \end{figure}
-
 
 
 \newpage\section{Licencias y agradecimiento}
