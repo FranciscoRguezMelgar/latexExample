@@ -2802,7 +2802,7 @@ Como se dijo en \textbf{\ref{sec:presentacion}}, se puede utilizar \LaTeX{} para
 crear presentaciones de transparencias, usando una clase de documento
 muy especial llamada \textit{beamer}. Ya se ha explica que  es muy difícil, si
 no imposible, cambiar la clase de un documento cuando éste tiene cierta
-extensión. Por lo que se ha creado otro documento llamada \texttt{beamer.tex}
+extensión. Por lo que se ha creado otro documento llamado \texttt{beamer.tex}
 que se compila con la orden \verb!make beamer.pdf! si se dispone de soporte para
 compilar con \verb!make!. En este documento incluiré el código para crear la
 presentación de transparencias del mismo modo que he hecho con el que ya 
@@ -2931,8 +2931,8 @@ indican los títulos de las transparencias.
 
 Ahora que hemos visto lo básico de las transparencias, vamos a ver cómo crear
 una transparencia de título, una tabla de contenidos, bloques destacados y 
-transparencias a dos columnas. Para crear una transparencia de título se hace
-de un modo muy parecido a como
+transparencias a dos columnas.
+Para crear una transparencia de título se hace de un modo parecido a como
 se hace en un documento normal, se deben usar las órdenes \verb!\title!,
 \verb!\author! y, esta sí cambia: \verb!\titlepage!. Para crear una tabla de
 contenido, se debe utilizar la orden \verb!\tableofcontents! dentro de un
@@ -3003,7 +3003,6 @@ cómo quedaría una tabla de contenido con siete secciones y una subsección.
 \caption{Transparencia de tabla de contenido}
 \label{fig:slide_content}
 \end{figure}
-
 
 En algunas transparencias, quizás, queramos destacar un párrafo sobre los
 demás, porque, quizá, sea un teorema importante, para ello existen las órdenes:
@@ -3078,6 +3077,60 @@ de una manera atractiva dependiente del tema que se elija. Por ejemplo:
     \label{fig:slide_lists}
 \end{figure}
 
+Para crear transparencias a dos columnas se hace con el entorno \verb!columns!.
+Dentro de él, se introducen tantos entornos \verb!column! como se deseen, que
+serían las columnas de la transparencia. Para cada columna debe decirse el
+ancho, en un argumento el entorno \verb!column!. Veamos un ejemplo:
+\begin{minipage}[c]{\hsize}
+\begin{lstlisting}[language={[LaTeX]TeX},
+                   label={lst:slide_two_columns},
+                   caption={Ejemplo de transparencia a dos columnas}]
+\begin{frame}
+    \frametitle{Transparencia}
+    \begin{columns}
+        \begin{column}{0.5\hsize}
+            Lorem ipsum dolor sit amet, conse
+            ctetur adipiscing elit. 
+            Integer eleifend lectus eros,
+            at dignissim leo puortor et, auctor arcu. Ut odio 
+            quam, faucibus non enim quis, consectetur rhoncus nisl.
+        \end{column}
+        \begin{column}{.5\hsize}
+            \begin{itemize}
+                \item Alemania
+                \item España
+                \item Andorra
+                \item Noruega
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+\end{lstlisting}
+\end{minipage}
+
+En la línea 3 se empieza el entorno \verb!columns!, en las líneas 4 y 11 se 
+empiezan los respectivos entornos \verb!column!. Nótese que después de 
+\verb!{column}!, se debe poner el tamaño de la columna, pero que \textbf{no} 
+se debe poner \verb!width=!, si se pusiera, fallaría. Después, simplemente
+se introduce el texto (u objetos) que se deseen en los entornos. En la figura
+\ref{fig:slide_two_columns} se puede ver el resultado.
+\begin{figure}[H]
+\includegraphics[width=\hsize]{slide_two_columns}
+\caption{Transparencia a dos columnas}
+\label{fig:slide_two_columns}
+\end{figure}
+
+Como detalle, el entorno \verb!beamer! no permite entornos verbatim dentro de
+él, por lo que si se desea usar ese o el entorno \verb!lstlisting!, debe
+añadirse a la transparencia la opción \verb![fragile]!, es decir, la línea
+quedaría como: \verb!\begin{frame}[fragile]!. Aparte de eso, el paquete
+\verb!xcolor! debe incluirse sin opciones, porque la clase de documento
+\verb!beamer! ya incluye algunas.
+
+Aparte de esto, todas las reglas que aplican para documentos normales
+aplicarían para la clase de documento \verb!beamer!, por lo que simplemente
+sería ir probando lo que necesites. Por ejemplo, las figuras se insertan
+del mismo modo que en documentos de otras clases, etc.
 
 \newpage\section{Licencias y agradecimiento}
 Todas las páginas citadas son de sus respectivos creadores, yo sólo me limito
@@ -3115,20 +3168,12 @@ rotating&Sebastian Rahtz, Leonor Barroca, Robin Fairbairns y El equipo \LaTeX{} 
 \caption{Paquetes utilizados y sus creadores}
 \label{tab:packagesUsed}
 \end{table}
-
-
-
-
-
-
-
-
-
-
-
 Todas las
 imágenes utilizadas son de licencia libre (ver:
 \href{https://pixabay.com/service/faq/}{FAQ de Pixabay}) o de creación propia.
+El nombre de Caltech se usa con fines humorísticos haciendo referencia al
+personaje \textbf{ficticio} del cine Dr. Emmett Brown, ni el autor ni este 
+documento tienen ninguna relación con dicha institución.
 \newpage
 \section{Bibliografía}
 \printbibliography[heading=none]

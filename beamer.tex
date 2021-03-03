@@ -1,10 +1,45 @@
 \documentclass{beamer}
 \usefonttheme{serif}
-\usepackage[spanish]{babel}
+\usepackage[spanish,es-tabla]{babel}
 \uselanguage{Spanish}
 \languagepath{Spanish}
 \usetheme{Madrid}
+\usepackage{listings}
 %\usecolortheme{beaver}
+\graphicspath{{img/}}
+\usepackage[]{xcolor}
+    \definecolor{gray}{rgb}{0.5,0.5,0.5}
+    \definecolor{lightYellow}{RGB}{251, 255, 212}
+    \definecolor{lightBlue}{RGB}{56,184,255}
+\lstset{
+    basicstyle=\ttfamily,
+    numberstyle=\ttfamily,
+    frame=rlbt, % draw a frame at the top and bottom of the code block
+    tabsize=4, % tab space width
+    showstringspaces=false, % don't mark spaces in strings
+    numbers=left, % display line numbers on the left
+    commentstyle=\color{gray}, % comment color
+    keywordstyle=\color{blue}, % keyword color
+    stringstyle=\color{red}, % string color
+    backgroundcolor=\color{lightYellow},
+    captionpos=b,
+    breaklines=true,
+    literate=
+            {Á}{{\'{A}}}1
+            {É}{{\'{E}}}1
+            {Í}{{\'{I}}}1
+            {Ó}{{\'{O}}}1
+            {Ú}{{\'{U}}}1
+            {á}{{\'{a}}}1
+            {é}{{\'{e}}}1
+            {í}{{\'{i}}}1
+            {ó}{{\'{o}}}1
+            {ú}{{\'{u}}}1
+            {ñ}{{\~{n}}}1
+            {Ñ}{{\~{N}}}1
+            {ü}{{\"{u}}}1
+            {Ü}{{\"{U}}}1
+}
 \author[Rodríguez y Brown]{
     Francisco Rodríguez Melgar\inst{1}\\
     Dr. Emmett Lathrop Brown\inst{2}\\
@@ -37,29 +72,42 @@
     \begin{frame}
         \frametitle{Transparencia}
         \begin{columns}
-\begin{column}{0.5\textwidth}
-Lorem ipsum dolor sit amet, conse
-ctetur adipiscing elit. 
-Integer eleifend lectus eros
-, at dignissim leo puortor et, auctor arcu. Ut odio 
-quam, faucibus non enim quis, consectetur rhoncus nisl.
-\end{column}
-\begin{column}{.5\textwidth}
-\begin{itemize}
-\item Alemania
-\item España
-\item Andorra
-\item Noruega
-\end{itemize}
-\end{column}
+            \begin{column}{0.5\hsize}
+                Lorem ipsum dolor sit amet, conse
+                ctetur adipiscing elit. 
+                Integer eleifend lectus eros,
+                at dignissim leo puortor et, auctor arcu. Ut odio 
+                quam, faucibus non enim quis, consectetur rhoncus nisl.
+            \end{column}
+            \begin{column}{.5\hsize}
+                \begin{itemize}
+                    \item Alemania
+                    \item España
+                    \item Andorra
+                    \item Noruega
+                \end{itemize}
+            \end{column}
         \end{columns}
     \end{frame}
     \begin{frame}
         \frametitle{Transparencia}
+        \begin{figure}[H]
+        \includegraphics[height=.666666\vsize]{gatito}
+        \caption{Un gato blanco}
+        \label{fig:gato}
+        \end{figure}
     \end{frame}
     \section{Alternativas}
-    \begin{frame}
+    \begin{frame}[fragile]
         \frametitle{Transparencia}
+            \begin{lstlisting}[language={C++},
+                   label={lst:slide_two_columns},
+                   caption={Hola mundo en C++}]
+#include <iostream>
+int main (void){
+    std::cout << "hola, mundo" << std::endl;
+}
+            \end{lstlisting}
     \end{frame}
     \begin{frame}
         \frametitle{Transparencia}
