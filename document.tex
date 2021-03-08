@@ -117,6 +117,8 @@
             {Ñ}{{\~{N}}}1
             {ü}{{\"{u}}}1
             {Ü}{{\"{U}}}1
+            {¡}{{!`}}1
+            {¿}{{?`}}1
 }
 \renewcommand{\lstlistingname}{Programa}
 \renewcommand{\lstlistlistingname}{Índice de \MakeLowercase{\lstlistingname}s}
@@ -2178,6 +2180,8 @@ por ejemplo, el estilo que se ha creado aquí se ha tipificado así:
             {Ñ}{{\~{N}}}1
             {ü}{{\"{u}}}1
             {Ü}{{\"{U}}}1
+            {¡}{{!`}}1
+            {¿}{{?`}}1
 }
 \end{lstlisting}
 \end{minipage}
@@ -3125,9 +3129,18 @@ Como detalle, el entorno \verb!beamer! no permite entornos verbatim dentro de
 añadirse a la transparencia la opción \verb![fragile]!, es decir, la línea
 quedaría como: \verb!\begin{frame}[fragile]!. Aparte de eso, el paquete
 \verb!xcolor! debe incluirse sin opciones, porque la clase de documento
-\verb!beamer! ya incluye algunas.
+\verb!beamer! ya incluye algunas. Por otro lado, debe incluirse una opción
+llamada \verb!xleftmargin! en el bloque \verb!lstset! con un valor de, por
+ejemplo, \verb!2em!, o si no los números de línea (por la izquierda), saldrían
+fuera de la transparencia. El resultado de un código introducido como
+lstlisting en una transparencia se puede ver en la figura \ref{fig:slide_code}.
+\begin{figure}[H]
+\includegraphics[width=\hsize]{slide_code}
+\caption{Código en una transparencia}
+\label{fig:slide_code}
+\end{figure}
 
-Aparte de esto, todas las reglas que aplican para documentos normales
+En general, todas las reglas que aplican para documentos normales
 aplicarían para la clase de documento \verb!beamer!, por lo que simplemente
 sería ir probando lo que necesites. Por ejemplo, las figuras se insertan
 del mismo modo que en documentos de otras clases, etc.

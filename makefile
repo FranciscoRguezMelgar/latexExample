@@ -14,7 +14,7 @@ yellow = "\033[1;33m"
 	fi;
 	@pdflatex -output-directory=build $< >build/compile.log
 	@echo "    Preliminar compilation ok"
-	@biber --input-directory build --output-directory build document >>build/compile.log
+	@biber --input-directory build --output-directory build $(basename $<) >>build/compile.log
 	@echo "    Bibliography building ok"
 	@pdflatex -output-directory=build $< >build/compile.log
 	@echo "    First compilation ok"
