@@ -166,7 +166,7 @@
         \frametitle{Ecuaciones}
         Como se ha dicho en el documento principal del tutorial, las
         ecuaciones en la clase \textit{beamer} se deben incluir con la notación
-        «moderna», compatible con el paquete \texttt{amsmath}.
+        <<moderna>>, compatible con el paquete \texttt{amsmath}.
     \end{frame}
     \begin{frame}
         \frametitle{Bloques especiales}
@@ -217,7 +217,7 @@ int main(int argc, const char* argv[])
     \end{frame}
     \begin{frame}[fragile, containsverbatim]
         \frametitle{Bloque \texttt{lstlisting}}
-        Al igual que en los documentos «normales», podemos querer usar bloques
+        Al igual que en los documentos <<normales>>, podemos querer usar bloques
         de código con mejor estilo. De nuevo, hay que poner la opción
         \texttt{fragile}.
         
@@ -245,5 +245,18 @@ int main(int argc, const char* argv[])
         Además, es recomendable añadir \verb!\tiny! al estilo para que el texto
         sea un poco más pequeño. Si se busca en el código de esta presentación
         el bloque \verb!lstset!, se verán las órdenes modificadas.
+    \end{frame}
+    \section{Sobre la bibliografía}
+    \begin{frame}
+        \frametitle{Citas}
+        Del mismo modo que se utiliza bibliografía en otro documentos, se
+        puede utilizar en presentaciones de transparencias. Se puede citar y se
+        puede incluir bibliografía de la misma manera. Por ejemplo:
+        <<El lenguaje C++ es un superconjunto del lenguaje C>>(\cite{cpppl})
+        Y, en la siguiente transparencia, podemos incluir la bibliografía.
+    \end{frame}
+    \begin{frame}
+        \frametitle{Bibliografía}
+        \printbibliography
     \end{frame}
 \end{document}

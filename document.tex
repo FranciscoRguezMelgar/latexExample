@@ -88,6 +88,7 @@
 
 \usepackage{multicol}
 
+\usepackage{pdfpages}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FIN SECCIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \lstset{
     basicstyle=\ttfamily,
@@ -1666,7 +1667,52 @@ aparecerá el título de la misma (la \textit{caption}).
 
 Por ejemplo: como podemos ver en la Figura \ref{fig:gatitoNegro}:
 \nameref{fig:gatitoNegro}.
+\subsubsection{Inclusión de gráficos vectoriale}
+Aunque incluir fotografías es muy útil, incluir otro tipo de imágenes es
+muy útil también. Uno de esos tipos de imagen más interesante son los gráficos
+vectoriales. Estos gráficos son imágenes definidas en términos matemáticos,
+esto permite que sean ampliados todo lo que se desee sin que aparezca el efecto
+de <<borrosidad>> o pixelación que aparece en las imágenes normales.
 
+\LaTeX{} no permite de manera fácil insertar gráficos vectoriales, que
+generalmente se distribuyen en archivo SVG (del inglés: \textit{Scalable
+Vector Graphics}), pero podemos trabajar para sortear esto. Podemos incrustar
+un PDF. Si disponemos de un gráfico vectorial, debemos usar un programa de
+nuestra elección para convertirlo a PDF, por ejemplo: InkScape. Una manera
+fácil es abrir la imagen svg en el navegador web e imprimirla a una impresora
+en PDF. Hay que tener cuidado con los márgenes que nos deje alrededor de la
+imagen, porque existirán cuando la incrustemos en nuestro documento. De todos
+modos, hay convertidores en internet. La cuestión es que debes convertir el SVG
+a PDF. Si tienes necesidad de incluir este tipo de gráficos, es probable que 
+seas un usuario avanzado.
+
+Una vez tenemos nuestro archivo PDF, debemos incluirlo, y se hace del mismo
+modo que cualquier otra imagen, con un entorno figure y la orden
+\verb!includegraphics!. Por ejemplo, el dibujo de una casa que se ve en
+la figura \ref{fig:house_svg} se ha creado convirtiendo el archivo SVG a PDF
+con InkScape. Se puede descargar el programa tanto para Windows como para Linux
+desde \href{https://inkscape.org}{aquí}.
+\begin{figure}[H]
+\centering
+\includegraphics[width=.5\hsize]{house}
+\caption{El dibujo vectorial de una casa}
+\label{fig:house_svg}
+\end{figure}
+
+Para incrustarla se han usado, como se ha dicho, los mismos comandos que si el
+PDF fuera una imagen, pero se incluye el código en el programa
+\ref{lst:pdf_include} para explicitar esto.
+
+\begin{lstlisting}[language={[LaTeX]TeX},
+                    caption={Incrustación de PDF},
+                    label={lst:pdf_include}]
+\begin{figure}[H]
+\centering
+\includegraphics[width=.5\hsize]{house}
+\caption{El dibujo vectorial de una casa}
+\label{fig:house_svg}
+\end{figure}
+\end{lstlisting}
 \subsection{Tablas}
 Las tablas son una de las herramientas más complejas de \LaTeX{}, empezaremos
 insertando tablas básicas (donde todas las celdas estén ocupadas) y después
@@ -1886,8 +1932,7 @@ la base de datos de referencias. Compila otra vez para asegurarte que no es
 En el makefile proporcionado ya se compila dos veces, pero si no lo utilizas,
 simplemente llama al comando dos veces seguidas.
 
-
-\subsubsection{Utilización alternativa de las figuras}
+\subsection{Utilización alternativa de las figuras}
 Una de las ventajas de utilizar figuras es que el contenido de las mismas no se
 divide entre páginas, así que si quisiéramos que una lista en concreto no se
 dividiera, podríamos incluirla en un bloque de figura, esta lista, por ejemplo:
