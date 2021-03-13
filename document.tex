@@ -89,6 +89,8 @@
 \usepackage{multicol}
 
 \usepackage{pdfpages}
+
+%\usepackage{amsopn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FIN SECCIÓN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \lstset{
     basicstyle=\ttfamily,
@@ -123,6 +125,7 @@
 }
 \renewcommand{\lstlistingname}{Programa}
 \renewcommand{\lstlistlistingname}{Índice de \MakeLowercase{\lstlistingname}s}
+\newcommand{\mod}{\mathop{\mathrm{m\acute{o}d}}}
 % Vamos a permitir más niveles de título, hasta 5.
 \setcounter{secnumdepth}{5}
 % Esto hace que la tabla de contenidos muestre hasta el nivel 3.
@@ -440,7 +443,7 @@ mejor leer primero el PDF compilado.
 
 \newpage\section{Comandos básicos de \LaTeX{}}
 En esta sección veremos los comandos más elementales de \LaTeX{}, cómo insertar
-formatos simples, insertas secciones... Y, sobre todo, al principio explicaré
+formatos simples, insertar secciones... Y, sobre todo, al principio explicaré
 cómo crear tu primer documento con esta herramienta.
 
 \subsection{Archivos .tex} \label{ArchivosTex}
@@ -497,7 +500,7 @@ se observa el preámbulo de este documento, se verá que hay muchos.
 
 \textbf{Nota sobre paquetes:} para realizar muchas de las tareas que se explican
 aquí se han incluido paquetes, para saber qué paquete es necesario para cada
-cosa, acuda a los comentarios del código.
+cosa, acudde a los comentarios del código.
 
 Ahora que ya hemos visto el contenido mínimo de un archivo .tex, puedes abrir
 aquél que creaste en el punto \ref{instGNULinux} y copiar los ejemplos
@@ -541,26 +544,6 @@ con los símbolos especiales que se usan, pueden renderizarse mal o no permitir
 que el PDF se genere. Si se usan los símbolos del idioma español: tildes, la
 eñe, diéresis en la u y demás, no debería haber problemas.
 Ej.: áéíóú, ÁÉÍÓÚ, üÜ, ñÑ.
-
-Si se desea introducir texto a dos columnas, debe incluirse el paquete
-\verb!multicol!, y utilizar el entorno \verb!multicols!, que nos
-permite indicar el número de columnas del texto. 
-
-\begin{lstlisting}[ language={[LaTeX]Tex},
-                    caption={Ejemplo de texto a dos columnas},
-                    label={lst:two_columns}]
-\begin{multicol}{2}
-%el texto que se desee que salga a dos columnas
-\end{multicol}
-\end{lstlisting}
-
-En la figura \ref{fig:two_columns} se puede ver el resultado.
-
-\begin{figure}[H]
-\includegraphics[width=\hsize]{two_columns}
-\caption{Texto a dos columnas}
-\label{fig:two_columns}
-\end{figure}
 
 \subsection{Escritura de texto en \LaTeX{}} \label{subsec:write_text}
 Como se ha visto en la sección anterior, dentro del contenido del documento es
@@ -675,8 +658,8 @@ como opción el tamaño en la orden \texttt{documentclass}. Por ejemplo:
 \begin{verbatim}
 \documentclass[12 pt]{article}
 \end{verbatim}
-crearía un documento con un tamaño de letras predeterminado de 12 puntos, usando
-la clase article.
+crearía un documento con un tamaño de letra predeterminado de 12 puntos, usando
+la clase \textit{article}.
 
 Además de texto, es natural que en un 
 documento tengamos que poner listas, ya sean éstas numeradas o sin numerar.
@@ -744,7 +727,7 @@ Como se puede ver en el código, una sección se define fácilmente, con la
 \verb|\subsubsection{<título de la sección>}|
 A partir de ahí, si se requieren títulos de un nivel más
 profundo, hay que usar otras órdenes. Esto depende de la clase de documento
-escogida. En este caso, article.
+escogida. En este caso, \textit{article}.
 \subsubsection{Cómo definir niveles más profundos de la jerarquía}
 Si quieres más información sobre ćomo hacer esto, puedes visitar
 \href{https://ctan.org/pkg/titlesec}{este enlace}.
@@ -775,9 +758,9 @@ más que suficientes para cualquier documento razonable.
 \subsection{Ecuaciones en \LaTeX{}} \label{ecuaciones}
 Uno de los puntos más fuertes de \LaTeX{} es la capacidad de incluir ecuaciones
 matemáticas de manera simple. Si queremos una ecuación matemática en bloque
-(separada del resto de los párrafos) pondríamos dos signos de dolar (\$), 
-un línea nueva, la ecuación (que puede ocupar varias líneas) y otros dos signos
- de dolar. De nuevo, al ser el signo de dolar un símbolo especial de \LaTeX{},
+(separada del resto de los párrafos) pondríamos dos signos de dólar (\$), 
+una línea nueva, la ecuación (que puede ocupar varias líneas) y otros dos signos
+ de dólar. De nuevo, al ser el signo de dólar un símbolo especial de \LaTeX{},
 si queremos incluirlo de manera literal, debe ir precedido de una barra
 inclinada inversa: \verb|\$|. Por ejemplo:
 \begin{verbatim}
@@ -791,7 +774,7 @@ $$
 G\cdot\frac{m_1\cdot m_2}{d^2}
 $$
 Si en este párrafo quisiéramos poner una ecuación o números al estilo 
-matemático, lo haremos con único signo de dolar a cada lado
+matemático, lo haremos con único signo de dólar a cada lado
 y la escribiríamos
 en la misma línea, por ejemplo, una ecuación cuadrática es: 
 $ax^2+bx+c = d : a \ne 0$. Se ha escrito así:
@@ -954,19 +937,40 @@ Además, como es lógico, \LaTeX{} incorpora las funciones matemáticas más usa
 \label{tab:foos}
 \end{table}
 
-Si se necesita una función que no esté aquí, por ejemplo digamos una llamada
-foo, simplemente se puede usar el comando \verb!\textrm! para que el nombre
-de la función se escriba sin estilo matemático, por ejemplo:
+Si se necesita una función que no esté aquí, por ejemplo, la función módulo,
+se puede utilizar el comando \verb!\mathop!, que nos permite
+hacer una función nueva, por ejemplo: \verb!\mathop{m\acute{o}d}{3}! sería
+equivalentea $\mathop{m\acute{o}d}{3}$. Por desgracia, la nueva función sale
+en cursiva, para evitar esto, debemos utilizar el comando \verb!\mathrm{}!, que
+escribe dentro de una ecuación texto <<normal>>. Así que:
 \begin{verbatim}
-\textrm{foo}\,(x, y)
+30 \equiv 3\mathop{\mathrm{m\acute{o}d}}{3}
 \end{verbatim}
-sería equivale a esto:
+sería equivalente a:
 $$
-\textrm{sen}\,\alpha
+30 \equiv 3\mathop{\mathrm{m\acute{o}d}}{3}
 $$
-nótese que hay que poner <<\verb!\,!>> para que lo que vaya después de la
-<<nueva función>> se separe un poco de ella y quede como si fuera una de las de 
-\LaTeX{}.
+
+Como se puede ver, esta sintaxis se vuelve terriblemente engorrosa en cuanto
+tenemos que usar nuestra flamante función nueva un par de veces en la misma
+ecuación, pero no ha motivo de alarma, porque hay una manera de asignar un
+conveniente comando a esta función. El comando \verb!\newcommand! nos permite
+definir nuevos comandos en \LaTeX{}, de hecho, nos permite definir el comando
+que queramos, pero nos centraremos en su uso para la casuística que aquí nos
+ocupa. De este modo:
+\begin{verbatim}
+\newcommand{\mod}{\mathop{\mathrm{m\acute{o}d}}}
+\end{verbatim}
+sería la orden que definiría nuestro nuevo comando, si la ponemos, por ejemplo,
+en el preámbulo de nuestro documento, el comando \verb!\mod! estaría disponible
+en cualquier parte del mismo dentro de nuestras ecuaciones matemáticas. Así que
+\begin{verbatim}
+30 \equiv 6 \mod 3
+\end{verbatim}
+produciría, concisamente:
+$$
+30\equiv 6 \mod 3
+$$
 
 Hay, además, hay muchos operadores que son necesarios, algunos de ellos
 son:
@@ -1262,7 +1266,7 @@ $$
 \subsubsection{Matrices como herramienta}\label{sec:matrixTools}
 Es evidente que el uso principal del comando \texttt{matrix} es crear matrices
 que contengan elementos algebraicos, pero en general nos permite crear rejillas
-o tablas en nuestras ecuaciones que puede resultar útiles para muchas cosas, 
+o tablas en nuestras ecuaciones que pueden resultar útiles para muchas cosas, 
 por ejemplo, el siguiente código:
 \begin{verbatim}
 $$
@@ -1417,8 +1421,8 @@ entre las llaves.
 
 Podemos poner símbolos monetarios gracias a algunos paquetes especiales
 (ver comentarios en donde se incluyen los paquetes). Esta camisa cuesta
-\EUR{10,99}. Para poner un dolar se pone una barra inclinada inversa 
-<<\textbackslash>> y el signo de dolar. El resultado es: \$. Por ejemplo:
+\EUR{10,99}. Para poner un dólar se pone una barra inclinada inversa 
+<<\textbackslash>> y el signo de dólar. El resultado es: \$. Por ejemplo:
 Esta mañana me he ido de compras por Nueva York y he gastado 500 \$.
 \subsubsection{Paquete \texttt{amsmath}} \label{sec:amsmath}
 El paquete \verb!amsmath! es un paquete que añade soporte a múltiples artefactos 
@@ -1429,7 +1433,7 @@ que es \textbf{incompatible} con todo lo realizado hasta ahora en ecuaciones,
 por dos motivos, el primero es la notación utilizada para los bloques
 matemáticos hasta ahora.
 
-La notación que se ha visto para los bloques matemáticos (con signos de dolar)
+La notación que se ha visto para los bloques matemáticos (con signos de dólar)
 es un legado de TeX (que es el origen de LaTex, que es un conjunto de macros
 sobre él). En el LaTeX moderno se pueden denotar las ecuaciones con \verb!\[ \]!
 y \verb!\( \)!, siendo el primero equivalente a los dos signos de dólar y el
@@ -1542,7 +1546,7 @@ Para poner imágenes hay que usar la orden
 \end{verbatim}
 La ruta a la imagen puede ser absoluta (desde el inicio del árbol de
 directorios) o relativa (desde este directorio donde está el archivo). Además,
-con el comando \texttt{granphicspath} se puede indicar una dirección
+con el comando \texttt{graphicspath} se puede indicar una dirección
 base para el comando anterior. Supongamos una estructura de directorios como
 la que sigue:
 \begin{verbatim}
@@ -1597,7 +1601,7 @@ referenciarla internamente.
             el 33,3 \% del ancho de la página. Si cambias el número ($.333$)
              por ejemplo a $0.5$ ocuparía el 50 \%.
         \item Como hemos usado la orden \texttt{graphicspath} en el preámbulo.
-        Podemos escribir simplemente el nombre del archivo, sin extensión.
+        Podemos escribir simplemente el nombre del archivo, sin indicar la ruta.
     \end{itemize}
     \item La orden \texttt{caption} pone el título visible que tendrá la figura.
     \item La orden label crea la etiqueta interna de esta figura, y permite 
@@ -1667,7 +1671,7 @@ aparecerá el título de la misma (la \textit{caption}).
 
 Por ejemplo: como podemos ver en la Figura \ref{fig:gatitoNegro}:
 \nameref{fig:gatitoNegro}.
-\subsubsection{Inclusión de gráficos vectoriale}
+\subsubsection{Inclusión de gráficos vectoriales}
 Aunque incluir fotografías es muy útil, incluir otro tipo de imágenes es
 muy útil también. Uno de esos tipos de imagen más interesante son los gráficos
 vectoriales. Estos gráficos son imágenes definidas en términos matemáticos,
@@ -2846,6 +2850,28 @@ del color, normalizadas entre cero y uno.
 \end{enumerate}
 Y, finalmente, el último argumento son los tres valores que necesite nuestro
 esquema de color.
+\subsection{Texto a dos columnas}
+
+Si se desea introducir texto a dos columnas, debe incluirse el paquete
+\verb!multicol!, y utilizar el entorno \verb!multicols!, que nos
+permite indicar el número de columnas del texto. 
+
+\begin{lstlisting}[ language={[LaTeX]Tex},
+                    caption={Ejemplo de texto a dos columnas},
+                    label={lst:two_columns}]
+\begin{multicol}{2}
+%el texto que se desee que salga a dos columnas
+\end{multicol}
+\end{lstlisting}
+
+En la figura \ref{fig:two_columns} se puede ver el resultado.
+
+\begin{figure}[H]
+\includegraphics[width=\hsize]{two_columns}
+\caption{Texto a dos columnas}
+\label{fig:two_columns}
+\end{figure}
+
 \newpage\section{Presentaciones de transparencias}
 Como se dijo en \textbf{\ref{sec:presentacion}}, se puede utilizar \LaTeX{} para
 crear presentaciones de transparencias, usando una clase de documento
