@@ -378,6 +378,19 @@ Debian, se usa este comando:
 sudo apt install make
 \end{verbatim}
 
+Hay varias opciones de compilación en este archivo make que se provee con el
+proyecto:
+\begin{enumerate}
+\item \verb!make!: Compila el documento principal del tutorial.
+\item \verb!make amsmath!: Compila el documento de ejemplo del paquete
+amsmath
+\item \verb!make beamer!: Compilar el ejemplo de presentación de transparencias.
+\item \verb!make all!: Compila todo lo anterior.
+\item \verb!make clean!: Elimina todos los resultados de la compilación, tanto
+intermedios como finales, útil si una compilación ha fallado y, aunque todo
+esté aparentemente correcto, no se genera el documento.
+\end{enumerate}
+
 Si quieres preparar un entorno para compilar archivos (en Linux) que hayas
 escrito tú, simplemente crea un directorio en un sitio sencillo (por ejemplo tu
 carpeta personal) y, dentro del mismo, un archivo .tex. Por ejemplo, con estos
@@ -500,7 +513,7 @@ se observa el preámbulo de este documento, se verá que hay muchos.
 
 \textbf{Nota sobre paquetes:} para realizar muchas de las tareas que se explican
 aquí se han incluido paquetes, para saber qué paquete es necesario para cada
-cosa, acudde a los comentarios del código.
+cosa, acude a los comentarios del código.
 
 Ahora que ya hemos visto el contenido mínimo de un archivo .tex, puedes abrir
 aquél que creaste en el punto \ref{instGNULinux} y copiar los ejemplos
@@ -548,7 +561,7 @@ Ej.: áéíóú, ÁÉÍÓÚ, üÜ, ñÑ.
 \subsection{Escritura de texto en \LaTeX{}} \label{subsec:write_text}
 Como se ha visto en la sección anterior, dentro del contenido del documento es
 donde se puede incluir texto. Ahora bien, si has experimentado con este archivo 
-\texttt{.tex}.
+\texttt{.tex}
 que has creado con el código anterior, quizás hayas notado que los saltos de
 línea no se trasladan a párrafos distintos.
 En Latex, un párrafo es una línea de texto o varias líneas consecutivas, que se
@@ -666,9 +679,9 @@ documento tengamos que poner listas, ya sean éstas numeradas o sin numerar.
 A continuación vemos cómo se hace.
 \begin{verbatim}
 \begin{itemize}
-\item Sector primario
-\begin{itemize}
-    \item Ganadería
+    \item Sector primario
+    \begin{itemize}
+        \item Ganadería
         \begin{itemize}
             \item Porcina
             \item Bovina
@@ -2376,7 +2389,7 @@ El código que permite la creación de figuras compuestas es bastante explicativ
 pero hay ciertas salvedades que hay que comentar:
 \begin{itemize}
 \item Cada subfigura ocupa un tamaño concreto, por lo que hay que asegurarse
-de que caben en la pantalla, en las líneas 4, 9 y 14 se puede ver que se ha 
+de que caben en la pantalla, en las líneas 3, 8 y 13 se puede ver que se ha 
 configurado para que cada subfigura ocupe aproximadamente un tercio del espacio
 horizontal disponible.
 \item Además, la imagen que va dentro de cada subfigura no puede usar el 
@@ -2695,7 +2708,7 @@ Generan el encabezado que se puede ver en la Figura \ref{fig:3columnHeader}:
 Existe, además, la orden
 \verb|\fancyfoot[<pos>]{<contenido>}|, que es la que se usa
 para añadir contenido al pie de página -en contraposición al encabezado, como 
-cabamos de ver-. Voy a listar, también, algunos comandos útiles
+acabamos de ver-. Voy a listar, también, algunos comandos útiles
 para crear encabezados y pies más dinámicos:
 \begin{enumerate}
 \item \texttt{leftmark}: inserta el número y título del nivel de título más
@@ -2765,7 +2778,7 @@ páginas pares o impares del documento. Por ejemplo:
 haría que el texto <<\LaTeX>> apareciera en el encabezado en la derecha
 en las páginas pares (E es por \emph{even} y O por \emph{odd}, par e impar
 respectivamente en inglés) y en la izquierda en las impares. El resultado se
-puede ver en la Figura: \ref{fig:twoside}.
+puede ver en la Figura \ref{fig:twoside}.
 \begin{figure}[H]
 \centering
 \includegraphics[width=\hsize]{twoside}
@@ -2875,7 +2888,7 @@ En la figura \ref{fig:two_columns} se puede ver el resultado.
 \newpage\section{Presentaciones de transparencias}
 Como se dijo en \textbf{\ref{sec:presentacion}}, se puede utilizar \LaTeX{} para
 crear presentaciones de transparencias, usando una clase de documento
-muy especial llamada \textit{beamer}. Ya se ha explica que  es muy difícil, si
+muy especial llamada \textit{beamer}. Ya se ha explicado que  es muy difícil, si
 no imposible, cambiar la clase de un documento cuando éste tiene cierta
 extensión. Por lo que se ha creado otro documento llamado \texttt{beamer.tex}
 que se compila con la orden \verb!make beamer.pdf! si se dispone de soporte para
