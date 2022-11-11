@@ -1499,6 +1499,57 @@ si no se va a usar intensamente ninguna de las funcionalidades del mismo y ya
 se tienen muchas ecuaciones escritas, incluir este paquete es un cambio que 
 nos obligará a reescribir nuestras ecuaciones y hay que tener esto en cuenta.
 
+Como nota final, podemos encontrarnos con una ecuación que sea muy larga, como
+por ejemplo esta: 
+$$
+\vec{v} = \left(\matrix{v_1 \cr v_2 \cr v_3}\right)
+\vec{v} \times \vec{w} = \left| \matrix{\vec{i}&\vec{j}&\vec{k} \cr v_1&v_2&v_3 \cr w_1 & w_2 & w_3}\right| =\\ \vec{i} \cdot v_2 \cdot w_3 + \vec{j} \cdot v_3 \cdot w_1 + v_1 \cdot w_2 \cdot \vec{k} - \vec{k} \cdot v_2 \cdot w_1 - \vec{j} \cdot v_1\cdot  w_3  - v_3 \cdot w_2 \cdot \vec{i}=
+\left(v_2\cdot w_3 - v_3\cdot w_2\right)\vec{i}  + \left(v_3\cdot w_1 - v_1\cdot w_3\cdot\right)\vec{j} + \left(v_1\cdot w_2 - v_2 \cdot w_1\right)\vec{k}
+$$
+
+Como puedes ver, no se muestra entera en la pantalla, si te ocurre esto
+con cualquier ecuación, o ésta se sale de los márgenes, simplemente escríbelas
+en ecuaciones diferentes, es decir:
+
+\begin{verbatim}
+$$
+\vec{v} = \left(\matrix{v_1 \cr v_2 \cr v_3}\right)
+$$
+$$
+\vec{v} \times \vec{w} = \left| \matrix{\vec{i}&\vec{j}&\vec{k} \cr 
+                                         v_1&v_2&v_3 \cr 
+                                         w_1 & w_2 & w_3}\right| =
+\vec{i} \cdot v_2 \cdot w_3 + \vec{j} \cdot v_3 \cdot w_1 + 
+v_1 \cdot w_2 \cdot \vec{k} - \vec{k} \cdot v_2 \cdot w_1 -
+\vec{j} \cdot v_1\cdot  w_3  - v_3 \cdot w_2 \cdot \vec{i}=
+$$
+$$
+\left(v_2\cdot w_3 - v_3\cdot w_2\right)\vec{i} +
+\left(v_3\cdot w_1 - v_1\cdot w_3\cdot\right)\vec{j} +
+\left(v_1\cdot w_2 - v_2 \cdot w_1\right)\vec{k}
+$$
+\end{verbatim}
+
+El resultado sería:
+
+$$
+\vec{v} = \left(\matrix{v_1 \cr v_2 \cr v_3}\right)
+$$
+$$
+\vec{v} \times \vec{w} = \left| \matrix{\vec{i}&\vec{j}&\vec{k} \cr 
+                                         v_1&v_2&v_3 \cr 
+                                         w_1 & w_2 & w_3}\right| =
+\vec{i} \cdot v_2 \cdot w_3 + \vec{j} \cdot v_3 \cdot w_1 + 
+v_1 \cdot w_2 \cdot \vec{k} - \vec{k} \cdot v_2 \cdot w_1 -
+\vec{j} \cdot v_1\cdot  w_3  - v_3 \cdot w_2 \cdot \vec{i}=
+$$
+$$
+\left(v_2\cdot w_3 - v_3\cdot w_2\right)\vec{i} +
+\left(v_3\cdot w_1 - v_1\cdot w_3\cdot\right)\vec{j} +
+\left(v_1\cdot w_2 - v_2 \cdot w_1\right)\vec{k}
+$$
+
+
 \newpage \section{Bloques especiales; figuras y tablas}
 Hay varios tipos de bloques especiales que nos permiten insertar cosas
 más complejas en el texto que párrafos y listas. Los que vamos a tratar aquí
